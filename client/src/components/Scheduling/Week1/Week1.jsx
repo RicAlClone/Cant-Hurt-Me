@@ -1,16 +1,17 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useContext} from "react";
 import Day from "./Day";
 import ScheduleService from '../../../Services/ScheduleService';
+import {AuthContext} from '../../../Context/AuthContext';
+
 
 function Week1(props){
 
 const [color,setColor]=useState("")
-
-// our update useStates
+//we have to press edit button before we can change update to true
 const[update,setUpdate]=useState(false);
 
-
-
+const authContext= useContext(AuthContext);
+//functions allow us to choose the background color of block
 function red(){
   setColor("red")
   console.log("set red")
@@ -46,8 +47,7 @@ function orange(){
 function purple(){
   setColor("purple");
 }
-  ////////////////////////////////////////Initital color set Above⤴ /////////////////////////////////////////////////////////////////////
-//we going to use a shortcut for our object and insert it into all our day objects.
+  //All our day models are based on skeleton object
 let skeleton={
 
     block1:[{backgroundColor:""},0],
@@ -148,8 +148,7 @@ let skeleton={
     block96:[{backgroundColor:""},0]
 }
 
-// what if we create an object of our objects
-
+//I create every day to be an object like skeleton
   const[evolve,setEvolve]=useState(skeleton);
 
   const[tuesObj,setTuesObj]=useState(skeleton);
@@ -164,83 +163,50 @@ let skeleton={
 
   const[sunObj,setSunObj]=useState(skeleton);
 
-  // const [array,setArray]=useState([]);
-
+//This array is used to grab _id from all models,from the backend
+  const [array,setArray]=useState([]);
+//Will hold our id when we click on edit button
   const [idHolder,setIdHolder]=useState(null);
-  ///////////////////////////////////////////////////////////
 
-//useEffect - what does it need ?
-  //it needs to loop through the week,in this case week 1,0-6 index.
-
-//updateclick - what does it need?
-  //it also needs to loop from 0-6 index.
-
-//saveClick - what does it need?
-  //it also needs to loop from 0-6 index.
-
-  ///////////////////////////////////////////////////////
-
-//Another way is to copy the way our other components operate.
-//One time i forgot to map through cookieNotes and it brought back all cookies.
-//put all objects in an array.So the total would end up being 21. When we do a get
-//we only pull up that users 21.
-//So for example if i only have 2,instead of 21, for right now. Then we would have an
-//array of 2. Our useEffect will set our array with those 2 objects.
-//We can map through that array and set monday to 0, week2 monday to 1
-//In updateClick we set idHolder
-
-//////////////////////////////////////////////////////////////
-
-//Another way is changing my skeleton in backend to make it unique in its own weeks and days.
-
+//Brings our data when page loads for the first time
   useEffect(()=>{
 
     ScheduleService.getSchedule().then(data=>{
-      console.log('w1/useEffect/data:',data.message.documents[1]);
-    setEvolve(data.message.documents[0]);
+      setArray(data.message.documents);
+      setEvolve(data.message.documents[0]);
+      setTuesObj(data.message.documents[1]);
+      setWedObj(data.message.documents[2]);
+      setThursObj(data.message.documents[3]);
+      setFriObj(data.message.documents[4]);
+      setSatObj(data.message.documents[5]);
+      setSunObj(data.message.documents[6]);
+
     })
 
   },[])
 
-
-//an array of 7 days with each having and object of 96 blocks
-//when we loop everyday
-
-  //////////////////////////////////////////////////////////
-
-//this week1Obj holds a function for everyday of week 1. We set the day with
-//useState. This useState holds an object with 96 properties which are arrays
-//that contain an object that changes the backgroundColor and a number to keep track
-//of points everytime the color is red. When we clikc on blue the function blue is triggered
-//we setColor to blue. When we click on block1 we run week1Obj.mon . tempObject will
-// equal [backgroundColor:blue},0]. We do a check if tempObject is 'red',if it is we add
-//a point.If not then we basically set it as the color it is. Then we set our setEvolve
-//to return the prev object with the property that was targeted by our click event. That will
-//be set to [{backgroundColor:color},0].
-
-//////////////// STEPS OF LOGIC THAT I WANT MY BACKGROUND PLUS FRONT END TO DO
-  //i want to to disable being able to click on a block and change anything.
-  //if disable we can set the background to a different color and once we Click on Update
-  //we can turn backgroundColor to white. When we hit save we update our day model?
-  //would we need 3 different models, one for each week?
-
-
+//Styles our edit,and save button
+const [saveButtonStyle,setSaveButtonStyle]=useState('btn btn-light');
+const [editButtonStyle,setEditButtonStyle]=useState('btn btn-info');
+//The week1Obj holds the functions that tell the day object,what blocks
+//are going to be the color chosen. We set that day object with its new colors
 let week1Obj={
-  //inide mon function we can check if we have a disabled button pressed. Do i
-  //need a useState for each day? Most likely. maybe we dont need to write somehting inside
-  //this funciton but instead make a statement if disabled we cant choose a color.
   mon: function (event){
     if (update){
       const name=event.target.getAttribute('name');
       console.log(name);
       let tempObject=[{backgroundColor:color},0];
       if(tempObject[0].backgroundColor==="red"){
-        //the 1 is the point added when color is red
         tempObject=[{backgroundColor:color},1]
       }else{
         tempObject=[{backgroundColor:color},0]
       }
       setEvolve(function(prev){
+        //Once we change the day object, we focus
+        //on the save button to let us know we are ready to save
+        setSaveButtonStyle('btn btn-info');
+        setEditButtonStyle('btn btn-light');
+
         return{
           ...prev,
         [name]: tempObject
@@ -262,6 +228,8 @@ let week1Obj={
       tempObject=[{backgroundColor:color},0]
     }
     setTuesObj(function(prev){
+      setSaveButtonStyle('btn btn-info');
+      setEditButtonStyle('btn btn-light');
       return{
         ...prev,
       [name]: tempObject
@@ -280,6 +248,8 @@ let week1Obj={
       tempObject=[{backgroundColor:color},0]
     }
     setWedObj(function(prev){
+      setSaveButtonStyle('btn btn-info');
+      setEditButtonStyle('btn btn-light');
       return{
         ...prev,
       [name]: tempObject
@@ -288,6 +258,7 @@ let week1Obj={
   }
   },
   thurs:function (event){
+    if(update){
     const name=event.target.getAttribute('name');
     console.log(name);
     let tempObject=[{backgroundColor:color},0];
@@ -297,13 +268,17 @@ let week1Obj={
       tempObject=[{backgroundColor:color},0]
     }
     setThursObj(function(prev){
+      setSaveButtonStyle('btn btn-info');
+      setEditButtonStyle('btn btn-light');
       return{
         ...prev,
       [name]: tempObject
       }
-    })
+    });
+  };
   },
   fri:function (event){
+    if(update){
     const name=event.target.getAttribute('name');
     console.log(name);
     let tempObject=[{backgroundColor:color},0];
@@ -313,13 +288,17 @@ let week1Obj={
       tempObject=[{backgroundColor:color},0]
     }
     setFriObj(function(prev){
+      setSaveButtonStyle('btn btn-info');
+      setEditButtonStyle('btn btn-light');
       return{
         ...prev,
       [name]: tempObject
       }
-    })
+    });
+  };
   },
   sat:function (event){
+    if(update){
     const name=event.target.getAttribute('name');
     console.log(name);
     let tempObject=[{backgroundColor:color},0];
@@ -329,13 +308,17 @@ let week1Obj={
       tempObject=[{backgroundColor:color},0]
     }
     setSatObj(function(prev){
+      setSaveButtonStyle('btn btn-info');
+      setEditButtonStyle('btn btn-light');
       return{
         ...prev,
       [name]: tempObject
       }
     })
+  };
   },
   sun:function (event){
+    if(update){
     const name=event.target.getAttribute('name');
     console.log(name);
     let tempObject=[{backgroundColor:color},0];
@@ -345,16 +328,20 @@ let week1Obj={
       tempObject=[{backgroundColor:color},0]
     }
     setSunObj(function(prev){
+      setSaveButtonStyle('btn btn-info');
+      setEditButtonStyle('btn btn-light');
       return{
         ...prev,
       [name]: tempObject
       }
-    })
+    });
+  };
   },
 };
 
-
-//   //Counts for every day
+//below are our day counters that will add 1
+//evertime we have a red block.Inside Day component we will
+//multiply it by 15 to get us our minutes being unproductive
   let monCount=0;
 
 Object.values(evolve).forEach(val=>{
@@ -370,7 +357,6 @@ Object.values(evolve).forEach(val=>{
       }
 });
 
-//problem is cannot set undefined or null to object
 let wedCount=0;
 Object.values(wedObj).forEach(val=>{
   if(val[1] === 1){
@@ -403,7 +389,6 @@ Object.values(sunObj).forEach(val=>{
 });
 
 let browserSize=window.innerWidth;
-console.log(browserSize)
 
 const stepContainer={
   display:"block",
@@ -415,34 +400,87 @@ const stepContainer={
 
 const [backColorDay,setBackColorDay]=useState({backgroundColor:'lightcyan'});
 
+//In order to get the current _id we loop through dayInfo.
+const dayInfo=[
+{index:0,day:"Monday"},{index:1,day:"Tuesday"},{index:2,day:"Wednesday"},
+{index:3,day:"Thursday"},{index:4,day:"Friday"},{index:5,day:"Saturday"},
+{index:6,day:"Sunday"}
+];
+//Clicking edit button allows us to color the blocks
+function editClick(nameDay){
 
-//when i click on any day how will it figure out what day im clicking
-function updateClick(nameDay){
-
-ScheduleService.getSchedule().then(data=>{
-setIdHolder(data.message.documents[0]._id);
-})
+  dayInfo.map((item)=>{
+    if(nameDay===item.day){
+      setIdHolder(array[item.index]._id);
+    }
+  })
 
   setUpdate(true);
   setBackColorDay({backgroundColor:'white'});
 }
-console.log(idHolder);//we are gettin id here now lets use it in <day>
+console.log(idHolder);
 
-
+//Save button will get id from edit button and the day object
+//and send to the backend to update our original day model
 function saveClick(id,body){
-  console.log('send id:',id);
-  console.log('send body:',body);
 
+if(update){
 ScheduleService.updateDay(id,body).then(data=>{
   if(!data.message.msgError){
     ScheduleService.getSchedule().then(newData=>{
-      setEvolve(newData.message.documents[0])
+      setArray(newData.message.documents);
+      setEvolve(newData.message.documents[0]);
+      setTuesObj(newData.message.documents[1]);
+      setWedObj(newData.message.documents[2]);
+      setThursObj(newData.message.documents[3]);
+      setFriObj(newData.message.documents[4]);
+      setSatObj(newData.message.documents[5]);
+      setSunObj(newData.message.documents[6]);
     })
+    setSaveButtonStyle('btn btn-light');
+    setEditButtonStyle('btn btn-info');
+  }
+  else if(data.message.msgBody === "Unauthorized"){
+const {setUser,setIsAuthenticated}=authContext;
+  setUser(null);
+  setIsAuthenticated(false);
   }
 })
+setUpdate(false);
+setBackColorDay({backgroundColor:'lightcyan'});
+}
+else{
+  console.log('need to click update first');
+}
+
+}
+//When we click slide we want to make sure we get previous colors,if object was
+//changed but not saved. We also want to turn off the ability to change the object
+//unless we click edit again.
+function slide(){
+  if(update){
+ScheduleService.getSchedule().then(data=>{
+  if(!data.message.msgError){
+  setArray(data.message.documents);
+  setEvolve(data.message.documents[0]);
+  setTuesObj(data.message.documents[1]);
+  setWedObj(data.message.documents[2]);
+  setThursObj(data.message.documents[3]);
+  setFriObj(data.message.documents[4]);
+  setSatObj(data.message.documents[5]);
+  setSunObj(data.message.documents[6]);
+}
+else if(data.message.msgBody === "Unauthorized"){
+const {setUser,setIsAuthenticated}=authContext;
+setUser(null);
+setIsAuthenticated(false);
+}
+})
+setSaveButtonStyle('btn btn-light');
+setEditButtonStyle('btn btn-info');
   setUpdate(false);
-  console.log('we click save and turn our background back to lightcyan');
   setBackColorDay({backgroundColor:'lightcyan'});
+  }
 }
 
 
@@ -478,16 +516,13 @@ ScheduleService.updateDay(id,body).then(data=>{
         </ul>
       </div>
 
-      {/* changed class */}
+
 
       <div id="week1" className="carousel slide" data-ride="carousel" data-interval="false">
 
-        {/* changed class */}
         <div className="carousel-inner">
-          {/* changed class */}
 
           <div className="carousel-item active">
-            {/* //these button should use props with functions that will allow us to update and save */}
 
             <Day
               dayName="Monday"
@@ -495,10 +530,12 @@ ScheduleService.updateDay(id,body).then(data=>{
               ourFunction={week1Obj.mon}
               count={monCount}
               update={setUpdate}
-              updateClick={updateClick}
+              editClick={editClick}
               backgroundColor={backColorDay}
               saveClick={saveClick}
               id={idHolder}
+              saveButtonStyle={saveButtonStyle}
+              editButtonStyle={editButtonStyle}
             />
           </div>
 
@@ -510,10 +547,12 @@ ScheduleService.updateDay(id,body).then(data=>{
               ourFunction={week1Obj.tues}
               count={tuesCount}
               update={setUpdate}
-              updateClick={updateClick}
+              editClick={editClick}
               backgroundColor={backColorDay}
               saveClick={saveClick}
               id={idHolder}
+              saveButtonStyle={saveButtonStyle}
+              editButtonStyle={editButtonStyle}
             />
           </div>
 
@@ -525,10 +564,12 @@ ScheduleService.updateDay(id,body).then(data=>{
               ourFunction={week1Obj.wed}
               count={wedCount}
               update={setUpdate}
-              updateClick={updateClick}
+              editClick={editClick}
               backgroundColor={backColorDay}
               saveClick={saveClick}
               id={idHolder}
+              saveButtonStyle={saveButtonStyle}
+              editButtonStyle={editButtonStyle}
             />
           </div>
 
@@ -539,6 +580,13 @@ ScheduleService.updateDay(id,body).then(data=>{
               evolve={thursObj}
               ourFunction={week1Obj.thurs}
               count={thursCount}
+              update={setUpdate}
+              editClick={editClick}
+              backgroundColor={backColorDay}
+              saveClick={saveClick}
+              id={idHolder}
+              saveButtonStyle={saveButtonStyle}
+              editButtonStyle={editButtonStyle}
             />
           </div>
 
@@ -549,6 +597,13 @@ ScheduleService.updateDay(id,body).then(data=>{
               evolve={friObj}
               ourFunction={week1Obj.fri}
               count={friCount}
+              update={setUpdate}
+              editClick={editClick}
+              backgroundColor={backColorDay}
+              saveClick={saveClick}
+              id={idHolder}
+              saveButtonStyle={saveButtonStyle}
+              editButtonStyle={editButtonStyle}
             />
           </div>
 
@@ -559,6 +614,13 @@ ScheduleService.updateDay(id,body).then(data=>{
               evolve={satObj}
               ourFunction={week1Obj.sat}
               count={satCount}
+              update={setUpdate}
+              editClick={editClick}
+              backgroundColor={backColorDay}
+              saveClick={saveClick}
+              id={idHolder}
+              saveButtonStyle={saveButtonStyle}
+              editButtonStyle={editButtonStyle}
             />
           </div>
 
@@ -569,14 +631,21 @@ ScheduleService.updateDay(id,body).then(data=>{
               evolve={sunObj}
               ourFunction={week1Obj.sun}
               count={sunCount}
+              update={setUpdate}
+              editClick={editClick}
+              backgroundColor={backColorDay}
+              saveClick={saveClick}
+              id={idHolder}
+              saveButtonStyle={saveButtonStyle}
+              editButtonStyle={editButtonStyle}
             />
           </div>
         </div>
-        <a className="carousel-control-prev" href="#week1" role="button" data-slide="prev">
+        <a onClick={slide} className="carousel-control-prev" href="#week1" role="button" data-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="sr-only">Previous</span>
         </a>
-        <a className="carousel-control-next" href="#week1" role="button" data-slide="next">
+        <a onClick={slide} className="carousel-control-next" href="#week1" role="button" data-slide="next">
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="sr-only">Next</span>
         </a>

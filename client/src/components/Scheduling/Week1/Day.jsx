@@ -14,8 +14,8 @@ function Day(props){
     // col-sm-3
           <div style={props.backgroundColor} className="day-container col-lg  col-xs">
 
-            <button onClick={()=>{props.updateClick(props.dayName)}}>update</button>
-            <button onClick={()=>{props.saveClick(props.id,props.evolve)}}>save</button>
+            <button className={props.editButtonStyle} onClick={()=>{props.editClick(props.dayName)}}>edit</button>
+            <button className={props.saveButtonStyle} onClick={()=>{props.saveClick(props.id,props.evolve)}}>save</button>
 
             <table>
               <tbody>

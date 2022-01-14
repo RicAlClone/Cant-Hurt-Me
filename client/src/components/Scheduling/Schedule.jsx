@@ -30,7 +30,7 @@ const Schedule= function(){
 
       </div>
 
-
+      
       <Week1
         weekName={"Week 1"}
 
