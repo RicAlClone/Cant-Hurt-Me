@@ -388,7 +388,6 @@ Object.values(sunObj).forEach(val=>{
   }
 });
 
-let browserSize=window.innerWidth;
 
 const stepContainer={
   display:"block",
@@ -409,7 +408,7 @@ const dayInfo=[
 //Clicking edit button allows us to color the blocks
 function editClick(nameDay){
 
-  dayInfo.map((item)=>{
+  dayInfo.forEach((item)=>{
     if(nameDay===item.day){
       setIdHolder(array[item.index]._id);
     }

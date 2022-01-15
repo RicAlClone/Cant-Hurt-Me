@@ -29,7 +29,8 @@ const takingSoulsRouter = require('./routes/TakingSoulsRoutes');
 const armoredMindRouter = require ('./routes/ArmoredMindRoutes');
 const cookieJarRouter=require('./routes/CookieJarRoutes');
 const fortyPercentRouter=require('./routes/FortyPercentRoutes');
-const scheduleRouter=require('./routes/ScheduleRoute');;
+const scheduleRouter=require('./routes/ScheduleRoute');
+const uncommonRouter=require('./routes/UncommonRoutes');
 
  app.use('/user', userRouter);
  app.use('/user/badhand', badhandRouter);
@@ -40,6 +41,7 @@ app.use('/user/armoredMind',armoredMindRouter);
 app.use('/user/cookieJar',cookieJarRouter);
 app.use('/user/fortyPercentRule',fortyPercentRouter);
 app.use('/user/schedule',scheduleRouter);
+app.use('/user/uncommon',uncommonRouter);
  //lets test our badhand without /user as an experiment to see if it would still work or break
 
 app.listen(port,function(){

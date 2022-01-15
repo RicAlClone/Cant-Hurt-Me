@@ -30,7 +30,9 @@ const UserSchema= new mongoose.Schema({
 
   fortyPercentRule:[{type:mongoose.Schema.Types.ObjectId,ref:"FortyPercentRule"}],
 
-  dayModel:[{type:mongoose.Schema.Types.ObjectId,ref:"DayModel"}]
+  dayModel:[{type:mongoose.Schema.Types.ObjectId,ref:"DayModel"}],
+
+  uncommon:[{type:mongoose.Schema.Types.ObjectId,ref:"Uncommon"}]
 });
 
 UserSchema.pre('save',function(next){

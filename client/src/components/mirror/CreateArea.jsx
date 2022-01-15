@@ -44,8 +44,8 @@ function onSubmit(event){
           <div className="main-contain">
 
 
-            <input onChange={handleChange} style={block} placeholder="Title" type="text" name="title" value={note.title}/>
-            <textarea onChange={handleChange} style={block} placeholder="Your Note" type="text" name="message" value={note.message}/>
+            <input onChange={handleChange} style={block} placeholder={props.inputPlaceHolder} type="text" name="title" value={note.title}/>
+            <textarea onChange={handleChange} style={block} placeholder={props.textAreaPlaceHolder} type="text" name="message" value={note.message}/>
             <button type='submit' className="bottom-right-add-button"  onClick={onSubmit}>
               <AddIcon/>
             </button>

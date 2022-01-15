@@ -105,18 +105,23 @@ console.log(array);
       <li>Note every step it will take to reach a goal.</li>
     </ul>
 
-    <CreateArea addNote={addNote}/>
+    <CreateArea
+      addNote={addNote}
+      inputPlaceHolder="Note title..."
+      textAreaPlaceHolder="Any insecuries, dreams, or goals..."
+    />
 
     <div className="row">
       {
         array.map(function(item, index) {
-          
+
           return <EachNote
             key={index}
             id={item._id}
             title={item.title}
             message={item.message}
-            deleteNote={deleteNote}/>
+            deleteNote={deleteNote}
+                 />
         })
       }
     </div>
