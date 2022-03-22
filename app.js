@@ -12,7 +12,10 @@ const port=  5000;
 
 app.use(cookieParser()); // I was missing this code!!!! which didnt
 //let me- continue making notes on this code i was missing
-app.use(express.json());
+// app.use(express.json());//dont know if i would need this since its also used at line 17.
+
+app.use(express.json({limit: '50mb',extended:true}));
+app.use(express.urlencoded({limit: '50mb',extended:true}));
 
 const uri= process.env.ATLAS_URI;
 
@@ -31,6 +34,7 @@ const cookieJarRouter=require('./routes/CookieJarRoutes');
 const fortyPercentRouter=require('./routes/FortyPercentRoutes');
 const scheduleRouter=require('./routes/ScheduleRoute');
 const uncommonRouter=require('./routes/UncommonRoutes');
+const failureRouter=require('./routes/FailureRoutes');
 
  app.use('/user', userRouter);
  app.use('/user/badhand', badhandRouter);
@@ -42,7 +46,7 @@ app.use('/user/cookieJar',cookieJarRouter);
 app.use('/user/fortyPercentRule',fortyPercentRouter);
 app.use('/user/schedule',scheduleRouter);
 app.use('/user/uncommon',uncommonRouter);
- //lets test our badhand without /user as an experiment to see if it would still work or break
+app.use('/user/failure',failureRouter);
 
 app.listen(port,function(){
   console.log(`server is on port ${port}`);

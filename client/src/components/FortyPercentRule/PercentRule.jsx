@@ -5,8 +5,10 @@ import {Link} from "react-router-dom";
 import fps from "../../Services/FortyPercentService";
 import {AuthContext} from "../../Context/AuthContext";
 import Message from '../Message';
-
-
+import AuthService from "../../Services/AuthService";
+import { SpinnerDiamond } from 'spinners-react';
+import {Alert} from "react-bootstrap";
+import {BsFillExclamationCircleFill} from 'react-icons/bs';
 
 const PercentRule = function() {
 
@@ -24,13 +26,27 @@ const[message, setMessage]=useState(null);
 
 const[array,setArray]=useState([]);
 
+const [isLoaded,setIsLoaded]=useState(false);
+
+const [required,setRequired]=useState(false);
+
 let authContext=useContext(AuthContext);
 
+function authCheck(){
+AuthService.isAuthenticated().then(data=>{
+  if(!data.isAuthenticated){
+    const {setIsAuthenticated,setUser}=authContext;
+    setIsAuthenticated(false);
+    setUser({username:""})
+  }
+})
+}
 
 let timer=useRef(null);
 
 useEffect(()=>{
   fps.getRuleNotes().then(data=>{
+    setIsLoaded(true);
     console.log(data.fortyPercentRules);
       setArray(data.fortyPercentRules)
   });
@@ -54,40 +70,47 @@ return{
 }
 
 
-
 function addBaseline(event){
+authCheck();
+if(!formData.title && !formData.sets && !formData.reps && !formData.hrs && !formData.mins && !formData.sec){
+  setRequired(true);
+  console.log('not all fields were filled')
+}
+else{
+  setRequired(false);
+  fps.postRuleNote(formData).then(data=>{
+    if(!data.message.msgError){
+      fps.getRuleNotes().then(getData=>{
+        console.log(getData);
+        setArray(getData.fortyPercentRules);
+        setMessage(data.message);
+        timer=setTimeout(()=>{setMessage(null)},2000)
+      });
+    }
+    else if(data.message.msgBody === "Unauthorized"){
+      authContext.setUser(null);
+      authContext.setIsAuthenticated(false);
+    }
+    else{
+    setMessage(data.message);
+    timer=setTimeout(()=>{setMessage(null)},2000)
 
-fps.postRuleNote(formData).then(data=>{
-  if(!data.message.msgError){
-    fps.getRuleNotes().then(getData=>{
-      console.log(getData);
-      setArray(getData.fortyPercentRules);
-      setMessage(data.message);
-      timer=setTimeout(()=>{setMessage(null)},2000)
-    });
-  }
-  else if(data.message.msgBody === "Unauthorized"){
-    authContext.setUser(null);
-    authContext.setIsAuthenticated(false);
-  }
-  else{
-  setMessage(data.message);
-  timer=setTimeout(()=>{setMessage(null)},2000)
-
-  }
-});
+    }
+  });
 
 
-setFormData({
-  title:"",
-  sets:"",
-  reps:"",
-  hrs:"",
-  mins:"",
-  sec:""
-})
+  setFormData({
+    title:"",
+    sets:"",
+    reps:"",
+    hrs:"",
+    mins:"",
+    sec:""
+  })
 
-  event.preventDefault();
+    event.preventDefault();
+}
+
 }
 
 function deleteBaseLine(e,id){
@@ -142,27 +165,45 @@ function updateNote(id,toUpdate){
 console.log(array);
   return (
     <div className="body-padding">
+      <div className="next-prev-challenge-spacing">
+        <Link onClick={authCheck}  as={Link} to="/CookieJar">Previous Challenge</Link>
+        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/Schedule">Next Challenge</Link>
+      </div>
       <h1 className="all-title">40 Percent Rule Challenge</h1>
-      <ul className="instruction-bullets">
-        <li><b>You are at 40% when your brain is telling you to quit.</b></li>
-        <li>To help build up your resistance to that little voice telling you to quit. Gradually increase that task by 5-10%.</li>
-        <li>Enter the type of task i.e. repititions in pushups, time studying, as a baseline. </li>
-        <li>Once a baseline is created you can come back and enter your improvements. </li>
-      </ul>
+      <Alert className="instruction-bullets" variant='primary'>
+        <p>  This challenge is to push yourself more than what you think you are capable of. This challenge was born
+          when David Goggins ran his first 100 mile marathon. He wanted to quit at mile 40 but vigorously continued until he finished.
+          That day is when David learned that humans can endure pain past what the mind thinks is capable of.
+          A governor in a car is a device is used to measure or regulate the speed of the car. This challenge will help you slowly
+          remove that governor from your mind. By incrementing your work load by 5-10% this will train your mind
+        and slowly remove that governor without injury or regress.</p>
+        <ul >
+          <li><b>You are at 40% when your brain is telling you to quit.</b></li>
+          <li>To help build up your resistance to that little voice telling you to quit. Gradually increase that task by 5-10%.</li>
+          <li>Enter the type of task i.e. repititions in pushups, time studying, as a baseline. </li>
+          <li>Once a baseline is created you can come back and enter your improvements. </li>
+        </ul>
+      </Alert>
       <div className="all-main-containers">
-        <div className="main-contain">
+        <div className="main-contain" style={{marginBottom:'40px'}}>
           <form className="mirror-form">
             <h2>Baseline</h2>
-            <label  style={{display:"block"}}>Title</label>
-            <input onChange={handleChange} name="title" value={formData.title } style={{width:"100%"}} type="text" placeholder="I.e. pushups, situps, study/work time"/>
-            <label style={{display:"block"}}>Sets</label>
-            <input onChange={handleChange} name="sets" value={formData.sets} type="number" min="0"/>
-            <label style={{display:"block"}}>Reps</label>
-            <input onChange={handleChange} name="reps" value={formData.reps} type="number" min="0" />
-            <label style={{display:"block"}}>Time</label>
-            <input onChange={handleChange} name="hrs" value={formData.hrs } type="number" placeholder="hrs" min="0" style={{width:"15%"}}/>
-            <input onChange={handleChange} name="mins" value={formData.mins } type="number" placeholder="min" min="0" max="60" style={{width:"15%"}}/>
-            <input onChange={handleChange} name="sec" value={formData.sec} type="number" placeholder="sec" min="0" max="60" style={{width:"15%"}}/>
+            <div style={{height:'2rem'}}>
+              {required?<p style={{marginBottom:'0',color:"#bf2121"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/> Must enter at least one field</p>:null}
+            </div>
+            <label  style={{display:"block",marginBottom:'0'}}>Title</label>
+            <input className="inputStyle list-input" onChange={handleChange} name="title" value={formData.title }  type="text" placeholder="I.e. pushups, situps, study/work time"/>
+
+            <label style={{display:"block",marginBottom:'0'}}>Sets</label>
+            <input className="inputStyle list-input" onChange={handleChange} name="sets" value={formData.sets} type="number" min="0"/>
+
+            <label style={{display:"block",marginBottom:'0'}}>Reps</label>
+            <input className="inputStyle list-input" onChange={handleChange} name="reps" value={formData.reps} type="number" min="0" />
+
+            <label style={{display:"block",marginBottom:'0'}}>Time</label>
+            <input className="inputStyle" onChange={handleChange} name="hrs" value={formData.hrs } type="number" placeholder="hrs" min="0" style={{width:"15%"}}/>
+            <input className="inputStyle" onChange={handleChange} name="mins" value={formData.mins } type="number" placeholder="min" min="0" max="60" style={{width:"15%"}}/>
+            <input className="inputStyle" onChange={handleChange} name="sec" value={formData.sec} type="number" placeholder="sec" min="0" max="60" style={{width:"15%"}}/>
 
           </form>
 
@@ -172,35 +213,43 @@ console.log(array);
         </div>
       </div>
 
-      <div className="row">
-        {
-          array.map(function(element,index){
-            //we are looping over our array which contains
-            //data
-            return <FormData
-              key={element._id}
-              id={element._id}
-              index={index}
-              title={element.title}
-              reps={element.reps}
-              sets={element.sets}
-              hrs={element.hrs}
-              mins={element.mins}
-              sec={element.sec}
-              delete={deleteBaseLine}
-              updateNote={updateNote}
-                   />
-          })
+      {
+        isLoaded?
+          <div className="row">
+            {
+              array.map(function(element,index){
+                //we are looping over our array which contains
+                //data
+                return <FormData
+                  key={element._id}
+                  id={element._id}
+                  index={index}
+                  title={element.title}
+                  reps={element.reps}
+                  sets={element.sets}
+                  hrs={element.hrs}
+                  mins={element.mins}
+                  sec={element.sec}
+                  delete={deleteBaseLine}
+                  updateNote={updateNote}
+                  authCheck={authCheck}
+                       />
+              })
 
-        }
-      </div>
+            }
+          </div>
+        :
+        <div className="all-main-containers">
+          <SpinnerDiamond size="150px"/>
+        </div>
+      }
+
 
       {
         message?<Message message={message}/>:null
       }
 
-      <div>
-        <Link className="first-challenge-link" as={Link} to="/Schedule">Next Challenge</Link>      </div>
+
     </div>
 );
 };

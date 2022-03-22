@@ -29,12 +29,12 @@ let newModel= new CallousedModel(reqBody);
 newModel.save(function(err,result){
   if(err){
     console.log('this is the error ',err);
-    res.status(500).json({message:{msgBody:" error has occured at 1st error check",msgError:true}});
+    res.status(500).json({message:{msgBody:"error",msgError:true}});
   }else{
     req.user.calluses.push(result);
     req.user.save(function(err){
       if(err){
-          res.status(500).json({message:{msgBody:" error has occured at at 2nd error check",msgError:true}});
+          res.status(500).json({message:{msgBody:"error",msgError:true}});
       }else{
         res.status(200).json({message:{msgBody:"created callus note",msgError:false}});
       }

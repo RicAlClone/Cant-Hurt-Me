@@ -5,12 +5,13 @@ const UserSchema= new mongoose.Schema({
   username:{
     type:String,
     required: true,
-    min:6,
-    max: 15
+    minLength:[6,'Username requires 6 characters or more']
+
   },
   password:{
     type:String,
     required: true,
+    minLength:[8,'Password requires 8 characters or more']
   },
 
   //basically this code populates with Badhand Schema
@@ -19,6 +20,8 @@ const UserSchema= new mongoose.Schema({
   badhands: [{type:mongoose.Schema.Types.ObjectId, ref: "Badhand"}],
   //the ref is based on Mirror.model schema and i hope it works
   mirrors: [{type:mongoose.Schema.Types.ObjectId, ref:"Mirror"}],
+
+  imageModel:[{type:mongoose.Schema.Types.ObjectId,ref:"ImageModel"}],
 
   calluses :[{type:mongoose.Schema.Types.ObjectId, ref:"CallousedModel"}],
 
@@ -32,7 +35,9 @@ const UserSchema= new mongoose.Schema({
 
   dayModel:[{type:mongoose.Schema.Types.ObjectId,ref:"DayModel"}],
 
-  uncommon:[{type:mongoose.Schema.Types.ObjectId,ref:"Uncommon"}]
+  uncommon:[{type:mongoose.Schema.Types.ObjectId,ref:"Uncommon"}],
+
+  failure:[{type:mongoose.Schema.Types.ObjectId,ref:"FailureModel"}]
 });
 
 UserSchema.pre('save',function(next){

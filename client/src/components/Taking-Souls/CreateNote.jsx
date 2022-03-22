@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import AddIcon from "../AddIcon";
 import RequiredMessage from "../RequiredMessage";
+import {BsFillExclamationCircleFill} from "react-icons/bs"
+import Message from "../Message";
 
 function CreateNote(props) {
 
@@ -10,12 +12,9 @@ function CreateNote(props) {
     paragraph: ""
   })
 
-  const [required,setRequired]=useState({
-    date:false,
-    title:false,
-    paragraph:false
-  })
+const [submitCheck,setSubmitCheck]=useState(false);
 
+const [inputCheck,setInputCheck]=useState("pink");
 
   function ourChange(event) {
     // const newValue=event.target.value;
@@ -55,93 +54,101 @@ function CreateNote(props) {
 
   function handleAddEntry(event) {
     event.preventDefault();
-    if(entry.date && entry.title && entry.paragraph !== ""){
-      props.addJournalEntry(entry);
-      setEntry({
-        date: "",
-        title: "",
-        paragraph: ""
-      })
-    }
-    ////Date
-    if(entry.date === ""){
+    //make a useState to follow if we hit submit
+//we check if either date, title,or paragraph is empty then we run console.log(something is empty),
+//else we return props.addJournalEntry(entry);
+setSubmitCheck(true);
+if(!entry.date||!entry.title||!entry.paragraph){
+  console.log('something is empty');
+}
+else{
+  props.addJournalEntry(entry);
+  setEntry(()=>{
+    setSubmitCheck(false);
+    return(
+      {
+        date:"",
+        title:"",
+        paragraph:""
+      }
+    )
+  }
+    )
+}
 
-    setRequired((prev)=>{
-      return({
-        date: true,
-        title: prev.title,
-        paragraph: prev.paragraph
-      })
-    })
+
+}
+console.log('submitCheck:',submitCheck);
+
+function dateFilled(property){
+  if (!entry[property] && submitCheck){
+    return {width:"59%",margin:"0",backgroundColor:"#ffdede"}
   }
   else{
-    setRequired((prev)=>{
-      return({
-        date: false,
-      title: prev.title,
-      paragraph: prev.paragraph
-    })
-    })
+    return {width:"59%",margin:"0",backgroundColor:"white"}
   }
-////Title
-if(entry.title === ""){
-
-setRequired((prev)=>{
-  return({
-    date: prev.date,
-    title: true,
-    paragraph: prev.paragraph
-  })
-})
-}
-else{
-setRequired((prev)=>{
-  return({
-    date: prev.date,
-  title: false,
-  paragraph: prev.paragraph
-})
-})
-}
-////Paragraph
-if(entry.paragraph === ""){
-
-setRequired((prev)=>{
-  return({
-    date: prev.date,
-    title: prev.title,
-    paragraph: true
-  })
-})
-}
-else{
-setRequired((prev)=>{
-  return({
-    date: prev.date,
-  title: prev.title,
-  paragraph: false
-})
-})
 }
 
+function titleFilled(property){
+  if (!entry[property] && submitCheck){
+    return {margin:"0",backgroundColor:"#ffdede"}
+  }
+  else{
+    return {margin:"0",backgroundColor:"white"}
+  }
+}
+
+function paragraphFilled(property){
+  if (!entry[property] && submitCheck){
+    return {margin:"0",backgroundColor:"#ffdede"}
+  }
+  else{
+    return {margin:"0",backgroundColor:"white"}
+  }
 }
 
   return (
     <form >
       <div className="all-main-containers">
-        <div className="main-contain">
-          <br/>
-          {required.date?<RequiredMessage />: null}
-          <br/>
-          <input name="date"  onChange={ourChange} type="date" value={entry.date} />
-          <br/>
-          {required.title?<RequiredMessage />: null}
-          <br/>
-          <input name="title" onChange={ourChange} style={block} placeholder="Enter your competitor..." value={entry.title} />
-          <br/>
-          {required.paragraph?<RequiredMessage />: null}
-          <br/>
-          <textarea name="paragraph" onChange={ourChange} style={block} placeholder="Write how you beat your competitor..." value={entry.paragraph} />
+        <div className="main-contain" style={{paddingBottom:"0",marginBottom:"30px"}}>
+
+          <div style={{height:"24px"}}>
+            {!entry.date&&submitCheck?
+              <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
+            :
+              null
+            }
+          </div>
+          <input className="inputStyle list-input" name="date"
+            style={dateFilled('date')}
+            onChange={ourChange} type="date" value={entry.date}
+          />
+
+          <div style={{height:"24px"}}>
+            {!entry.title&&submitCheck?
+              <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
+            :
+              null
+            }
+          </div>
+
+          <input style={titleFilled('title')} className="inputStyle list-input" name="title" onChange={ourChange}  placeholder="Enter your competitor..." value={entry.title} />
+
+          <div style={{height:"24px"}}>
+            {!entry.paragraph&&submitCheck?
+              <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>:null}
+          </div>
+          <textarea style={paragraphFilled('paragraph')} name="paragraph" onChange={ourChange}  placeholder="Write how you beat your competitor..." value={entry.paragraph} />
+
+          <div style={{height:"39px",margin:"10px 0"}}>
+            {
+              props.message?
+                <Message message={props.message}/>
+              :
+              null
+            }
+          </div>
+
 
           <button type='submit' onClick={handleAddEntry} style={{display: "block"}} className="bottom-right-add-button">
             <AddIcon/>

@@ -2,7 +2,8 @@ import React,{useState,useEffect,useContext} from "react";
 import Day from "./Day";
 import ScheduleService from '../../../Services/ScheduleService';
 import {AuthContext} from '../../../Context/AuthContext';
-
+import { SpinnerDiamond } from 'spinners-react';
+import {FiArrowLeftCircle,FiArrowRightCircle} from 'react-icons/fi';
 
 function Week1(props){
 
@@ -37,7 +38,7 @@ function yellow(){
 }
 
 function black(){
-  setColor("433d3c")
+  setColor(" #433d3c")
   console.log("set black")
 }
 
@@ -148,7 +149,109 @@ let skeleton={
     block96:[{backgroundColor:""},0]
 }
 
+
 //I create every day to be an object like skeleton
+const [loadingAnim,setLoadingAnim]=useState(
+  {
+    block1:[{backgroundColor:""},0],
+    block2:[{backgroundColor:""},0],
+    block3:[{backgroundColor:""},0],
+    block4:[{backgroundColor:""},0],
+    block5:[{backgroundColor:""},0],
+    block6:[{backgroundColor:""},0],
+    block7:[{backgroundColor:""},0],
+    block8:[{backgroundColor:""},0],
+    block9:[{backgroundColor:""},0],
+    block10:[{backgroundColor:""},0],
+    block11:[{backgroundColor:""},0],
+    block12:[{backgroundColor:""},0],
+    block13:[{backgroundColor:""},0],
+    block14:[{backgroundColor:""},0],
+    block15:[{backgroundColor:""},0],
+    block16:[{backgroundColor:""},0],
+    block17:[{backgroundColor:""},0],
+    block18:[{backgroundColor:""},0],
+    block19:[{backgroundColor:""},0],
+    block20:[{backgroundColor:""},0],
+    block21:[{backgroundColor:""},0],
+    block22:[{backgroundColor:""},0],
+    block23:[{backgroundColor:""},0],
+    block24:[{backgroundColor:""},0],
+    block25:[{backgroundColor:""},0],
+    block26:[{backgroundColor:""},0],
+    block27:[{backgroundColor:""},0],
+    block28:[{backgroundColor:""},0],
+    block29:[{backgroundColor:""},0],
+    block30:[{backgroundColor:""},0],
+    block31:[{backgroundColor:""},0],
+    block32:[{backgroundColor:""},0],
+    block33:[{backgroundColor:""},0],
+    block34:[{backgroundColor:""},0],
+    block35:[{backgroundColor:""},0],
+    block36:[{backgroundColor:""},0],
+    block37:[{backgroundColor:""},0],
+    block38:[{backgroundColor:""},0],
+    block39:[{backgroundColor:""},0],
+    block40:[{backgroundColor:""},0],
+    block41:[{backgroundColor:""},0],
+    block42:[{backgroundColor:""},0],
+    block43:[{backgroundColor:""},0],
+    block44:[{backgroundColor:""},0],
+    block45:[{backgroundColor:""},0],
+    block46:[{backgroundColor:""},0],
+    block47:[{backgroundColor:""},0],
+    block48:[{backgroundColor:""},0],
+    block49:[{backgroundColor:""},0],
+    block50:[{backgroundColor:""},0],
+    block51:[{backgroundColor:""},0],
+    block52:[{backgroundColor:""},0],
+    block53:[{backgroundColor:""},0],
+    block54:[{backgroundColor:""},0],
+    block55:[{backgroundColor:""},0],
+    block56:[{backgroundColor:""},0],
+    block57:[{backgroundColor:""},0],
+    block58:[{backgroundColor:""},0],
+    block59:[{backgroundColor:""},0],
+    block60:[{backgroundColor:""},0],
+    block61:[{backgroundColor:""},0],
+    block62:[{backgroundColor:""},0],
+    block63:[{backgroundColor:""},0],
+    block64:[{backgroundColor:""},0],
+    block65:[{backgroundColor:""},0],
+    block66:[{backgroundColor:""},0],
+    block67:[{backgroundColor:""},0],
+    block68:[{backgroundColor:""},0],
+    block69:[{backgroundColor:""},0],
+    block70:[{backgroundColor:""},0],
+    block71:[{backgroundColor:""},0],
+    block72:[{backgroundColor:""},0],
+    block73:[{backgroundColor:""},0],
+    block74:[{backgroundColor:""},0],
+    block75:[{backgroundColor:""},0],
+    block76:[{backgroundColor:""},0],
+    block77:[{backgroundColor:""},0],
+    block78:[{backgroundColor:""},0],
+    block79:[{backgroundColor:""},0],
+    block80:[{backgroundColor:""},0],
+    block81:[{backgroundColor:""},0],
+    block82:[{backgroundColor:""},0],
+    block83:[{backgroundColor:""},0],
+    block84:[{backgroundColor:""},0],
+    block85:[{backgroundColor:""},0],
+    block86:[{backgroundColor:""},0],
+    block87:[{backgroundColor:""},0],
+    block88:[{backgroundColor:""},0],
+    block89:[{backgroundColor:""},0],
+    block90:[{backgroundColor:""},0],
+    block91:[{backgroundColor:""},0],
+    block92:[{backgroundColor:""},0],
+    block93:[{backgroundColor:""},0],
+    block94:[{backgroundColor:""},0],
+    block95:[{backgroundColor:""},0],
+    block96:[{backgroundColor:""},0]
+  }
+)
+
   const[evolve,setEvolve]=useState(skeleton);
 
   const[tuesObj,setTuesObj]=useState(skeleton);
@@ -167,22 +270,27 @@ let skeleton={
   const [array,setArray]=useState([]);
 //Will hold our id when we click on edit button
   const [idHolder,setIdHolder]=useState(null);
-
+  //We want to have a load spinner if its taking long to load
+  const [isLoaded,setIsLoaded]=useState(false);
 //Brings our data when page loads for the first time
   useEffect(()=>{
 
     ScheduleService.getSchedule().then(data=>{
-      setArray(data.message.documents);
-      setEvolve(data.message.documents[0]);
-      setTuesObj(data.message.documents[1]);
-      setWedObj(data.message.documents[2]);
-      setThursObj(data.message.documents[3]);
-      setFriObj(data.message.documents[4]);
-      setSatObj(data.message.documents[5]);
-      setSunObj(data.message.documents[6]);
-
+      console.log('data',data);
+      if(data.message.msgBody==="Unauthorized"){
+        console.log('unauthorized');
+      }else{
+        setIsLoaded(true);
+        setArray(data.message.documents);
+        setEvolve(data.message.documents[0]);
+        setTuesObj(data.message.documents[1]);
+        setWedObj(data.message.documents[2]);
+        setThursObj(data.message.documents[3]);
+        setFriObj(data.message.documents[4]);
+        setSatObj(data.message.documents[5]);
+        setSunObj(data.message.documents[6]);
+      }
     })
-
   },[])
 
 //Styles our edit,and save button
@@ -422,7 +530,6 @@ console.log(idHolder);
 //Save button will get id from edit button and the day object
 //and send to the backend to update our original day model
 function saveClick(id,body){
-
 if(update){
 ScheduleService.updateDay(id,body).then(data=>{
   if(!data.message.msgError){
@@ -457,6 +564,7 @@ else{
 //changed but not saved. We also want to turn off the ability to change the object
 //unless we click edit again.
 function slide(){
+  props.authCheck();
   if(update){
 ScheduleService.getSchedule().then(data=>{
   if(!data.message.msgError){
@@ -488,12 +596,12 @@ setEditButtonStyle('btn btn-info');
 
       <h1 className="week-title">{props.weekName}</h1>
 
-      <div style={stepContainer}>
+      {/* <div style={stepContainer}>
         <h5>Step 1</h5>
         <ul>
           <li>click on button to choose color</li>
         </ul>
-      </div>
+      </div> */}
 
 
       <div className="buttons-container">
@@ -508,23 +616,36 @@ setEditButtonStyle('btn btn-info');
       </div>
 
 
-      <div style={stepContainer}>
+      {/* <div style={stepContainer}>
         <h4>Step 2</h4>
         <ul>
           <li>click on time block to fill</li>
         </ul>
-      </div>
+      </div> */}
 
 
 
       <div id="week1" className="carousel slide" data-ride="carousel" data-interval="false">
-
+        {/* <div style={{display:'flex',justifyContent:'space-evenly',height:'50px'}}>
+        {/* className="carousel-control-prev" */}
+        {/* <a onClick={slide}  href="#week1" role="button" data-slide="prev">
+        <FiArrowLeftCircle size='50'/> */}
+        {/* <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="sr-only">Previous</span> */}
+        {/* </a> */}
+        {/* className="carousel-control-next" */}
+        {/* <a onClick={slide}  href="#week1" role="button" data-slide="next">
+        <FiArrowRightCircle size='50'/> */}
+        {/* <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="sr-only">Next</span> */}
+        {/* </a>
+        </div> */}
         <div className="carousel-inner">
 
           <div className="carousel-item active">
-
             <Day
-              dayName="Monday"
+              week="1"
+              dayName={isLoaded?"Monday":"Loading..."}
               evolve={evolve}
               ourFunction={week1Obj.mon}
               count={monCount}
@@ -535,13 +656,19 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
+
+
+
           <div className="carousel-item ">
             <Day
-              dayName="Tuesday"
+              week="1"
+              dayName={isLoaded?"Tuesday":"Loading..."}
               evolve={tuesObj}
               ourFunction={week1Obj.tues}
               count={tuesCount}
@@ -552,13 +679,16 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Wednesday"
+              week="1"
+              dayName={isLoaded?"Wednesday":"Loading..."}
               evolve={wedObj}
               ourFunction={week1Obj.wed}
               count={wedCount}
@@ -569,13 +699,16 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Thursday"
+              week="1"
+              dayName={isLoaded?"Thursday":"Loading..."}
               evolve={thursObj}
               ourFunction={week1Obj.thurs}
               count={thursCount}
@@ -586,13 +719,16 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Friday"
+              week="1"
+              dayName={isLoaded?"Friday":"Loading..."}
               evolve={friObj}
               ourFunction={week1Obj.fri}
               count={friCount}
@@ -603,13 +739,16 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Saturday"
+              week="1"
+              dayName={isLoaded?"Saturday":"Loading..."}
               evolve={satObj}
               ourFunction={week1Obj.sat}
               count={satCount}
@@ -620,13 +759,16 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Sunday"
+              week="1"
+              dayName={isLoaded?"Sunday":"Loading..."}
               evolve={sunObj}
               ourFunction={week1Obj.sun}
               count={sunCount}
@@ -637,19 +779,14 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
         </div>
-        <a onClick={slide} className="carousel-control-prev" href="#week1" role="button" data-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="sr-only">Previous</span>
-        </a>
-        <a onClick={slide} className="carousel-control-next" href="#week1" role="button" data-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="sr-only">Next</span>
-        </a>
+
       </div>
-</div>
+    </div>
 
   );
 }

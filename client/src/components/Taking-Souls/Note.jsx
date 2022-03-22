@@ -7,7 +7,7 @@ function Note(props){
     let fixRegex = /(\w+)-(\w+)-(\w+)/; // Change this line
     let replaceText = "$2-$3-$1"; // Change this line
     let result = str.replace(fixRegex, replaceText);
-    
+
     return result;
 
   }
@@ -18,11 +18,11 @@ function handleDelete(){
 }
 
 return(
-  <div className="col-lg-3" >
+  <div className="col-lg-4" >
     <div className="note-container">
       <div className="note" >
-        <h3>{dateFunc(props.calendar)}</h3>
-        <h1>{props.title}</h1>
+        <h6>{dateFunc(props.calendar)}</h6>
+        <p className="mirror-note-title">{props.title}</p>
         <p>{props.paragraph}</p>
         <i className="fas fa-trash-alt delete-bottom-right" onClick={handleDelete} />
       </div>

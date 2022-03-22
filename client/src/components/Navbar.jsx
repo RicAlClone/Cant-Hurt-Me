@@ -1,23 +1,18 @@
-import React, {useContext} from "react";
+import React, {useContext,useState} from "react";
  import { Link,useHistory } from 'react-router-dom';
 import BNavbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import AuthService from '../Services/AuthService';
 import {AuthContext} from '../Context/AuthContext';
-
-//when we are authenticated display the NavDropdown and logout and
-//we want to take off sign up or login
+import Container from 'react-bootstrap/Container';
+import {FaUserCheck} from 'react-icons/fa';
 
 
 function Navbar() {
 
-//we need to grab our authcontext info and be able to destructure it
-/////////////import useContext
-const {isAuthenticated,setIsAuthenticated,setUser}=useContext(AuthContext)
+const {isAuthenticated,setIsAuthenticated,setUser,user}=useContext(AuthContext)
 
-// the history object can be used to navigate to different links
-//,or endpoints, and many more.
 const history= useHistory();
 
 let onClickLogoutHandler = ()=>{
@@ -33,39 +28,57 @@ let onClickLogoutHandler = ()=>{
 const unAuthenticatedNavBar= ()=>{
   return(
   <>
+
     <Nav className="mr-auto">
-      <Nav.Link style={{color:"white"}}  as={Link} to="/" > Home </Nav.Link>
-      <Nav.Link style={{color:"white"}}  as={Link} to="/login" >Login</Nav.Link>
-      <Nav.Link style={{color:"white"}}  as={Link} to="/register" >Register</Nav.Link>
+      <Nav.Link style={{color:"white"}}  as={Link} href='#Home' to="/" > Home </Nav.Link>
+      <Nav.Link style={{color:"white"}}  as={Link} href='#login' to="/login" >Login</Nav.Link>
+      <Nav.Link style={{color:"white"}}  as={Link} href='#register' to="/register" >Register</Nav.Link>
     </Nav>
   </>
       )
 }
 
 const authenticatedNavBar = ()=>{
+
+  function authCheck(){
+
+    AuthService.isAuthenticated().then(data=>{
+      if(!data.isAuthenticated){
+        setIsAuthenticated(false);
+        setUser({username:""});
+      }
+    })
+  }
+
 return(
 <>
 
-  <Nav.Link style={{color:"white"}} as={Link} to="/">Home</Nav.Link>
+  <Nav className="mr-auto">
+    <Nav.Link style={{color:"white"}} as={Link} href='#Home' to="/">Home</Nav.Link>
 
-  <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-    <NavDropdown.Item style={blackText} as={Link} to="/BadHand">1. Bad Hand</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/Mirror">2. The Accountability Mirror</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/Calloused">3. Calloused Mind</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/TakingSouls">4. Taking Souls</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/ArmoredMind">5. Armored Mind</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/CookieJar">6. The Cookie Jar</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/PercentRule">7. The 40 Percent Rule</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/Schedule">8. Schedule</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/Uncommon" >9. Become Uncommon Amongst the Uncommon</NavDropdown.Item>
-    <NavDropdown.Item style={blackText} as={Link} to="/EmpowermentFailure">10. Empowerment of Failure</NavDropdown.Item>
-  </NavDropdown>
-  <button onClick={onClickLogoutHandler}>Logout</button>
+    <NavDropdown title="Challenges" id="collasible-nav-dropdown">
+      <NavDropdown.Item onClick={authCheck} style={blackText} as={Link} href='#BadHand' to="/BadHand">1. Bad Hand</NavDropdown.Item>
+      <NavDropdown.Item onClick={authCheck} style={blackText} as={Link} href='#Mirror' to="/Mirror">2. The Accountability Mirror</NavDropdown.Item>
+      <NavDropdown.Item onClick={authCheck}  style={blackText} as={Link} href='#Calloused' to="/Calloused">3. Calloused Mind</NavDropdown.Item>
+      <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#TakingSouls' to="/TakingSouls">4. Taking Souls</NavDropdown.Item>
+      <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#ArmoredMind' to="/ArmoredMind">5. Armored Mind</NavDropdown.Item>
+      <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#CookieJar' to="/CookieJar">6. The Cookie Jar</NavDropdown.Item>
+      <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#PercentRule' to="/PercentRule">7. The 40 Percent Rule</NavDropdown.Item>
+      <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#Schedule' to="/Schedule">8. Schedule</NavDropdown.Item>
+      <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#Uncommon' to="/Uncommon" >9. Uncommon Amongst the Uncommon</NavDropdown.Item>
+      <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#EmpFail' to="/EmpowermentFailure">10. Empowerment of Failure</NavDropdown.Item>
+    </NavDropdown>
+  </Nav>
+  <Nav className="justify-content-end">
+    <BNavbar.Text style={{marginRight:"20px"}}>
+      <FaUserCheck/> {user.username}
+    </BNavbar.Text>
+    <button className='btn btn-light' style={{margin:"0 20px 0 0"}} onClick={onClickLogoutHandler}>Logout</button>
+  </Nav>
+
 </>
 )
 }
-//we need to make a function that for unauth and for auth that returns
-// html of nav links in our navbar
 
 const blackText={
   color:"#1d2124"
@@ -77,9 +90,9 @@ const blackText={
       <BNavbar.Brand  style={{color:"white"}} as={Link} to="/">Can't Hurt Me Challenges</BNavbar.Brand>
       <BNavbar.Toggle aria-controls="responsive-navbar-nav" />
       <BNavbar.Collapse id="responsive-navbar-nav">
-        <Nav className="mr-auto">
-          {!isAuthenticated? unAuthenticatedNavBar(): authenticatedNavBar()}
-        </Nav>
+
+        {!isAuthenticated? unAuthenticatedNavBar(): authenticatedNavBar()}
+
       </BNavbar.Collapse>
     </BNavbar>
 

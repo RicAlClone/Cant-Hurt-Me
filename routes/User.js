@@ -18,17 +18,12 @@ const allDays=require("./AllDays");
 const app=express();
 
 
-// 1. cap lock JWT
 const JWT = require('jsonwebtoken');
 
 const signToken = userID =>{
-  // console.log(userID);
-  //2. did not use return on JWT.sign
-  // console.log(userID);
+
   return JWT.sign({
-    //3. did not use iss property
-    //4. did not use sub property
-    //5. did not use the key to sign in with
+
     iss: process.env.SECRET_KEY,
     //who is this jwt token for
     sub: userID
@@ -57,8 +52,18 @@ userRouter.post('/register',(req,res)=>{
 
     newUser.save((err,result)=>{ ///arrow
       if(err){
+        console.log('username=>',err.errors['username']);
+        console.log('password=>',err.errors['password']);
 
-        res.status(500).json({message:{msgBody:"error has occured 2",msgError:true}});
+        if(err.errors['username']&&err.errors['password']){
+          res.status(500).json({message:{msgBody:"Username should be 6 character or more. Password should be 8 characters or more",msgError:true}})
+        }
+        else if(err.errors['username']){
+          res.status(500).json({message:{msgBody:err.errors['username'].message,msgError:true}})
+        }
+        else if(err.errors['password']){
+          res.status(500).json({message:{msgBody:err.errors['password'].message,msgError:true}})
+        }
 
       }
       else{

@@ -55,6 +55,47 @@ deleteMirrorNote: (id)=>{
   }
 })
 
+},
+postImage:(body)=>{
+  return fetch(`/user/mirror/postImage`,{
+    method:'POST',
+    body:JSON.stringify(body),
+    headers:{'Content-Type':'application/json'}
+  })
+  .then(res=>{
+    if(res.status!==401){
+      return res.json().then(data=>data);
+    }
+    else{
+      return {message:{msgBody:"Unauthorized",msgError:true}}
+    }
+  })
+},
+getImage:()=>{
+  return fetch('/user/mirror/getImage')
+  .then(res=>{
+    if(res.status!==401){
+      return res.json().then(data=>data);
+    }
+    else{
+      return {message:{msgBody:"Unauthorized",msgError:true}}
+    }
+  })
+},
+updateImage:(id,body)=>{
+  return fetch(`/user/mirror/updateImage/${id}`,{
+    method:'PUT',
+    body:JSON.stringify(body),
+    headers:{'Content-Type':'application/json'}
+  })
+  .then(res=>{
+    if(res.status!==401){
+      return res.json().then(data=>data);
+    }
+    else{
+      return {message:{msgBody:"Unauthorized",msgError:true}}
+    }
+  })
 }
 }
 export default mirrorService;

@@ -10,6 +10,7 @@ const [color,setColor]=useState("")
 const[update,setUpdate]=useState(false);
 //This array is used to grab _id from all models,from the backend
 const [array,setArray]=useState([]);
+const [isLoaded,setIsLoaded]=useState(false);
 
 const authContext= useContext(AuthContext);
 
@@ -40,7 +41,7 @@ function yellow(){
 }
 
 function black(){
-  setColor("433d3c")
+  setColor(" #433d3c")
   console.log("set black")
 }
 
@@ -174,17 +175,21 @@ let skeleton={
   useEffect(()=>{
 
     ScheduleService.getSchedule().then(data=>{
-      setArray(data.message.documents);
-      setEvolve(data.message.documents[7]);
-      setTuesObj(data.message.documents[8]);
-      setWedObj(data.message.documents[9]);
-      setThursObj(data.message.documents[10]);
-      setFriObj(data.message.documents[11]);
-      setSatObj(data.message.documents[12]);
-      setSunObj(data.message.documents[13]);
-
+      if(data.message.msgBody==="Unauthorized"){
+        console.log('Unauthorized')
+      }
+      else{
+        setIsLoaded(true);
+        setArray(data.message.documents);
+        setEvolve(data.message.documents[7]);
+        setTuesObj(data.message.documents[8]);
+        setWedObj(data.message.documents[9]);
+        setThursObj(data.message.documents[10]);
+        setFriObj(data.message.documents[11]);
+        setSatObj(data.message.documents[12]);
+        setSunObj(data.message.documents[13]);
+      }
     })
-
   },[])
 
   //Styles our edit,and save button
@@ -499,14 +504,6 @@ console.log('update:',update);
 
       <h1 className="week-title">{props.weekName}</h1>
 
-      <div style={stepContainer}>
-        <h5>Step 1</h5>
-        <ul>
-          <li>click on button to choose color</li>
-        </ul>
-      </div>
-
-
       <div className="buttons-container">
         <button onClick={blue} type="button" className="btn btn-primary">Work</button>
         <button onClick={red} type="button" className="btn btn-danger">Unproductive</button>
@@ -519,20 +516,12 @@ console.log('update:',update);
       </div>
 
 
-      <div style={stepContainer}>
-        <h4>Step 2</h4>
-        <ul>
-          <li>click on time block to fill</li>
-        </ul>
-      </div>
-
-
-
       <div id="week2" className="carousel slide" data-ride="carousel" data-interval="false">
         <div className="carousel-inner">
           <div className="carousel-item active">
             <Day
-              dayName="Monday"
+              week="2"
+              dayName={isLoaded?"Monday":"Loading..."}
               evolve={evolve}
               ourFunction={week2Obj.mon}
               count={monCount}
@@ -543,13 +532,16 @@ console.log('update:',update);
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Tuesday"
+              week="2"
+              dayName={isLoaded?"Tuesday":"Loading..."}
               evolve={tuesObj}
               ourFunction={week2Obj.tues}
               count={tuesCount}
@@ -560,13 +552,16 @@ console.log('update:',update);
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Wednesday"
+              week="2"
+              dayName={isLoaded?"Wednesday":"Loading..."}
               evolve={wedObj}
               ourFunction={week2Obj.wed}
               count={wedCount}
@@ -577,13 +572,16 @@ console.log('update:',update);
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Thursday"
+              week="2"
+              dayName={isLoaded?"Thursday":"Loading..."}
               evolve={thursObj}
               ourFunction={week2Obj.thurs}
               count={thursCount}
@@ -594,13 +592,16 @@ console.log('update:',update);
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Friday"
+              week="2"
+              dayName={isLoaded?"Friday":"Loading..."}
               evolve={friObj}
               ourFunction={week2Obj.fri}
               count={friCount}
@@ -611,13 +612,16 @@ console.log('update:',update);
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Saturday"
+              week="2"
+              dayName={isLoaded?"Saturday":"Loading..."}
               evolve={satObj}
               ourFunction={week2Obj.sat}
               count={satCount}
@@ -628,13 +632,16 @@ console.log('update:',update);
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
 
 
           <div className="carousel-item ">
             <Day
-              dayName="Sunday"
+              week="2"
+              dayName={isLoaded?"Sunday":"Loading..."}
               evolve={sunObj}
               ourFunction={week2Obj.sun}
               count={sunCount}
@@ -645,20 +652,22 @@ console.log('update:',update);
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
+              classAnimation={isLoaded?"":"schedule-loader"}
+              slide={slide}
             />
           </div>
         </div>
 
-
-        <a onClick={slide} className="carousel-control-prev" href="#week2" role="button" data-slide="prev">
+        {/* 
+          <a onClick={slide} className="carousel-control-prev" href="#week2" role="button" data-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="sr-only">Previous</span>
-        </a>
+          </a>
 
-        <a onClick={slide} className="carousel-control-next" href="#week2" role="button" data-slide="next">
+          <a onClick={slide} className="carousel-control-next" href="#week2" role="button" data-slide="next">
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="sr-only">Next</span>
-        </a>
+        </a> */}
 
 
       </div>

@@ -6,15 +6,13 @@ function EachNote(props){
 
   return(
 
-    <div className="col-lg-3" >
+    <div className="col-lg-4" >
       <div className="note-container">
         <div className="note" >
-          <h1 >{props.title}</h1>
-          <p>{props.message}</p>
-          {/* <button type="button"  className="btn btn-primary">delete</button> */}
+          <p className="mirror-note-title">{props.title}</p>
+          <p className="mirror-paragraph">{props.message}</p>
           <i className="fas fa-trash-alt delete-bottom-right" onClick={()=>{
             props.deleteNote(props.id);
-            // there was a ) extra below between }}
           }}></i>
         </div>
       </div>

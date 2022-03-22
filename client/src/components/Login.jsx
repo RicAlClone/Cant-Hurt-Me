@@ -71,11 +71,19 @@ function onSubmit(e){
   return(
 //style={{margin:"0 auto 0 auto",width:"320px",backgroundColor:"pink"}}
 
-  <div style={center}>
-    <form style={{textAlign:"center",width:"100%"}}>
+  <div className="form-container">
+    <form style={{backgroundColor:"white",textAlign:"left",width:"100%",borderRadius:"10px"}}>
       <h2>Login</h2>
-      <input name="username" onChange={handleChange} value={signInData.username} style={inputStyle} placeholder="Username" required/>
-      <input type="password" name="password" onChange={handleChange} value={signInData.password} style={inputStyle} placeholder="Password" required/>
+      <div className="input-and-label-padding">
+        <label>Username</label>
+        <input className="inputStyle" style={inputStyle} name="username" onChange={handleChange} value={signInData.username} placeholder="Username" required/>
+      </div>
+
+      <div className="input-and-label-padding">
+        <label>Password</label>
+        <input className="inputStyle" style={inputStyle} type="password" name="password" onChange={handleChange} value={signInData.password} placeholder="Password" required/>
+      </div>
+
       <button onClick={onSubmit} className="btn btn-primary">Login</button>
     </form>
     {message? <Message message={message}/>:null}

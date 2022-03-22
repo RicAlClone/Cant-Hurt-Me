@@ -1,11 +1,3 @@
-//we want to be able to send our text to the server get it
-//comfirmed and we get sent to the login page
-
-//we need authService to send our username and password
-//we probably wont need authcontext since we wont get authenticated till
-//after we login
-
-
 
 import React, {useState,useRef,useEffect} from "react";
 import AuthService from '../Services/AuthService';
@@ -13,16 +5,7 @@ import Message from "./Message";
 
 function Register(props){
 
-let center={
-  margin:"0 auto 0 auto",
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center",
-  backgroundColor: "green",
-  width:"320px",
-  height:"320px",
-  padding:"10px"
-}
+
 let inputStyle={
   width:"100%",
   display:"block"
@@ -37,6 +20,9 @@ const [registerData,setRegisterData]=useState(
 );
 
 const [message, setMessage]= useState(null);
+const [clickAdd,setClickAdd]=useState(null);
+const [usernameCheck,setUserNameCheck]=useState(false);
+const [passwordCheck, setPasswordCheck]=useState(false);
 
 let timerId= useRef(null);
 useEffect(()=>{
@@ -60,38 +46,86 @@ function handleChange(event){
 
 function onSubmit(e){
 e.preventDefault();
+setClickAdd(true);
 console.log(registerData);
 AuthService.register(registerData).then(data=>{
-
+//if message equals err username then set
 const {message}=data;
+const usernameVal='Username requires 6 characters or more';
+const passwordVal='Password requires 8 characters or more';
+const bothVal="Username should be 6 character or more. Password should be 8 characters or more";
+
+console.log('message.msgBody',message.msgBody);
+//this means everything went well
 if(!message.msgError){
+  setUserNameCheck(false);
+  setPasswordCheck(false);
   setMessage(message);
 console.log(message);
 timerId= setTimeout(()=>{
   props.history.push('/Login')
 },5000)
 }
-else{
-  //if not able to register send back Message
-  console.log(message);
+//if we get erros we fall in error
 
-    setMessage(message);
-    setRegisterData({
-      username: "",
-      password: ""
-    });
+  else if(message.msgBody ==bothVal){
+    setUserNameCheck(true);
+    setPasswordCheck(true);
 
-}
+  }
+  else if(message.msgBody == usernameVal){
+    setUserNameCheck(true);
+    setPasswordCheck(false);
+
+  }
+  else if(message.msgBody == passwordVal){
+    setPasswordCheck(true);
+    setUserNameCheck(false);
+
+  }
+
+    else{
+
+      setRegisterData({
+        username: "",
+        password: ""
+      });
+    }
+setMessage(message);
 })
 
 }
+
+console.log('usernameCheck',usernameCheck);
+console.log('passwordCheck',passwordCheck);
+console.log('clickAdd:',clickAdd)
+
+const exlamMark={
+  fontSize:"1.2rem",
+  color:"#bf2121",
+  opacity: "0.6",
+  marginLeft:"0.8rem"
+
+}
+
   return(
 
-  <div style={center}>
-    <form style={{textAlign:"center",width:"100%"}}>
+  <div className="form-container">
+    <form style={{backgroundColor:"white",textAlign:"left",width:"100%",borderRadius:"10px"}}>
       <h2>Register</h2>
-      <input name="username" onChange={handleChange} value={registerData.username} style={inputStyle} placeholder="Username" required/>
-      <input type="password" name="password" onChange={handleChange} value={registerData.password} style={inputStyle} placeholder="Password" required/>
+
+      <div className="input-and-label-padding">
+        <label for='usernameRegister'>Username</label>
+        {clickAdd&&usernameCheck ? <span style={exlamMark}><i class="fas fa-exclamation-circle"></i></span> : null}
+        <input className="inputStyle" id='usernameRegister' name="username" onChange={handleChange} value={registerData.username} style={inputStyle} placeholder="Username" required/>
+      </div>
+      {/* <span style={{fontSize:"20px",color:'black'}}> <i class="fa-solid fa-cloud-xmark"></i></span>  */}
+      <div className="input-and-label-padding">
+        <label>Password</label>
+        {clickAdd&&passwordCheck ? <span style={exlamMark}><i class="fas fa-exclamation-circle"></i></span> : null}
+        <input className="inputStyle" type="password" name="password" onChange={handleChange} value={registerData.password} style={inputStyle} placeholder="Password" required/>
+      </div>
+
       <button onClick={onSubmit} className="btn btn-primary">Register</button>
     </form>
     {message ?

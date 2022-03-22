@@ -5,18 +5,32 @@ import {Link} from "react-router-dom";
 import CallousedService from "../../Services/CallousedService";
 import {AuthContext} from "../../Context/AuthContext";
 import Message from '../Message';
-
+import AuthService from "../../Services/AuthService";
+import { SpinnerDiamond } from 'spinners-react';
+import {Alert} from 'react-bootstrap';
 const Calloused= function(props){
   //
   const authContext= useContext(AuthContext);
 
 const [items, setItems]= useState([]);
 const [message,setMessage]=useState(null);
-
+const [isLoaded,setIsLoaded]=useState(false);
 let timer=useRef(null);
 
+function authCheck(){
+AuthService.isAuthenticated().then(data=>{
+  if(!data.isAuthenticated){
+    const {setIsAuthenticated,setUser}=authContext;
+    setIsAuthenticated(false);
+    setUser({username:""})
+  }
+})
+}
+
 useEffect(()=>{
+  window.scrollTo(0,0);
 CallousedService.getCallousedNotes().then(data=>{
+  setIsLoaded(true);
   console.log(data);
   setItems(data.calluses);
 });
@@ -75,42 +89,52 @@ if(!data.message.msgError){
 
   return(
     <div className="body-padding">
-      <h1 className="all-title">Calloused Mind Challenge</h1>
-      <ul className="instruction-bullets">
-        <li>Make a list of the things you hate to do.</li>
-        <li>Enter small things that are tedious and do them. The more you can get done the more calloused your mind becomes.</li>
-      </ul>
-      <form>
-        <div className="all-main-containers">
-          <div className="inner-container">
-            <h1 className="list-title">I hate too</h1>
-            <InputArea
-              addItems={addItems}
-            />
-
-            <ul>
-              {items.map(function(arrayItem,index){
-                return  <ListItem
-                  key={index}
-                  id={arrayItem._id}
-                  arrayItem={arrayItem}
-                  deleteItem={deleteItem}
-                        />
-              })}
-            </ul>
-
-          </div>
-        </div>
-      </form>
-      
-      {message?
-        <Message
-          message={message}
-        />
-      :null}
-      <div>
-        <Link className="first-challenge-link" as={Link} to="/TakingSouls">Next Challenge</Link>
+      <div className="next-prev-challenge-spacing">
+        <Link onClick={authCheck} as={Link} to="/Mirror">Previous Challenge</Link>
+        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/TakingSouls">Next Challenge</Link>
       </div>
+
+      <h1 className="all-title">Calloused Mind Challenge</h1>
+      <Alert className="instruction-bullets" variant="primary">
+        <p>  This challenge is intended to toughen and build a callus over your mind. To do this we must get out
+          of our comfort zone and do things everyday that we dont want to do,that will improve your life. Even if
+          its as simple as making your bed, or washing your dishes. The key to this is doing it every day. Once this
+          becomes normal and comfortable,its time to add more. For example if running 1 mile everyday becomes comfortable,
+        increase it by 1.5 miles everyday.The goal is to keep callousing the mind.</p>
+      </Alert>
+
+
+      {
+        isLoaded?
+          <form>
+            <div className="all-main-containers">
+              <div className="inner-container">
+                <InputArea
+                  addItems={addItems}
+                  message={message}
+                />
+
+                <ul>
+                  {items.map(function(arrayItem,index){
+                    return  <ListItem
+                      key={index}
+                      id={arrayItem._id}
+                      arrayItem={arrayItem}
+                      deleteItem={deleteItem}
+
+                            />
+                  })}
+                </ul>
+
+              </div>
+            </div>
+          </form>
+        :
+        <div className="all-main-containers">
+          <SpinnerDiamond size="150px"/>
+        </div>
+      }
+      
     </div>
   );
 };

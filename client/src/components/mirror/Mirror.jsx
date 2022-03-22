@@ -6,6 +6,11 @@ import {Link} from "react-router-dom";
 import MirrorService from "../../Services/MirrorService";
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
+import AuthService from "../../Services/AuthService";
+import { SpinnerDiamond,SpinnerCircularFixed } from 'spinners-react';
+import FileBase64 from 'react-file-base64';
+import {Alert, Button} from 'react-bootstrap'
+
 //lets test ourselfs in using our message component and using the timer component when making a message
 
 const Mirror = function(props) {
@@ -15,15 +20,53 @@ const Mirror = function(props) {
   const [array, setArray] = useState([]);
 
   const [message, setMessage] = useState(null);
+  const [imageMessage, setImageMessage] = useState(null);
 
+
+const [image,setImage]=useState({image:""});
+const [imageID,setImageID]=useState('');
+const [imageExists,setImageExists]=useState(false);
+const [newImage,setNewImage]=useState(false);
+const [imageLoader,setImageLoader]=useState(false);
+const [initialImageLoading,setInitialImageLoading]=useState(false);
+const [hide,setHide]=useState(false);
   let timer = useRef(null);
+
+const [isLoaded,setIsLoaded]=useState(false);
+
+  function authCheck(){
+  AuthService.isAuthenticated().then(data=>{
+    if(!data.isAuthenticated){
+      const {setIsAuthenticated,setUser}=authContext;
+      setIsAuthenticated(false);
+      setUser({username:""})
+    }
+  })
+  }
 
   useEffect(() => {
 
     MirrorService.getMirrorNotes().then(data => {
+      setIsLoaded(true);
       console.log(data);
       setArray(data.mirrors);
         // setArray(data.mirrorArray);
+    })
+
+
+    setInitialImageLoading(true);
+    MirrorService.getImage().then(data=>{
+
+      if(data.documents.length>0){
+        console.log('somehow we fall inside statement data.documents.length>0')
+        setImage({image:data.documents[0].image})
+        setInitialImageLoading(false);
+        setImageExists(true);
+        setImageID(data.documents[0]._id);
+      }
+      else if(data.documents.length==0){
+      setInitialImageLoading(false);
+      }
     })
     //we return a function that return clearTimeout so we can unmount
     return() => {
@@ -53,12 +96,13 @@ const Mirror = function(props) {
         authContext.setUser({username: ""});
         authContext.setIsAuthenticated(false);
         console.log('else if (is Unauthorized)')
-      } else {
-        setMessage(data.message);
-        timer = setTimeout(() => {
-          setMessage(null)
-        }, 2000);
       }
+      // else {
+      //   setMessage(data.message);
+      //   timer = setTimeout(() => {
+      //     setMessage(null)
+      //   }, 2000);
+      // }
 
     });
 
@@ -96,46 +140,193 @@ if(!data.message.msgError){
 
   };
 
-console.log(array);
+function addImage(){
+    setHide(true);
+  setImageLoader(true);
+  MirrorService.postImage(image).then(data=>{
+    if(!data.message.msgError){
+      MirrorService.getImage().then(gData=>{
+        setImage({image:gData.documents[0].image})
+        setImageID(gData.documents[0]._id)
+        setImageMessage(data.message);
+        timer = setTimeout(() => {
+          setImageMessage(null);
+          setHide(false);
+        }, 2000)
 
-  return (<div className="body-padding">
-    <h1 className="all-title">The Accountability Mirror Challenge</h1>
-    <ul className="instruction-bullets">
-      <li>Make notes on all your insecurities, dreams, and goals.</li>
-      <li>Note every step it will take to reach a goal.</li>
-    </ul>
+        setImageLoader(false);
+        setNewImage(false);
+        setImageExists(true);
 
-    <CreateArea
-      addNote={addNote}
-      inputPlaceHolder="Note title..."
-      textAreaPlaceHolder="Any insecuries, dreams, or goals..."
-    />
-
-    <div className="row">
-      {
-        array.map(function(item, index) {
-
-          return <EachNote
-            key={index}
-            id={item._id}
-            title={item.title}
-            message={item.message}
-            deleteNote={deleteNote}
-                 />
-        })
-      }
-    </div>
-
-    {
-      message
-        ? <Message message={message}/>
-        : null
+      })
+    }
+    else if(data.message.msgBody==="Unauthorized"){
+      authContext.setUser({username:""});
+      authContext.setIsAuthenticated(false);
     }
 
-    <div>
-      <Link className="first-challenge-link" as={Link} to="/Calloused">Next Challenge</Link>
-    </div>
-  </div>);
+  })
+}
+
+function updateImage(){
+  setHide(true);
+  setImageLoader(true);
+MirrorService.updateImage(imageID,image).then(data=>{
+  if(!data.message.msgError){
+    MirrorService.getImage().then(gData=>{
+      console.log('get image loaded');
+      setImage({image:gData.documents[0].image})
+      setImageMessage(data.message);
+      timer = setTimeout(() => {
+        setImageMessage(null);
+        setHide(false);
+      }, 2000)
+
+      setImageLoader(false);
+      setNewImage(false);
+        })
+  }
+  else if(data.message.msgBody==="Unauthorized"){
+    authContext.setUser({username:""});
+    authContext.setIsAuthenticated(false);
+  }
+  })
+}
+
+
+console.log('image:',image);
+
+console.log('imageID',imageID);
+
+console.log('imageExists:',imageExists);
+console.log('newImage:',newImage);
+console.log('hide:',hide);
+  return (
+    <div className="body-padding">
+
+      <div className="next-prev-challenge-spacing">
+        <Link onClick={authCheck} as={Link} to="/BadHand">Previous Challenge</Link>
+        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/Calloused">Next Challenge</Link>
+      </div>
+
+      <h1 className="all-title">The Accountability Mirror Challenge</h1>
+      <Alert className="instruction-bullets" variant="primary">
+        <p>In this challenge you must face and be brutaly honest about yourself. If you are lazy then
+          call yourself lazy. Are you are overweight? Call yourself
+          fat. There is no need to sugar coat it. Use the anger when feeling sorry for yourself to fuel for change. Write down all goals and every step it takes to get there. For example if you have a goal
+          of losing 40 pounds, make a note of losing 2 pounds in a week. Once you lose 2 pounds,delete the note and
+        write another of losing 3 pounds.</p>
+        {/* <li>Make notes on all your insecurities, dreams, and goals.</li>
+        <li>Note every step it will take to reach a goal.</li> */}
+      </Alert>
+
+      <CreateArea
+        addNote={addNote}
+        inputPlaceHolder="Title ..."
+        textAreaPlaceHolder="Notes ..."
+        message={message}
+      />
+
+      <Alert className="instruction-bullets" style={{marginBottom:"20px"}} variant="primary">
+        Choose file to add/or update an image
+      </Alert>
+
+      <div style={{height:"400px"}}>
+        <div style={{height:"50px"}}>
+          {
+            hide?
+              null
+            :
+            <div style={{width:"235px",margin:"0 auto"}}>
+              <FileBase64
+                type="file"
+                multiple={ false }
+                onDone={ ({base64})=>{
+                  //when this is loaded we send the save button down below
+                  setNewImage(true);
+                  setImage({image:base64} )
+                }
+                }
+              />
+            </div>
+          }
+        </div>
+
+        {
+          initialImageLoading?
+            <SpinnerCircularFixed style={{display:"block",margin:'0 auto'}} size="50px"/>
+          :
+          null
+        }
+
+        {image.image?
+          <>
+            <img style={{display:"block",width:"235px",height:"300px",margin:"0 auto",paddingBottom:"20px"}} src={image.image} alt=""></img>
+          </>
+        :
+          null
+        }
+
+        {
+          imageExists&&newImage&&!hide?
+            <>
+              <Button variant="primary" style={{display:"block",margin:"0 auto"}} onClick={updateImage}>update image</Button>
+            </>
+          :null
+        }
+
+
+        {
+          !imageExists&&newImage&&!hide?
+            <>
+              <Button variant="primary" style={{display:"block",margin:"0 auto"}} onClick={addImage}>save image</Button>
+              {/* <button style={{display:"block",margin:"0 auto"}} onClick={addImage}>save image</button> */}
+            </>
+          :null
+        }
+        {
+          imageLoader?
+            <SpinnerCircularFixed style={{display:"block",margin:'0 auto'}} size="50px"/>
+          :
+          null
+        }
+        {
+          imageMessage?
+            <Message message={imageMessage} check={true}/>
+          :null
+        }
+      </div>
+      {isLoaded?
+        <div className="row">
+
+          {
+            array.map(function(item, index) {
+
+              return <EachNote
+                key={index}
+                id={item._id}
+                title={item.title}
+                message={item.message}
+                deleteNote={deleteNote}
+                     />
+            })
+          }
+        </div>
+      :
+      <div className="all-main-containers">
+        <SpinnerDiamond size="150px"/>
+      </div>
+      }
+
+      {
+          message
+            ? <Message message={message}/>
+            : null
+        }
+
+
+      </div>
+      );
 };
 
 export default Mirror;
