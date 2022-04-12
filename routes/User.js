@@ -33,7 +33,7 @@ const signToken = userID =>{
     //when you sign you are creating the jwt token
     //has to match secretOrKey to verify the token is legit
 // expiresIn is an option
-},process.env.SECRET_KEY, {expiresIn : "1h"} );
+},process.env.SECRET_KEY, {expiresIn : "24h"} );
 };
 
 

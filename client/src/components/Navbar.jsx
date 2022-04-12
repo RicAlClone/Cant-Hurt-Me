@@ -22,6 +22,10 @@ let onClickLogoutHandler = ()=>{
       setIsAuthenticated(false);
       history.push('/');
     }
+    else{
+      setUser(data.user);
+      setIsAuthenticated(data.isAuthenticated);
+    }
   })
 }
 

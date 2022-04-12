@@ -18,7 +18,7 @@ const UserSchema= new mongoose.Schema({
   //i put an s at the end of badhand because when we make
   //a new badhand it gets pushed to badhands
   badhands: [{type:mongoose.Schema.Types.ObjectId, ref: "Badhand"}],
-  //the ref is based on Mirror.model schema 
+  //the ref is based on Mirror.model schema
   mirrors: [{type:mongoose.Schema.Types.ObjectId, ref:"Mirror"}],
 
   imageModel:[{type:mongoose.Schema.Types.ObjectId,ref:"ImageModel"}],
@@ -48,10 +48,7 @@ UserSchema.pre('save',function(next){
   bcrypt.hash(this.password,10,(err,hashed)=>{
     if(err){
       return next(err);
-
     }
-
-
     this.password = hashed;
     next();
   })
