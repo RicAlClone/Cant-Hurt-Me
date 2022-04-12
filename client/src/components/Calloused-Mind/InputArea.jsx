@@ -16,25 +16,36 @@ const [required,setRequired]=useState(false);
     const newValue= event.target.value;
 
     setInput({name:newValue});
-    console.log('inputing note')
   }
 
-console.log("props.message:",props.message);
-//our words are showing up blank when we hit onclick
+function emptyInputError(){
+  if(required && !input.name){
+    return {
+      backgroundColor:'#ffdede',
+      marginRight:'5px'
+    }
+  }
+  else{
+    return {marginRight:'5px'}
+  }
+}
+
   return(
     <>
-      <div style={{height:"50px",textIndent:"20px",margin:"0",
+      <div style={{
+        height:"50px",
+        textIndent:"20px",
+        marginLeft:"10px",
         display:"flex",
         flexDirection:"column",
         justifyContent:"center",
-
-
       }}>
         {required && !input.name?
-          <p style={{color:"#bf2121",marginBottom:"0"}}>Empty <BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
+          <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
         :
           props.message?
-            <div style={{display:"flex",justifyContent:"center"}}>
+
+            <div>
               <Message
                 message={props.message}
               />
@@ -43,7 +54,7 @@ console.log("props.message:",props.message);
         }
       </div>
       <div className="input-fix" style={{height:"55px"}}>
-        <input autocomplete="off" name='input' onChange={letsChange} className="inputStyle list-input" type="text" value={input.name} placeholder="I hate to..."/>
+        <input style={emptyInputError()} autoComplete="off" name='input' onChange={letsChange} className="inputStyle list-input" type="text" value={input.name} placeholder="I hate to..."/>
         <button type='submit' style={{border:"none",backgroundColor:"white"}} onClick={function(e){
           e.preventDefault();
           setRequired(true);
@@ -54,7 +65,6 @@ console.log("props.message:",props.message);
             setRequired(false);
             props.addItems(e,input);
             setInput({name:""});
-            console.log('clicking to inputing note' ,input);
           }
 
         }}>

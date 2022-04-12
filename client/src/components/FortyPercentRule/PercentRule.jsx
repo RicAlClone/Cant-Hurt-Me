@@ -10,6 +10,7 @@ import { SpinnerDiamond } from 'spinners-react';
 import {Alert} from "react-bootstrap";
 import {BsFillExclamationCircleFill} from 'react-icons/bs';
 
+
 const PercentRule = function() {
 
 const[formData, setFormData]=useState({
@@ -47,7 +48,6 @@ let timer=useRef(null);
 useEffect(()=>{
   fps.getRuleNotes().then(data=>{
     setIsLoaded(true);
-    console.log(data.fortyPercentRules);
       setArray(data.fortyPercentRules)
   });
 
@@ -57,7 +57,7 @@ useEffect(()=>{
 },[]);
 
 function handleChange(event){
-
+setRequired(false);
   const {name,value}= event.target;
 
 setFormData(function(prevValue){
@@ -67,6 +67,7 @@ return{
   [name]:value
 }
 })
+
 }
 
 
@@ -74,14 +75,12 @@ function addBaseline(event){
 authCheck();
 if(!formData.title && !formData.sets && !formData.reps && !formData.hrs && !formData.mins && !formData.sec){
   setRequired(true);
-  console.log('not all fields were filled')
 }
 else{
   setRequired(false);
   fps.postRuleNote(formData).then(data=>{
     if(!data.message.msgError){
       fps.getRuleNotes().then(getData=>{
-        console.log(getData);
         setArray(getData.fortyPercentRules);
         setMessage(data.message);
         timer=setTimeout(()=>{setMessage(null)},2000)
@@ -120,7 +119,6 @@ function deleteBaseLine(e,id){
 
     if(!data.message.msgError){
       fps.getRuleNotes().then(getData=>{
-        console.log(getData,' on line 86');
         setArray(getData.fortyPercentRules)
         setMessage(data.message);
         timer=setTimeout(()=>{setMessage(null)},2000)
@@ -144,7 +142,6 @@ function updateNote(id,toUpdate){
     if(!data.message.msgError){
       fps.getRuleNotes().then(getData=>{
         setArray(getData.fortyPercentRules);
-        console.log(getData)
         setMessage(data.message);
         timer=setTimeout(()=>{setMessage(null)},2000)
 
@@ -162,7 +159,6 @@ function updateNote(id,toUpdate){
   })
 }
 
-console.log(array);
   return (
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
@@ -171,12 +167,14 @@ console.log(array);
       </div>
       <h1 className="all-title">40 Percent Rule Challenge</h1>
       <Alert className="instruction-bullets" variant='primary'>
-        <p>  This challenge is to push yourself more than what you think you are capable of. This challenge was born
-          when David Goggins ran his first 100 mile marathon. He wanted to quit at mile 40 but vigorously continued until he finished.
+        <p>
+          This challenge is to push yourself more than what you think you are capable of. This challenge was born
+          when David Goggins ran his first 100 mile marathon. He wanted to quit at mile 40, but continued with agony until he finished.
           That day is when David learned that humans can endure pain past what the mind thinks is capable of.
           A governor in a car is a device is used to measure or regulate the speed of the car. This challenge will help you slowly
           remove that governor from your mind. By incrementing your work load by 5-10% this will train your mind
-        and slowly remove that governor without injury or regress.</p>
+          and slowly remove that governor without injury or regress.
+        </p>
         <ul >
           <li><b>You are at 40% when your brain is telling you to quit.</b></li>
           <li>To help build up your resistance to that little voice telling you to quit. Gradually increase that task by 5-10%.</li>
@@ -195,15 +193,17 @@ console.log(array);
             <input className="inputStyle list-input" onChange={handleChange} name="title" value={formData.title }  type="text" placeholder="I.e. pushups, situps, study/work time"/>
 
             <label style={{display:"block",marginBottom:'0'}}>Sets</label>
-            <input className="inputStyle list-input" onChange={handleChange} name="sets" value={formData.sets} type="number" min="0"/>
+            <input type="number" min="0" className="inputStyle" onChange={handleChange} name="sets" value={formData.sets} />
+
 
             <label style={{display:"block",marginBottom:'0'}}>Reps</label>
-            <input className="inputStyle list-input" onChange={handleChange} name="reps" value={formData.reps} type="number" min="0" />
+            <input type="number" min="0" className="inputStyle" onChange={handleChange} name="reps" value={formData.reps}  />
+
 
             <label style={{display:"block",marginBottom:'0'}}>Time</label>
-            <input className="inputStyle" onChange={handleChange} name="hrs" value={formData.hrs } type="number" placeholder="hrs" min="0" style={{width:"15%"}}/>
-            <input className="inputStyle" onChange={handleChange} name="mins" value={formData.mins } type="number" placeholder="min" min="0" max="60" style={{width:"15%"}}/>
-            <input className="inputStyle" onChange={handleChange} name="sec" value={formData.sec} type="number" placeholder="sec" min="0" max="60" style={{width:"15%"}}/>
+            <input className="inputStyle" onChange={handleChange} name="hrs" value={formData.hrs } type="number" placeholder="hrs" min="0" style={{width:"28%"}}/>
+            <input className="inputStyle" onChange={handleChange} name="mins" value={formData.mins } type="number" placeholder="min" min="0" max="60" style={{width:"28%"}}/>
+            <input className="inputStyle" onChange={handleChange} name="sec" value={formData.sec} type="number" placeholder="sec" min="0" max="60" style={{width:"28%"}}/>
 
           </form>
 
@@ -243,12 +243,6 @@ console.log(array);
           <SpinnerDiamond size="150px"/>
         </div>
       }
-
-
-      {
-        message?<Message message={message}/>:null
-      }
-
 
     </div>
 );

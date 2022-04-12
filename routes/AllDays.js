@@ -23,8 +23,6 @@ function everyDayFunction(DayModel,skeleton,result){
            User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
              if(err){
                console.log(err);
-             }else{
-                 console.log('saved monday model and saved to dayModel property');
              }
            })
           }//else ends
@@ -42,8 +40,6 @@ function everyDayFunction(DayModel,skeleton,result){
             User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
               if(err){
                 console.log(err);
-              }else{
-                  console.log('saved monday model and saved to dayModel property');
               }
           })
         }
@@ -62,8 +58,6 @@ const wedWeek1= new DayModel(skeleton);
           User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
             if(err){
               console.log(err);
-            }else{
-                console.log('saved monday model and saved to dayModel property');
             }
         })
       }
@@ -81,8 +75,6 @@ const thursWeek1= new DayModel(skeleton);
           User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
             if(err){
               console.log(err);
-            }else{
-                console.log('saved thurs model, week1');
             }
         })
       }
@@ -100,8 +92,6 @@ const friWeek1= new DayModel(skeleton);
           User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
             if(err){
               console.log(err);
-            }else{
-                console.log('saved friday model, week1');
             }
         })
       }
@@ -119,8 +109,6 @@ const satWeek1= new DayModel(skeleton);
           User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
             if(err){
               console.log(err);
-            }else{
-                console.log('saved saturday model, week1');
             }
         })
       }
@@ -138,8 +126,6 @@ const sunWeek1= new DayModel(skeleton);
           User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
             if(err){
               console.log(err);
-            }else{
-                console.log('saved sunday model, week1');
             }
         })
       }
@@ -158,8 +144,6 @@ const mondayWeek2= new DayModel(skeleton);
          User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
            if(err){
              console.log(err);
-           }else{
-               console.log('saved mondayWeek2 model ');
            }
          })
         }//else ends
@@ -177,8 +161,6 @@ const tuesWeek2= new DayModel(skeleton);
           User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
             if(err){
               console.log(err);
-            }else{
-                console.log('saved tuesWeek2 ');
             }
         })
       }
@@ -197,8 +179,6 @@ wedWeek2.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved wedWeek2 ');
           }
       })
     }
@@ -216,8 +196,6 @@ thursWeek2.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved thursWeek2 ');
           }
       })
     }
@@ -235,8 +213,6 @@ friWeek2.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved friWeek2 ');
           }
       })
     }
@@ -254,8 +230,6 @@ satWeek2.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved satWeek2 ');
           }
       })
     }
@@ -273,8 +247,6 @@ sunWeek2.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved sunWeek2 ');
           }
       })
     }
@@ -294,8 +266,6 @@ const mondayWeek3= new DayModel(skeleton);
          User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
            if(err){
              console.log(err);
-           }else{
-               console.log('saved mondayWeek3 model ');
            }
          })
         }//else ends
@@ -313,8 +283,6 @@ const tuesWeek3= new DayModel(skeleton);
           User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
             if(err){
               console.log(err);
-            }else{
-                console.log('saved tuesWeek3 ');
             }
         })
       }
@@ -333,8 +301,6 @@ wedWeek3.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved wedWeek3 ');
           }
       })
     }
@@ -352,8 +318,6 @@ thursWeek3.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved thursWeek3 ');
           }
       })
     }
@@ -371,8 +335,6 @@ friWeek3.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved friWeek3 ');
           }
       })
     }
@@ -390,8 +352,6 @@ satWeek3.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved satWeek3 ');
           }
       })
     }
@@ -409,8 +369,6 @@ sunWeek3.save((err,saved)=>{
         User.updateOne({_id:id},{$push:{dayModel:idOfDay}},(err,found)=>{
           if(err){
             console.log(err);
-          }else{
-              console.log('saved sunWeek3 ');
           }
       })
     }

@@ -3,8 +3,7 @@ const badhandService={
   getBadhands:()=>{
     return fetch('/user/badhand/getBadHands')
     .then((res)=>{
-      // passport send a 401 when not authorized
-      //what i need to understand a bit more is what res.json() does
+
       if(res.status !== 401){
         return res.json().then(data=>data)
       }
@@ -15,10 +14,10 @@ const badhandService={
   },
   postBadhand: input => {
     return fetch('/user/badhand/postBadHand',{
-      method: "post", //first problem i had header as prop here wich is wrong
+      method: "post",
       body: JSON.stringify(input),
-      headers:{      //second problem is headers should have been an object
-        'Content-Type':'application/json' //third problem content type inclosed in ''
+      headers:{
+        'Content-Type':'application/json'
       }
     })
 
@@ -47,6 +46,7 @@ const badhandService={
     })
 
   }
+
 }
 
 export default badhandService;

@@ -54,7 +54,7 @@ function onSubmit(e){
     if(isAuthenticated){
       authContext.setUser(signInData);
       authContext.setIsAuthenticated(isAuthenticated);
-      props.history.push('/badhand');
+      props.history.push('/DailyInstructions');
     }
     else{
       setSignInData({
@@ -62,7 +62,6 @@ function onSubmit(e){
         password:""
       })
       setMessage(message);
-      console.log(message);
     }
   })
 }

@@ -2,12 +2,14 @@ import React,{useState,useEffect,useRef,useContext} from "react";
 import FailureNote from "./FailureNote";
 import AddIcon from "../AddIcon";
 import FailureService from "../../Services/FailureService";
-import Message from "../Message";//check back if this turns out ok.
+import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
 import RqMs from "../RequiredMessage";
 import AuthService from "../../Services/AuthService";
 import {Link} from "react-router-dom";
 import { SpinnerDiamond } from 'spinners-react';
+import {Alert} from 'react-bootstrap';
+import {BsFillExclamationCircleFill} from 'react-icons/bs';
 
 function EmpowermentFailure(){
 
@@ -98,7 +100,6 @@ else{
 }
 
 function deleteNote(id){
-  console.log(id);
 FailureService.delete(id).then(data=>{
   if(!data.message.msgError){
     FailureService.get().then(gData=>{
@@ -122,44 +123,86 @@ FailureService.delete(id).then(data=>{
     border:"1px solid #ccc",
     borderRadius: "8px"
   }
+
+  function emptyInputError(x){
+    if(clickedAdd &&!failNote[x]){
+      return {
+        backgroundColor:"#ffdede",
+        display: "block",
+        width: "100%",
+        border:"1px solid #ccc",
+        borderRadius: "8px"
+    }
+    }
+    else{
+      return {
+        display: "block",
+        width: "100%",
+        border:"1px solid #ccc",
+        borderRadius: "8px"
+      }
+    }
+  }
+function dateEmptyCheck(){
+  if(clickedAdd && !failNote.date){
+    return {backgroundColor:"#ffdede"}
+  }
+  else{
+    return null;
+  }
+}
   return(
     <div className="body-padding">
-      <div>
+      <div className="next-prev-challenge-spacing">
+        <Link onClick={authCheck} as={Link} to="/Uncommon">Previous Challenge</Link>
         <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/BadHand">First Challenge</Link>
       </div>
-      <div>
-        <Link onClick={authCheck} as={Link} to="/Uncommon">Previous Challenge</Link>
-      </div>
       <h1 className="all-title">Empowerment of Failure Challenge</h1>
-      <ul className="instruction-bullets">
-        <li> Write down failures from these challenges</li>
-        <li> Write down positives from failures</li>
-        <li> Write how to fix failures</li>
-        <li> Set date when to tackle those failures</li>
-      </ul>
+
+      <Alert className="instruction-bullets" variant='primary'>
+        <p>
+          Note all the failures you had with these challenges. Note the positives from these failures. Note your
+          mind set during your failing and how that made you feel. Note how you can tackle these failures again
+          and schedule it. If you keep failing dont give up and keep attacking until you reach the goal.
+        </p>
+      </Alert>
+
       <div className="all-main-containers">
-        <div className="main-contain">
+        <div className="main-contain" style={{height:'500px',display:'flex',flexDirection:'column',justifyContent:'space-evenly',marginBottom:'30px'}}>
+          <div>
+            <label><b>Challenge:</b> {clickedAdd && !failNote.title?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:'0 10px'}}/>:null}</label>
+            <input onChange={handleChange} name="title" value={failNote.title} style={emptyInputError('title')} type="text" placeholder="Challenge name..."/>
+          </div>
 
+          <div>
+            <label><b>Positives:</b>{clickedAdd && !failNote.title?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:"0 10px"}}/>:null}</label>
+            <textarea  onChange={handleChange} name="positives" value={failNote.positives} style={emptyInputError('positives')} type="text"
+            placeholder="Positives that came out of this attempt..."/>
+          </div>
 
-          <label><strong>Challenge:</strong></label>
-          {/* //we need a required field here incase it is not added */}
-          {clickedAdd && !failNote.title?<RqMs/>:null}
-          <input  onChange={handleChange} name="title" value={failNote.title} style={block} type="text" placeholder="Challenge name..."/>
+          <div>
+            <label><b>Mindset:</b>{clickedAdd && !failNote.title?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:"0 10px"}}/>:null}</label>
+            <textarea  onChange={handleChange} name="mindset" value={failNote.mindset} style={emptyInputError('mindset')} type="text"
+            placeholder="What was your mindset while or when you failed..."/>
+          </div>
 
-          {clickedAdd && !failNote.positives?<p>*required</p>:null}
-          <label><strong>Positives:</strong></label>
-          <textarea  onChange={handleChange} name="positives" value={failNote.positives} style={block} type="text" placeholder="Positives here ..."/>
+          <div>
+            <label><b>Fixes:</b>{clickedAdd && !failNote.title?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:"0 10px"}}/>:null}</label>
+            <textarea  onChange={handleChange} name="fixes" value={failNote.fixes} style={emptyInputError('fixes')} type="text"
+            placeholder="What adjustments can we make on our next attempt..."/>
+          </div>
 
-          {clickedAdd && !failNote.mindset?<p>*required</p>:null}
-          <label><strong>Mindset:</strong></label>
-          <textarea  onChange={handleChange} name="mindset" value={failNote.mindset} style={block} type="text" placeholder="Mindset here ..."/>
+          <div>
+            <p style={{display:"inline-block"}}>Fix failures on </p> <input type="date" className="inputStyle" style={dateEmptyCheck()} onChange={handleChange}  name="date" value={failNote.date} />
+            {clickedAdd && !failNote.date?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:"0 10px"}}/>:null}
+          </div>
 
-          {clickedAdd && !failNote.fixes?<p>*required</p>:null}
-          <label><strong>Fixes:</strong></label>
-          <textarea  onChange={handleChange} name="fixes" value={failNote.fixes} style={block} type="text" placeholder="Fixes here ..."/>
-
-          {clickedAdd && !failNote.date?<p>*required</p>:null}
-          <p style={{display:"inline-block"}}>Fix failures on </p> <input type="date" onChange={handleChange}  name="date" value={failNote.date} />
+          <div style={{height:"40px"}}>
+            {message?
+              <Message message={message}/>
+            : null
+            }
+          </div>
 
           <div onClick={addNote} className="bottom-right-add-button">
             <AddIcon/>
@@ -185,7 +228,7 @@ FailureService.delete(id).then(data=>{
         </div>
       }
 
-          {message?<Message message={message}/>:null}
+      {/* {message?<Message message={message}/>:null} */}
 
 
 

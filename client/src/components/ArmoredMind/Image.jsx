@@ -1,7 +1,5 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useRef} from "react";
 import {Animated} from "react-animated-css";
-
-
 
 let color= {
 
@@ -10,18 +8,25 @@ let color= {
 
 function Image(props){
 
+let timerId=useRef(null);
+
 const [visible,setVisible]=useState(true);
+
+useEffect(()=>{
+  return ()=>{clearTimeout(timerId)}
+},[])
+
 
   return(
     <>
       <div  className="col-lg-4" style={color} >
-      <Animated
-        animationIn="fadeIn"
-        animationOut="bounceOut"
-        animationInDuration={1000}
-        animationOutDuration={1000}
-        isVisible={visible}
-      >
+        <Animated
+          animationIn="fadeIn"
+          animationOut="bounceOut"
+          animationInDuration={1000}
+          animationOutDuration={1000}
+          isVisible={visible}
+        >
 
 
           <div >
@@ -34,7 +39,7 @@ const [visible,setVisible]=useState(true);
           <i  className="fas fa-trash-alt delete-bottom-right" style={{marginTop:'10px'}} onClick={
             ()=>{
               setVisible(false);
-              setTimeout(()=>{setVisible(true);},1000);
+              timerId=setTimeout(()=>{setVisible(true);},1000);
 
               props.deleteImage(props.id);
             }}/>

@@ -6,15 +6,15 @@ const Failure=require("../models/Failure.model");
 
 //post
 router.post('/postFailureNote',passport.authenticate('jwt', { session: false }),(req,res)=>{
-  console.log('req.body->',req.body);
+
   const newFailureNote= new Failure(req.body);
   newFailureNote.save((err,saved)=>{
     if(err){
-      console.log(err);
+
       res.status(500).json({message:{msgBody:"Error occurred",msgError:true}})
     }
     else{
-      console.log('saved->',saved);
+      
       req.user.failure.push(saved);
       req.user.save(err=>{
         if(err){

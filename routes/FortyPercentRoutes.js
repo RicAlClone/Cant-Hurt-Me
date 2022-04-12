@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/postRuleNote', passport.authenticate('jwt', {session: false}), (req, res) => {
   //we need to get our req.body which is formData
   const data = req.body;
-  console.log(data,'is our req.body');
+
   const newPercentRule = new fortyPercentRule(data);
   newPercentRule.save((err, saved) => {
     if (err) {
@@ -53,7 +53,7 @@ router.delete('/deleteRuleNote/:id',passport.authenticate('jwt', {session: false
 
 User.findOneAndUpdate({_id:req.user._id},{"$pull":{"fortyPercentRule":idParams}},{ safe: true, multi:true },(err,deleted)=>{
   if(err){
-    console.log(err);
+
     res.status(500).json({message:{msgBody:"not found,first",msgError:true}});
   }
   else{
@@ -81,13 +81,11 @@ router.put('/updateRuleNote/:id',passport.authenticate('jwt', {session: false}),
   const id=req.params.id;
 
   //what if when we create a new user we create all models for our days in
-  console.log(req.body,'this is req.body');
   fortyPercentRule.findOneAndReplace({_id:id},req.body,{},(err,result)=>{
     if(err){
       res.status(500).json({message:{msgBody:"not found",msgError:true}});
     }
     else{
-      console.log(result);
       res.status(200).json({message:{msgBody:"updated",msgError:false}});
     }
   })

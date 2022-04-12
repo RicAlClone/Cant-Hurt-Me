@@ -28,8 +28,7 @@ let newModel= new CallousedModel(reqBody);
 
 newModel.save(function(err,result){
   if(err){
-    console.log('this is the error ',err);
-    res.status(500).json({message:{msgBody:"error",msgError:true}});
+        res.status(500).json({message:{msgBody:"error",msgError:true}});
   }else{
     req.user.calluses.push(result);
     req.user.save(function(err){
@@ -51,8 +50,7 @@ User.findById({_id:req.user._id}).populate('calluses').exec(function(err, docume
   if(err){
     res.status(500).json({message:{msgBody:"Error occured",msgError:true}});
   }else{
-    console.log(document);
-    res.status(200).json({calluses:document.calluses,authenticated:true});
+        res.status(200).json({calluses:document.calluses,authenticated:true});
   }
 });
 

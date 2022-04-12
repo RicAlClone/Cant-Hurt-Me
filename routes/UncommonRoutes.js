@@ -7,11 +7,9 @@ const Uncommon = require('../models/Uncommon.model.js');
 
 router.post('/postUncommonNote', passport.authenticate('jwt', { session: false }),(req,res)=>{
   const sentBody=req.body;
-console.log('req.body->',req.body);
       const newNote= new Uncommon(req.body);
       newNote.save((err,saved)=>{
         if(err){
-          console.log('err1:',err);
 
           res.status(500).json({message:{msgBody:'1:error occurred',msgError:true}})
       }
@@ -19,7 +17,6 @@ console.log('req.body->',req.body);
           req.user.uncommon.push(newNote);
           req.user.save((err,saved)=>{
             if(err){
-              console.log('err2:',err);
               res.status(500).json({message:{msgBody:'2:error occurred',msgError:true}})
             }
             else{

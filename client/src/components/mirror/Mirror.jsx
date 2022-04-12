@@ -48,9 +48,7 @@ const [isLoaded,setIsLoaded]=useState(false);
 
     MirrorService.getMirrorNotes().then(data => {
       setIsLoaded(true);
-      console.log(data);
       setArray(data.mirrors);
-        // setArray(data.mirrorArray);
     })
 
 
@@ -58,7 +56,6 @@ const [isLoaded,setIsLoaded]=useState(false);
     MirrorService.getImage().then(data=>{
 
       if(data.documents.length>0){
-        console.log('somehow we fall inside statement data.documents.length>0')
         setImage({image:data.documents[0].image})
         setInitialImageLoading(false);
         setImageExists(true);
@@ -68,7 +65,6 @@ const [isLoaded,setIsLoaded]=useState(false);
       setInitialImageLoading(false);
       }
     })
-    //we return a function that return clearTimeout so we can unmount
     return() => {
       clearTimeout(timer);
     }
@@ -76,7 +72,6 @@ const [isLoaded,setIsLoaded]=useState(false);
   }, []);
 
   function addNote(note) {
-    console.log('our note is ',note);
     MirrorService.postMirrorNote(note).then(data => {
       if (!data.message.msgError) {
 
@@ -95,30 +90,20 @@ const [isLoaded,setIsLoaded]=useState(false);
         setMessage(data.message);
         authContext.setUser({username: ""});
         authContext.setIsAuthenticated(false);
-        console.log('else if (is Unauthorized)')
       }
-      // else {
-      //   setMessage(data.message);
-      //   timer = setTimeout(() => {
-      //     setMessage(null)
-      //   }, 2000);
-      // }
+
 
     });
 
   };
 
   function deleteNote(id) {
-    console.log(id);
-    console.log(typeof id);
 
 MirrorService.deleteMirrorNote(id).then(data=>{
-console.log(data.message);
 if(!data.message.msgError){
 
   MirrorService.getMirrorNotes().then(getData=>{
     setArray(getData.mirrors);
-    // setArray(getData.mirrorArray);
 
     setMessage(data.message);
     timer = setTimeout(() => {
@@ -174,7 +159,6 @@ function updateImage(){
 MirrorService.updateImage(imageID,image).then(data=>{
   if(!data.message.msgError){
     MirrorService.getImage().then(gData=>{
-      console.log('get image loaded');
       setImage({image:gData.documents[0].image})
       setImageMessage(data.message);
       timer = setTimeout(() => {
@@ -193,14 +177,6 @@ MirrorService.updateImage(imageID,image).then(data=>{
   })
 }
 
-
-console.log('image:',image);
-
-console.log('imageID',imageID);
-
-console.log('imageExists:',imageExists);
-console.log('newImage:',newImage);
-console.log('hide:',hide);
   return (
     <div className="body-padding">
 
@@ -213,7 +189,7 @@ console.log('hide:',hide);
       <Alert className="instruction-bullets" variant="primary">
         <p>In this challenge you must face and be brutaly honest about yourself. If you are lazy then
           call yourself lazy. Are you are overweight? Call yourself
-          fat. There is no need to sugar coat it. Use the anger when feeling sorry for yourself to fuel for change. Write down all goals and every step it takes to get there. For example if you have a goal
+          fat. There is no need to sugar coat it. Write down all goals and every step it takes to get there. For example if you have a goal
           of losing 40 pounds, make a note of losing 2 pounds in a week. Once you lose 2 pounds,delete the note and
         write another of losing 3 pounds.</p>
         {/* <li>Make notes on all your insecurities, dreams, and goals.</li>
@@ -317,13 +293,6 @@ console.log('hide:',hide);
         <SpinnerDiamond size="150px"/>
       </div>
       }
-
-      {
-          message
-            ? <Message message={message}/>
-            : null
-        }
-
 
       </div>
       );

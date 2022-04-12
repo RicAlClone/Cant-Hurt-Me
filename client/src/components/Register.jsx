@@ -27,7 +27,6 @@ const [passwordCheck, setPasswordCheck]=useState(false);
 let timerId= useRef(null);
 useEffect(()=>{
   return ()=>{
-    console.log('this is when timer is cleared in useEffect');
     clearTimeout(timerId);
   }
 },[]);
@@ -47,26 +46,20 @@ function handleChange(event){
 function onSubmit(e){
 e.preventDefault();
 setClickAdd(true);
-console.log(registerData);
 AuthService.register(registerData).then(data=>{
-//if message equals err username then set
 const {message}=data;
 const usernameVal='Username requires 6 characters or more';
 const passwordVal='Password requires 8 characters or more';
 const bothVal="Username should be 6 character or more. Password should be 8 characters or more";
 
-console.log('message.msgBody',message.msgBody);
-//this means everything went well
 if(!message.msgError){
   setUserNameCheck(false);
   setPasswordCheck(false);
   setMessage(message);
-console.log(message);
 timerId= setTimeout(()=>{
   props.history.push('/Login')
 },5000)
 }
-//if we get erros we fall in error
 
   else if(message.msgBody ==bothVal){
     setUserNameCheck(true);
@@ -96,9 +89,6 @@ setMessage(message);
 
 }
 
-console.log('usernameCheck',usernameCheck);
-console.log('passwordCheck',passwordCheck);
-console.log('clickAdd:',clickAdd)
 
 const exlamMark={
   fontSize:"1.2rem",
@@ -108,9 +98,10 @@ const exlamMark={
 
 }
 
+
   return(
 
-  <div className="form-container">
+  <div className="form-container shadow">
     <form style={{backgroundColor:"white",textAlign:"left",width:"100%",borderRadius:"10px"}}>
       <h2>Register</h2>
 
@@ -119,7 +110,7 @@ const exlamMark={
         {clickAdd&&usernameCheck ? <span style={exlamMark}><i class="fas fa-exclamation-circle"></i></span> : null}
         <input className="inputStyle" id='usernameRegister' name="username" onChange={handleChange} value={registerData.username} style={inputStyle} placeholder="Username" required/>
       </div>
-      {/* <span style={{fontSize:"20px",color:'black'}}> <i class="fa-solid fa-cloud-xmark"></i></span>  */}
+
       <div className="input-and-label-padding">
         <label>Password</label>
         {clickAdd&&passwordCheck ? <span style={exlamMark}><i class="fas fa-exclamation-circle"></i></span> : null}
@@ -133,6 +124,7 @@ const exlamMark={
         message={message}/>
     : null
     }
+
   </div>
 
   );

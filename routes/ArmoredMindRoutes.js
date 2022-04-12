@@ -7,7 +7,6 @@ const ArmoredMindURL = require('../models/ArmoredMind.model');
 
 router.post('/addArmoredNote',passport.authenticate('jwt', { session: false }),(req,res)=>{
   const sent = req.body.imageURL;
-  console.log(req.body);
 
   const newArmoredNote= new ArmoredMindURL({
     imageURL: sent
@@ -51,8 +50,7 @@ router.delete('/deleteArmoredNote/:deleteNote',passport.authenticate('jwt', { se
       res.status(500).json({message:{msgBody:"error occurred",msgError:true}});
     }else{
       userId=req.user._id;
-  //     //user is a collection
-  console.log(id);
+
 
     User.updateOne({_id:userId},{$pull:{armoredmindurls:id}},(err)=>{
       if(err){

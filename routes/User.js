@@ -17,6 +17,8 @@ const allDays=require("./AllDays");
 
 const app=express();
 
+const cookieSession = require('cookie-session');
+require('../passport');
 
 const JWT = require('jsonwebtoken');
 
@@ -37,7 +39,6 @@ const signToken = userID =>{
 
 
 userRouter.post('/register',(req,res)=>{
-  console.log('i want this to console first');
   const {username,password}=req.body;
   User.findOne({username},(err, foundUser)=>{ //arrow function
     if(err){
@@ -52,8 +53,6 @@ userRouter.post('/register',(req,res)=>{
 
     newUser.save((err,result)=>{ ///arrow
       if(err){
-        console.log('username=>',err.errors['username']);
-        console.log('password=>',err.errors['password']);
 
         if(err.errors['username']&&err.errors['password']){
           res.status(500).json({message:{msgBody:"Username should be 6 character or more. Password should be 8 characters or more",msgError:true}})
@@ -106,6 +105,7 @@ userRouter.get('/authenticated', passport.authenticate('jwt', {session : false})
   res.status(200).json({isAuthenticated : true, user:{username}});
 
 });
+
 
 
 

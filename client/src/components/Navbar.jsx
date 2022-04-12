@@ -55,6 +55,7 @@ return(
 
   <Nav className="mr-auto">
     <Nav.Link style={{color:"white"}} as={Link} href='#Home' to="/">Home</Nav.Link>
+    <Nav.Link style={{color:"white"}} as={Link} href='#DailyInstructions' to="/DailyInstructions">Daily Instructions</Nav.Link>
 
     <NavDropdown title="Challenges" id="collasible-nav-dropdown">
       <NavDropdown.Item onClick={authCheck} style={blackText} as={Link} href='#BadHand' to="/BadHand">1. Bad Hand</NavDropdown.Item>

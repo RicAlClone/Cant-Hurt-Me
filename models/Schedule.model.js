@@ -1,14 +1,4 @@
 
-
-
-//make a pseudo object to see what our model would look like,
-//how many models would we need, think about days, and weeks,
-
-//would this just be for monday? or can we use for everyday? i believe
-//i can use this model for everyday of the week
-//when we send data over from front end
-
-//we need mongoose
  const mongoose = require('mongoose');
 
  const daySchema = new mongoose.Schema({

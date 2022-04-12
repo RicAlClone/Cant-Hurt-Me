@@ -18,12 +18,10 @@ const authContext= useContext(AuthContext);
 
 function red(){
   setColor("red")
-  console.log("set red")
 }
 
 function blue(){
   setColor("blue")
-  console.log("set blue")
 }
 
 function green(){
@@ -32,17 +30,14 @@ function green(){
 
 function grey(){
   setColor("grey")
-  console.log("set grey")
 }
 
 function yellow(){
   setColor("yellow")
-  console.log("set yellow")
 }
 
 function black(){
   setColor(" #433d3c")
-  console.log("set black")
 }
 
 function orange(){
@@ -202,7 +197,6 @@ let week2Obj={
   mon: function (event){
     if (update){
       const name=event.target.getAttribute('name');
-      console.log(name);
       let tempObject=[{backgroundColor:color},0];
       if(tempObject[0].backgroundColor==="red"){
         tempObject=[{backgroundColor:color},1]
@@ -227,7 +221,6 @@ let week2Obj={
   tues:function (event){
     if (update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
     if(tempObject[0].backgroundColor==="red"){
       tempObject=[{backgroundColor:color},1]
@@ -247,7 +240,6 @@ let week2Obj={
   wed:function (event){
     if (update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
     if(tempObject[0].backgroundColor==="red"){
       tempObject=[{backgroundColor:color},1]
@@ -267,7 +259,6 @@ let week2Obj={
   thurs:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
     if(tempObject[0].backgroundColor==="red"){
       tempObject=[{backgroundColor:color},1]
@@ -287,7 +278,6 @@ let week2Obj={
   fri:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
     if(tempObject[0].backgroundColor==="red"){
       tempObject=[{backgroundColor:color},1]
@@ -307,7 +297,6 @@ let week2Obj={
   sat:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
     if(tempObject[0].backgroundColor==="red"){
       tempObject=[{backgroundColor:color},1]
@@ -327,7 +316,6 @@ let week2Obj={
   sun:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
     if(tempObject[0].backgroundColor==="red"){
       tempObject=[{backgroundColor:color},1]
@@ -426,7 +414,6 @@ function editClick(nameDay){
   setBackColorDay({backgroundColor:'white'});
 
 }
-console.log("w2 idHolder:",idHolder);//we are gettin id here now lets use it in <day>
 
 
 //Save button will get id from edit button and the day object
@@ -455,7 +442,6 @@ function saveClick(id,body){
       setIsAuthenticated(false);
       }
     })
-      console.log('we click save and turn our background back to lightcyan');
       setBackColorDay({backgroundColor:'lightcyan'});
       setUpdate(false);
 
@@ -495,8 +481,6 @@ setEditButtonStyle('btn btn-info');
   }
 
 }
-
-console.log('update:',update);
 
 
   return(
@@ -658,7 +642,7 @@ console.log('update:',update);
           </div>
         </div>
 
-        {/* 
+        {/*
           <a onClick={slide} className="carousel-control-prev" href="#week2" role="button" data-slide="prev">
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="sr-only">Previous</span>

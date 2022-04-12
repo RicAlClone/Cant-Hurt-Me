@@ -14,11 +14,11 @@ const UserSchema= new mongoose.Schema({
     minLength:[8,'Password requires 8 characters or more']
   },
 
-  //basically this code populates with Badhand Schema
+  //this code populates with Badhand Schema
   //i put an s at the end of badhand because when we make
   //a new badhand it gets pushed to badhands
   badhands: [{type:mongoose.Schema.Types.ObjectId, ref: "Badhand"}],
-  //the ref is based on Mirror.model schema and i hope it works
+  //the ref is based on Mirror.model schema 
   mirrors: [{type:mongoose.Schema.Types.ObjectId, ref:"Mirror"}],
 
   imageModel:[{type:mongoose.Schema.Types.ObjectId,ref:"ImageModel"}],
@@ -42,20 +42,17 @@ const UserSchema= new mongoose.Schema({
 
 UserSchema.pre('save',function(next){
   if(!this.isModified('password')){
-    console.log('10');
     return next();
 
   }
   bcrypt.hash(this.password,10,(err,hashed)=>{
     if(err){
-      console.log('11');
       return next(err);
 
     }
 
 
     this.password = hashed;
-console.log('12');
     next();
   })
 })
@@ -63,15 +60,12 @@ console.log('12');
 UserSchema.methods.comparePassword = function(password, cb){
   bcrypt.compare(password,this.password,(err,isMatch)=>{ //changing to arrow
     if(err){
-      console.log('13');
       return cb(err);
     }
     else{
       if(!isMatch){
-        console.log('14');
         return cb(null,isMatch);
       }
-      console.log('15');
       return cb(null,this);
     }
   })

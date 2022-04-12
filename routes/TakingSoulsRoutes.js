@@ -2,7 +2,6 @@ const express= require('express');
 const router = express.Router();
 const passport = require('passport');
 const TakingSoulNote = require('../models/TakingSouls.model');
-//also include user to be able to use User
 const User = require('../models/User');
 
 
@@ -31,12 +30,11 @@ newNote.save(function(err,result){
 });
 
 router.get('/getTSNotes', passport.authenticate('jwt', { session: false }), function(req,res){
-  //we need to get all notes from our collection
   User.findById({_id:req.user._id}).populate('takingSouls').exec((err,document)=>{
     if(err){
       res.status(500).json({message:{msgBody:"Error occured, please retry",msgError:true}})
     }else{
-      console.log(document);
+
       res.status(200).json({takingSouls:document.takingSouls,authenticated:true});
     }
   });
@@ -44,9 +42,7 @@ router.get('/getTSNotes', passport.authenticate('jwt', { session: false }), func
 
 router.delete('/deleteTSNotes/:id', passport.authenticate('jwt', { session: false }), function(req,res){
   const theParams= req.params.id;
-// so on deleting an item we go into the model and remove but we also delete from the req.user.
-//somehow we used update to delete by finding the id which one should i wrap first
-  // either delete from model first and then from req.user.takingSouls or the opposite
+
   TakingSoulNote.findByIdAndDelete({_id:theParams},function(err){
     if(err){
       res.status(500).json({message:{msgBody:"Error occured , please retry",msgError:true}})

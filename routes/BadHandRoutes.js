@@ -16,8 +16,7 @@ router.post('/postBadHand', passport.authenticate('jwt', {session : false}), (re
 
   badhand.save(err=>{
     if(err){
-      console.log(err);
-      res.status(500).json({message:{msgBody:"empty, try again",msgError:true}});
+          res.status(500).json({message:{msgBody:"empty, try again",msgError:true}});
     }
     else{ //what i didnt include was being able to push
       //our badhand onto our array of badhands. then we need
@@ -77,5 +76,7 @@ if(err){
 }
 })
 })
+
+
 
 module.exports = router;

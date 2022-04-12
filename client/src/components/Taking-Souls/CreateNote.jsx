@@ -4,7 +4,8 @@ import RequiredMessage from "../RequiredMessage";
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Message from "../Message";
 
-function CreateNote(props) {
+
+function CreateNote(props,{children}) {
 
   const [entry, setEntry] = useState({
     date: "",
@@ -54,9 +55,7 @@ const [inputCheck,setInputCheck]=useState("pink");
 
   function handleAddEntry(event) {
     event.preventDefault();
-    //make a useState to follow if we hit submit
-//we check if either date, title,or paragraph is empty then we run console.log(something is empty),
-//else we return props.addJournalEntry(entry);
+
 setSubmitCheck(true);
 if(!entry.date||!entry.title||!entry.paragraph){
   console.log('something is empty');
@@ -78,7 +77,6 @@ else{
 
 
 }
-console.log('submitCheck:',submitCheck);
 
 function dateFilled(property){
   if (!entry[property] && submitCheck){
@@ -112,38 +110,53 @@ function paragraphFilled(property){
       <div className="all-main-containers">
         <div className="main-contain" style={{paddingBottom:"0",marginBottom:"30px"}}>
 
-          <div style={{height:"24px"}}>
-            {!entry.date&&submitCheck?
-              <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
-            :
-              null
-            }
-          </div>
-          <input className="inputStyle list-input" name="date"
-            style={dateFilled('date')}
-            onChange={ourChange} type="date" value={entry.date}
-          />
+          <div style={{margin:'15px 0'}}>
+            <div style={{height:"24px"}}>
+              {!entry.date&&submitCheck?
+                <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
+              :
+                null
+              }
+            </div>
+            {/* className="inputStyle list-input" */}
+            <input
+              className="inputStyle list-input"
+              type="date"
+              name="date"
+              style={dateFilled('date')}
+              onChange={ourChange}  value={entry.date}
+              />
 
-          <div style={{height:"24px"}}>
-            {!entry.title&&submitCheck?
-              <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
-            :
-              null
-            }
+
+
           </div>
 
-          <input style={titleFilled('title')} className="inputStyle list-input" name="title" onChange={ourChange}  placeholder="Enter your competitor..." value={entry.title} />
 
-          <div style={{height:"24px"}}>
-            {!entry.paragraph&&submitCheck?
-              <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>:null}
+          <div style={{margin:'15px 0'}}>
+            <div style={{height:"24px"}}>
+              {!entry.title&&submitCheck?
+                <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
+              :
+                null
+              }
+            </div>
+            <input style={titleFilled('title')} className="inputStyle list-input" name="title" onChange={ourChange}  placeholder="Enter your competitor..." value={entry.title} />
           </div>
-          <textarea style={paragraphFilled('paragraph')} name="paragraph" onChange={ourChange}  placeholder="Write how you beat your competitor..." value={entry.paragraph} />
+
+          <div style={{margin:'15px 0'}}>
+            <div style={{height:"24px"}}>
+              {!entry.paragraph&&submitCheck?
+                <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>:null}
+            </div>
+            <textarea style={paragraphFilled('paragraph')} name="paragraph" onChange={ourChange}  placeholder="Write how you beat your competitor..." value={entry.paragraph} />
+          </div>
 
           <div style={{height:"39px",margin:"10px 0"}}>
             {
               props.message?
-                <Message message={props.message}/>
+
+                <Message style={{height:"39px"}} message={props.message}/>
+
               :
               null
             }

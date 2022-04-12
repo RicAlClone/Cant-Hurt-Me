@@ -31,7 +31,6 @@ useEffect(()=>{
   window.scrollTo(0,0);
 CallousedService.getCallousedNotes().then(data=>{
   setIsLoaded(true);
-  console.log(data);
   setItems(data.calluses);
 });
 return ()=>{
@@ -42,7 +41,6 @@ return ()=>{
   function addItems(e,input){
 
   e.preventDefault();
-  console.log('recieving input ',input);
   CallousedService.postCallousedNote(input).then(data=>{
 if(!data.message.msgError){
     CallousedService.getCallousedNotes().then(getData=>{
@@ -67,7 +65,6 @@ if(!data.message.msgError){
   function deleteItem(id){
 
     CallousedService.deleteCallusNote(id).then(getData=>{
-      console.log(getData)//we get the data now what? we get back the new notes with getCallousedNotes
       if(!getData.message.msgError){
         CallousedService.getCallousedNotes().then(data=>{
           setItems(data.calluses);
@@ -134,7 +131,7 @@ if(!data.message.msgError){
           <SpinnerDiamond size="150px"/>
         </div>
       }
-      
+
     </div>
   );
 };

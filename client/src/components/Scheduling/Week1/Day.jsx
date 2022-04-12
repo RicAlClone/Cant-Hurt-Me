@@ -30,6 +30,7 @@ function week(){
   }
 }
 
+
   return(
     // col-sm-3
           <div style={props.backgroundColor} className="day-container col-lg  col-xs">
@@ -65,8 +66,9 @@ function week(){
 
               <tbody>
                 <tr>
+
                   <td className="small-font">12am</td>
-                  <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block1[0]} name="block1"> </td>
+                  <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block1[0]} name="block1"></td>
                   <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block2[0]} name="block2"></td>
                   <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block3[0]} name="block3"></td>
                   <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block4[0]} name="block4"></td>

@@ -13,32 +13,24 @@ const Mirror = require('../models/Mirror.model');
 const ImageModel= require('../models/ImageModel');
 
 router.post("/addMirrorNote",passport.authenticate('jwt', { session: false }), function(req,res){
-// console.log(req.user.mirrors);
-  //what do we want to accomplish?
-      //i want my server to recieve my title and message ( our schema)
+
       const temp=req.body;
-      console.log(temp);
-      //1. pedro added added req.body inside new Mirror but i want
-          //to check if i can still get away with the way i set it up.
+          
       const newMirrorNote= new Mirror({
         title:temp.title,
         message:temp.message
       })
-      //then i want to save that schema and add it ?
       newMirrorNote.save(function(err){
         if(err){
           res.status(500).json({message:{msgBody:'not saved',msgError:true}});
         }
         else{
-          //2. i had forgotten that we need to add to our req.user.
           req.user.mirrors.push(newMirrorNote)
-          //3. we also needed to save req.user
           req.user.save(function(err,doc){
             if(err){
                res.status(500).json({message:{msgBody:'not saved',msgError:true}});
             }
             else{
-              // console.log('this is our doc ',doc);
                res.status(200).json({message:{msgBody:"Mirror note added",msgError:false}});
             }
           })
@@ -49,19 +41,14 @@ router.post("/addMirrorNote",passport.authenticate('jwt', { session: false }), f
 
 
 router.get("/getMirrorNotes",passport.authenticate('jwt', { session: false }), function(req,res){
-  //so somehow we need to get all our notes from mirror model using mongoose.
   const id=req.user._id;
 
-//*****************my main question in my mind is how does populate take the documents
-    //that match the ids that are in User.mirrors and move them inside User.mirrors.
-    //the answer is yes according to a blog -https://medium.com/@nicknauert/mongooses-model-populate-b844ae6d1ee7
 
 User.findById({_id:id}).populate('mirrors').exec((err,document)=>{
   if(err){
     res.status(500).json({message:{msgBody:"error",msgError:true}});
   }
 else{
-  // console.log(document);
   res.status(200).json({mirrors:document.mirrors,authenticated:true});
 }
 });

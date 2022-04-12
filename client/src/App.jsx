@@ -14,6 +14,7 @@ import Uncommon from "./components/Uncommon/Uncommon";
 import EmpowermentFailure from "./components/FinalChallenge/EmpowermentFailure";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import DailyInstructions from "./components/DailyInstructions";
 import PrivateRoute from "./Hocs/PrivateRoute";
 import UnPrivateRoute from "./Hocs/UnPrivateRoute";
 
@@ -25,6 +26,7 @@ const App = () => {
     <Route exact path="/" component={About}></Route>
     <UnPrivateRoute path="/Register" component={Register}></UnPrivateRoute>
     <UnPrivateRoute path="/Login" component={Login}></UnPrivateRoute>
+    <PrivateRoute path="/DailyInstructions" roles={['user']} component={DailyInstructions}></PrivateRoute>
     <PrivateRoute path="/BadHand" roles={['user']} component={BadHand}></PrivateRoute>
     <PrivateRoute  path="/Mirror" roles={['user']} component={Mirror}></PrivateRoute>
     <PrivateRoute  path="/Calloused" roles={['user']} component={Calloused}></PrivateRoute>

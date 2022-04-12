@@ -43,12 +43,10 @@ const auth= useContext(AuthContext);
 useEffect(()=>{
 ArmoredMindService.getArmoredNotes().then(data=>{
   setIsLoaded(true);
-  console.log('getting data on line 28',data);
   setArray(data.armoredmindurls);
 });
 
 return ()=>{
-  console.log('we trigger clearTimeout inside useEffect');
    clearTimeout(timer);
 }
 },[]);
@@ -64,7 +62,7 @@ function addImage(e){
   e.preventDefault();
   setSubmitCheck(true);
   if(!value.imageURL){
-    console.log('its empty');
+    console.log('empty');
 }
 else{
     ArmoredMindService.postArmoredNote(value).then(data=>{
@@ -74,7 +72,6 @@ else{
                 setMessage(data.message);
                 timer= setTimeout(()=>{
                   setMessage(null)
-                  console.log('timer is setting message to null');
                 },2000);
               }
               else if(data.message.msgBody === "Unauthorized"){
@@ -91,9 +88,7 @@ setValue({imageURL:""});
 
 
 function deleteImage(id){
-  console.log(id);
 ArmoredMindService.deleteArmoredNote(id).then(data=>{
-  console.log('message when deleted:',data.message.msgBody);
   ArmoredMindService.getArmoredNotes().then(getData=>{
     if(!data.message.msgError){
       setArray(getData.armoredmindurls);

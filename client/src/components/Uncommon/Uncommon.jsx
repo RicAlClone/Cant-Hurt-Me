@@ -7,7 +7,7 @@ import {AuthContext} from "../../Context/AuthContext";
 import Message from "../Message";
 import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
-
+import {Alert} from 'react-bootstrap';
 
 function Uncommon(){
 
@@ -42,7 +42,6 @@ useEffect(()=>{
 function addJournalEntry(entry){
 
 
-  //we want to send entry to our /post
   UncommonService.post(entry).then(data=>{
     if(!data.message.msgError){
       UncommonService.get().then(gData=>{
@@ -78,22 +77,24 @@ UncommonService.delete(id).then(data=>{
 
   return(
     <div className="body-padding">
-      <div>
+      <div className="next-prev-challenge-spacing">
+        <Link onClick={authCheck} as={Link} to="/Schedule">Previous Challenge</Link>
         <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/EmpowermentFailure">Next Challenge</Link>
       </div>
-      <div>
-        <Link onClick={authCheck} as={Link} to="/Schedule">Previous Challenge</Link>
-      </div>
       <h1 className="all-title">Uncommon Challenge</h1>
-      <ul className="instruction-bullets">
-        <li>Find an uncommon person that you aspire to be, either they be in your life,or someone you heard about.
-          Look at what makes them stand out and why they are the best at what they do. If you want to be an uncommon person
-          amongst uncommon people.You will have to work harder than them. For example, if Bruce Lee practiced throwing 1000 kicks a day,
-          then you have to practice more than 1000 kicks a day.
-        </li>
-        <li>Note those times and how you accomplished this challenge.</li>
-      </ul>
+      <Alert className="instruction-bullets" variant='primary'>
+        <p>
+          Uncommon amongst uncommon is about being the best, in a group of people that are the uncommon.This challenge is
+          geared towards the people who are already successful and have reached the highest
+          of goals they created. The people who feel they made it in life. David Goggins explains that some of these
+          people feel they lost drive because they reached the top of a mountain and no longer are hungry. These
+          individuals have to keep putting more effort everyday and climb new bigger mountains. For the common person
+          who are trying to become uncommon, the first step is to find an uncommon person and get to their level. The second
+          step is to actually work harder than them. For example if Bruce Lee practiced 1000 kicks a day, then you will
+          have to practice 1001 kicks a day.
+        </p>
 
+      </Alert>
       {/* addJournal entry is used to trigger addJournalEntry with the body we want sent */}
       <CreateArea
         addNote={addJournalEntry}
@@ -121,7 +122,7 @@ UncommonService.delete(id).then(data=>{
       }
 
 
-      {message?<Message message={message}/>:null}
+      {/* {message?<Message message={message}/>:null} */}
 
 
 

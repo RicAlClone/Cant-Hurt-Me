@@ -2,8 +2,7 @@ import React,{useEffect,useContext,useState} from "react";
 import {AuthContext} from "../Context/AuthContext";
 import {Link} from "react-router-dom";
  function About(){
-//check if we are authenticated.let log something and see if we are.
-   const {isAuthenticated,setIsAuthenticated,setUser,user}=useContext(AuthContext)
+const {isAuthenticated,setIsAuthenticated,setUser,user}=useContext(AuthContext)
 
 const [isLogged,setIsLogged]=useState(false);
 
@@ -38,19 +37,19 @@ const bookLink="https://www.amazon.com/Cant-Hurt-Me-Master-Your/dp/1544512279/re
       <ol >
         <li>
           <h5> Bad Hand Challenge</h5>
-          <p className="challenge-paragraph"> List all the bad things life has given you from birth.
-            Write everything that has bothered you about yourself.
-            Were you bullied? Were you beaten? Were you poor? Are you insecure? Did you have a
+          <p className="challenge-paragraph">
+            List all the bad things life has given you from birth. Write everything that has bothered you about
+            yourself. Were you bullied? Were you beaten? Were you poor? Are you insecure? Did you have a
             fortunate comfortable life, that hindered you? Are you dealing with something now?
-            List every little detail life has dealt you. The challenges ahead will give you confidence, in dealing
-            with these bad hands because you will be taking steps in flipping the script on your life.
+            List every little detail life has dealt you. Once the challenges ahead start changing the script
+            that is your life, you can come back and see the progress you made.
           </p>
         </li>
         <li>
           <h5> The Accountability Mirror Challenge</h5>
           <p className="challenge-paragraph"> In this challenge you must face and be brutaly honest about yourself. If you are lazy then
             call yourself lazy and write how you will work your ass off to change. Are you are overweight? Call yourself
-            fat. There is no need to sugar coat it. Use the anger when feeling sorry for yourself to fuel for change. This challenge is intended to give yourself thicker skin and force
+            fat. There is no need to sugar coat it. This challenge is intended to give yourself thicker skin and force
             yourself to change. Write down all goals and every step it takes to get there. For example if you have a goal
             of losing 40 pounds, make a note of losing 2 pounds in a week. Once you lose 2 pounds,delete the note and
             write another of losing 3 pounds.
@@ -72,9 +71,9 @@ const bookLink="https://www.amazon.com/Cant-Hurt-Me-Master-Your/dp/1544512279/re
           <p className="challenge-paragraph">
             Taking souls means when you outwork or exceed expectation from a person who rivals or undermines you.
             In a competative setting taking souls is meant to break your component in a way you could see it in their
-            reaction. An example David Goggins like to give is in the movie about a boxer, Rocky 1. In the movie Rocky 1, Rocky is getting
+            reaction. An example David Goggins like to give is in the movie about a boxer, Rocky. In the movie Rocky 1, Rocky is getting
             beat sensless by the better opponent Apollo Creed. Appollo is able to knock Rocky down,and everyone is telling
-            Rocky to stay down. When Rocky refuses and gets back up,Apollo has a reaction of disbelief and it saps his energy.
+            Rocky to stay down. When Rocky refuses, Apollo has a reaction of disbelief and it saps his energy.
             That reaction is what is considered taking ones soul. In a real life setting, you want to pass work expectation that
             a collegue,teacher,coach or boss, will have to respect you. You want to reach goals that they could never
             imagine themselves doing.
@@ -90,7 +89,7 @@ const bookLink="https://www.amazon.com/Cant-Hurt-Me-Master-Your/dp/1544512279/re
         <li>
           <h5> The Cookie Jar Challenge</h5>
           <p className="challenge-paragraph">
-            This challenge is to get motivation and energy, in a timer where you want to quit. The cookie is
+            This challenge is to get motivation and energy, in a time where you want to quit. The cookie is
             any obstacle that you have passed in life or goal you have met. Steps to reaching a goal everyday can get repetative
             and fatiguing. In these times you need to reach in to your cookie jar and get a cookie that reminds you
             how much of a badass you can be.
@@ -100,7 +99,7 @@ const bookLink="https://www.amazon.com/Cant-Hurt-Me-Master-Your/dp/1544512279/re
           <h5> 40 Percent Rule Challenge</h5>
           <p className="challenge-paragraph">
             This challenge is to push yourself more than what you think you are capable of. This challenge was born
-            when David Goggins ran his first 100 mile marathon. He wanted to quit at mile 40 vigorously continued until he finished.
+            when David Goggins ran his first 100 mile marathon. He wanted to quit at mile 40, but continued with agony until he finished.
             That day is when David learned that humans can endure pain past what the mind thinks is capable of.
             A governor in a car is a device is used to measure or regulate the speed of the car. This challenge will help you slowly
             remove that governor from your mind. By incrementing your work load by 5-10% this will train your mind

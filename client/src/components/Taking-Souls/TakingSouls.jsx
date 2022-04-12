@@ -32,7 +32,6 @@ AuthService.isAuthenticated().then(data=>{
 useEffect(()=>{
   tsService.getTSNotes().then(data=>{
     setIsLoaded(true);
-    console.log('this is our data ',data);
     setArray(data.takingSouls)
   });
   return ()=>{clearTimeout(timer)};
@@ -95,14 +94,16 @@ tsService.deleteTSNote(id).then(data=>{
       </div>
       <h1 className="all-title">Taking Souls Challenge</h1>
 
-      <Alert className="instruction-bullets" variant="primary"><p>Taking souls means when you outwork or exceed expectation from a person who rivals or undermines you.
+      <Alert className="instruction-bullets" variant="primary"><p>
+        Taking souls means when you outwork or exceed expectation from a person who rivals or undermines you.
         In a competative setting taking souls is meant to break your component in a way you could see it in their
-        reaction. An example David Goggins like to give is in the movie about a boxer, Rocky 1. In the movie Rocky 1, Rocky is getting
+        reaction. An example David Goggins like to give is in the movie about a boxer, Rocky. In the movie Rocky 1, Rocky is getting
         beat sensless by the better opponent Apollo Creed. Appollo is able to knock Rocky down,and everyone is telling
-        Rocky to stay down. When Rocky refuses and gets back up,Apollo has a reaction of disbelief and it saps his energy.
+        Rocky to stay down. When Rocky refuses, Apollo has a reaction of disbelief and it saps his energy.
         That reaction is what is considered taking ones soul. In a real life setting, you want to pass work expectation that
         a collegue,teacher,coach or boss, will have to respect you. You want to reach goals that they could never
-      imagine themselves doing.</p></Alert>
+        imagine themselves doing.
+      </p></Alert>
       {/* <ul className="instruction-bullets">
         <li>Document everytime you outwork anyone in any situation.
         In example check out the hardest worker in the room and work harder.</li>
@@ -135,7 +136,7 @@ tsService.deleteTSNote(id).then(data=>{
         </div>
       }
 
-      {message? <Message message={message}/>:null}
+
 
     </div>
   );

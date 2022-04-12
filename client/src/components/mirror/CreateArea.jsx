@@ -48,10 +48,14 @@ setClickAdd(true);
   }
 
 
-// what we Did
-  //input bottom margin 10px as well as textarea
-  //main-contain bottom padding of 25px to clear touching add button,postion relative
-  //bottom-right-add-button position absolute,erase left and bottom,right 40x,bottom -32px
+function inputErrorCatcher(x){
+  if(clickAdd && !note[x]){
+    return {backgroundColor:"#ffdede"}
+  }
+  else{
+    return null;
+  }
+}
 
   return(
     <div>
@@ -59,10 +63,14 @@ setClickAdd(true);
         <div className="all-main-containers" style={{marginBottom:'32px'}}>
           <div className="main-contain">
 
-            {clickAdd && !note.title?<BsFillExclamationCircleFill style={{color:"#bf2121"}}/>:null}
-            <input className="inputStyle list-input"  onChange={handleChange}  placeholder={props.inputPlaceHolder} type="text" name="title" value={note.title}/>
-            {clickAdd && !note.message?<BsFillExclamationCircleFill style={{color:"#bf2121"}}/>:null}
-            <textarea rows="4" col="40" onChange={handleChange}  placeholder={props.textAreaPlaceHolder} type="text" name="message" value={note.message}/>
+            <div style={{height:'25px'}}>
+              {clickAdd && !note.title?<BsFillExclamationCircleFill style={{color:"#bf2121"}}/>:null}
+            </div>
+            <input style={inputErrorCatcher('title')} className="inputStyle list-input"  onChange={handleChange}  placeholder={props.inputPlaceHolder} type="text" name="title" value={note.title}/>
+            <div style={{height:'25px'}}>
+              {clickAdd && !note.message?<BsFillExclamationCircleFill style={{color:"#bf2121"}}/>:null}
+            </div>
+            <textarea style={inputErrorCatcher('message')} rows="4" col="40" onChange={handleChange}  placeholder={props.textAreaPlaceHolder} type="text" name="message" value={note.message}/>
             <div style={{height:"40px"}}>
               {props.message?
                 <Message message={props.message}/>

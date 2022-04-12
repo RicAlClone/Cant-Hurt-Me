@@ -14,32 +14,27 @@ const[update,setUpdate]=useState(false);
 const authContext= useContext(AuthContext);
 //functions allow us to choose the background color of block
 function red(){
-  setColor("red")
-  console.log("set red")
+  setColor("#e00000")
 }
 
 function blue(){
   setColor("blue")
-  console.log("set blue")
 }
 
 function green(){
-  setColor("green");
+  setColor("green")
 }
 
 function grey(){
   setColor("grey")
-  console.log("set grey")
 }
 
 function yellow(){
   setColor("yellow")
-  console.log("set yellow")
 }
 
 function black(){
   setColor(" #433d3c")
-  console.log("set black")
 }
 
 function orange(){
@@ -276,7 +271,6 @@ const [loadingAnim,setLoadingAnim]=useState(
   useEffect(()=>{
 
     ScheduleService.getSchedule().then(data=>{
-      console.log('data',data);
       if(data.message.msgBody==="Unauthorized"){
         console.log('unauthorized');
       }else{
@@ -302,9 +296,8 @@ let week1Obj={
   mon: function (event){
     if (update){
       const name=event.target.getAttribute('name');
-      console.log(name);
       let tempObject=[{backgroundColor:color},0];
-      if(tempObject[0].backgroundColor==="red"){
+      if(tempObject[0].backgroundColor==="#e00000"){
         tempObject=[{backgroundColor:color},1]
       }else{
         tempObject=[{backgroundColor:color},0]
@@ -328,9 +321,8 @@ let week1Obj={
   tues:function (event){
     if (update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
-    if(tempObject[0].backgroundColor==="red"){
+    if(tempObject[0].backgroundColor==="#e00000"){
       tempObject=[{backgroundColor:color},1]
     }else{
       tempObject=[{backgroundColor:color},0]
@@ -348,9 +340,8 @@ let week1Obj={
   wed:function (event){
     if (update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
-    if(tempObject[0].backgroundColor==="red"){
+    if(tempObject[0].backgroundColor==="#e00000"){
       tempObject=[{backgroundColor:color},1]
     }else{
       tempObject=[{backgroundColor:color},0]
@@ -368,9 +359,8 @@ let week1Obj={
   thurs:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
-    if(tempObject[0].backgroundColor==="red"){
+    if(tempObject[0].backgroundColor==="#e00000"){
       tempObject=[{backgroundColor:color},1]
     }else{
       tempObject=[{backgroundColor:color},0]
@@ -388,9 +378,8 @@ let week1Obj={
   fri:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
-    if(tempObject[0].backgroundColor==="red"){
+    if(tempObject[0].backgroundColor==="#e00000"){
       tempObject=[{backgroundColor:color},1]
     }else{
       tempObject=[{backgroundColor:color},0]
@@ -408,9 +397,8 @@ let week1Obj={
   sat:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
-    if(tempObject[0].backgroundColor==="red"){
+    if(tempObject[0].backgroundColor==="#e00000"){
       tempObject=[{backgroundColor:color},1]
     }else{
       tempObject=[{backgroundColor:color},0]
@@ -428,9 +416,8 @@ let week1Obj={
   sun:function (event){
     if(update){
     const name=event.target.getAttribute('name');
-    console.log(name);
     let tempObject=[{backgroundColor:color},0];
-    if(tempObject[0].backgroundColor==="red"){
+    if(tempObject[0].backgroundColor==="#e00000"){
       tempObject=[{backgroundColor:color},1]
     }else{
       tempObject=[{backgroundColor:color},0]
@@ -448,7 +435,7 @@ let week1Obj={
 };
 
 //below are our day counters that will add 1
-//evertime we have a red block.Inside Day component we will
+//evertime we have a #e00000 block.Inside Day component we will
 //multiply it by 15 to get us our minutes being unproductive
   let monCount=0;
 
@@ -525,7 +512,6 @@ function editClick(nameDay){
   setUpdate(true);
   setBackColorDay({backgroundColor:'white'});
 }
-console.log(idHolder);
 
 //Save button will get id from edit button and the day object
 //and send to the backend to update our original day model

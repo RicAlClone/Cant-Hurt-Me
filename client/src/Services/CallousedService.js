@@ -1,5 +1,3 @@
-//service for callousedmind challenge
-//we want an object with properties that
 
 const callousedService= {
 
