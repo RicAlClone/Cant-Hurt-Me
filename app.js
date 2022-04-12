@@ -53,6 +53,6 @@ if(process.env.NODE_ENV=== 'production'){
   app.use(express.static('client/build'));
 }
 
-app.listen(port,function(){
+app.listen(PORT,function(){
   console.log(`server is on port ${PORT}`);
 })
