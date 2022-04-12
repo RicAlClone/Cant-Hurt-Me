@@ -8,7 +8,7 @@ const cookieParser= require('cookie-parser');
 
 require("dotenv").config();
 
-const port=  5000;
+const PORT= process.env.PORT || 5000;
 
 app.use(cookieParser()); // I was missing this code!!!! which didnt
 //let me- continue making notes on this code i was missing
@@ -19,7 +19,7 @@ app.use(express.urlencoded({limit: '50mb',extended:true}));
 
 const uri= process.env.ATLAS_URI;
 
-mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
+mongoose.connect(process.env.MONGODB_URI || uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
   console.log("MongoDB database connected successfully");
 })
 
@@ -48,6 +48,11 @@ app.use('/user/schedule',scheduleRouter);
 app.use('/user/uncommon',uncommonRouter);
 app.use('/user/failure',failureRouter);
 
+
+if(process.env.NODE_ENV=== 'production'){
+  app.use(express.static('client/build'));
+}
+
 app.listen(port,function(){
-  console.log(`server is on port ${port}`);
+  console.log(`server is on port ${PORT}`);
 })
