@@ -51,10 +51,10 @@ app.use('/user/failure',failureRouter);
 const path = require("path");
 
 
-  app.use(express.static(path.resolve(_dirname,'./client/build')));
+  app.use(express.static(path.resolve(__dirname,'./client/build')));
 
   app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(_dirname,"./client","index.html"));
+    res.sendFile(path.resolve(__dirname,"./client","index.html"));
   });
 
 
