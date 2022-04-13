@@ -10,7 +10,10 @@
     "dev": "nodemon app.js",
     "start": "node app.js",
     "heroku-postbuild": "npm run install-client && run build",
-    "client":"cd client && npm start"
+    "server": "nodemon app.js",
+    "develop": "concurrently --kill-others-on-fail \"npm run app\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run app\" \"npm run start --prefix client\""
+
   },
   "engines":{
     "node":"12.18.2"

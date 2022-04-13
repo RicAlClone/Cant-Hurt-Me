@@ -19,7 +19,7 @@ app.use(express.urlencoded({limit: '50mb',extended:true}));
 
 const uri= process.env.ATLAS_URI;
 
-mongoose.connect(process.env.MONGODB_URI || uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
+mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
   console.log("MongoDB database connected successfully");
 })
 
@@ -48,10 +48,15 @@ app.use('/user/schedule',scheduleRouter);
 app.use('/user/uncommon',uncommonRouter);
 app.use('/user/failure',failureRouter);
 
+const path = require("path");
 
-if(process.env.NODE_ENV=== 'production'){
-  app.use(express.static('client/build'));
-}
+
+  app.use(express.static(path.resolve(_dirname,'./client/build')));
+
+  app.get('*',(req,res)=>{
+    res.sendFile(path.resolve(_dirname,"./client","index.html"));
+  });
+
 
 app.listen(PORT,function(){
   console.log(`server is on port ${PORT}`);
