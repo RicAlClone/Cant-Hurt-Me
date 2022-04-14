@@ -17,9 +17,9 @@ app.use(cookieParser()); // I was missing this code!!!! which didnt
 app.use(express.json({limit: '50mb',extended:true}));
 app.use(express.urlencoded({limit: '50mb',extended:true}));
 
-const uri= process.env.ATLAS_URI;
+// const uri= process.env.ATLAS_URI;
 
-mongoose.connect(uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
+mongoose.connect(process.env.ATLAS_URI,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
   console.log("MongoDB database connected successfully");
 })
 
@@ -50,12 +50,22 @@ app.use('/user/failure',failureRouter);
 
 const path = require("path");
 
+__dirname=path.resolve();
 
-  app.use(express.static(path.resolve(__dirname,'./client/build')));
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static(path.join(__dirname,'/client/build')));
 
   app.get('*',(req,res)=>{
-    res.sendFile(path.resolve(__dirname,"./client/build","index.html"));
+    res.sendFile(path.resolve(__dirname,"client","build","index.html"));
   });
+}
+else{
+app.get('/',(req,res)=>{
+  res.send('App is running...')
+})
+}
+
+
 
 
 app.listen(PORT,function(){
