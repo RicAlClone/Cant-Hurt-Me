@@ -105,7 +105,7 @@ if(!data.message.msgError){
         isLoaded?
           <form>
             <div className="all-main-containers">
-              <div className="inner-container">
+              <div className="inner-container" style={{position:'relative'}}>
                 <InputArea
                   addItems={addItems}
                   message={message}

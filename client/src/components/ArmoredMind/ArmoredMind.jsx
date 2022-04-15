@@ -135,7 +135,7 @@ if(!value.imageURL&&submitCheck){
 
       <form>
         <div className="all-main-containers">
-          <div className="inner-container" style={{marginBottom:'20px'}}>
+          <div className="inner-container" style={{marginBottom:'20px',position:'relative'}}>
             <div style={{height:"34px"}}>
               {!value.imageURL&&submitCheck?
                 <p style={{color:"#bf2121",marginBottom:"0",display:'flex',alignItems:'center',marginLeft:'10px',height:'34px'}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>
@@ -146,7 +146,7 @@ if(!value.imageURL&&submitCheck){
             <div className ="input-fix" style={{paddingBottom:"0",height:"42px"}}>
               <input type="text" style={emptyStyle()} className="inputStyle list-input"  onChange={handleChange} value={value.imageURL}/>
               {/* <button onClick={addImage} type="button" className="btn btn-primary">add</button> */}
-              <button type='submit' style={{border:"none",backgroundColor:"white"}} onClick={addImage}>
+              <button type='submit' className="button-top-right" onClick={addImage}>
                 <AddIcon/>
               </button>
             </div>

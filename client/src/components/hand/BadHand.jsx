@@ -168,7 +168,7 @@ function emptyInputError(){
 
         <form>
           <div className="all-main-containers">
-            <div className="inner-container">
+            <div className="inner-container" style={{position:'relative'}}>
               <div style={{height:"45px",display:'flex',flexDirection:'column',justifyContent:'center',paddingLeft:'10px'}}>
                 {clickedToAdd && !input.name?<BsFillExclamationCircleFill
                   style={{color:"#bf2121",marginBottom:"0",display:'flex',alignItems:'center',marginLeft:'10px',height:'34px'
@@ -178,7 +178,8 @@ function emptyInputError(){
               </div>
               <div className="input-fix" style={{paddingBottom:"0",height:"42px",marginBottom:'18px'}}>
                 <input style={emptyInputError()} autoComplete="off" name='input' onChange={letsChange} className="inputStyle list-input" type="text" value={input.name} placeholder="Enter a bad hand..."/>
-                <button type='submit' style={{border:'none',backgroundColor:'white'}} onClick={addItems}>
+                <button type='submit' className="button-top-right"
+                  onClick={addItems}>
                   <AddIcon/>
                 </button>
               </div>

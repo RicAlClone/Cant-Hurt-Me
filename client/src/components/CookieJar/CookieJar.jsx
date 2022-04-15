@@ -164,7 +164,7 @@ const CookieJar = function() {
 
       <form>
         <div className="all-main-containers">
-          <div className="inner-container" style={{marginBottom:'20px'}}>
+          <div className="inner-container" style={{marginBottom:'20px',position:'relative'}}>
 
             <div style={{height:"34px"}}>
               {required && !cookie.cookie?
@@ -178,7 +178,7 @@ const CookieJar = function() {
 
               <input onChange={handleChange} style={emptyStyle()} className="inputStyle list-input" type="text" value={cookie.cookie}/>
               {/* className='add-button' */}
-              <button type='submit' style={{border:'none',backgroundColor:'white'}} onClick={addCookie}>
+              <button type='submit' className="button-top-right" onClick={addCookie}>
                 <AddIcon/>
               </button>
 
@@ -191,7 +191,7 @@ const CookieJar = function() {
         </div>
       </form>
 
-      
+
 
 
       <div id={animation} onClick={next} className="jar-container" style={{position:"relative",height:'300px',width:'300px'}}>

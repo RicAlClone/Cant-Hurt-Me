@@ -407,12 +407,9 @@ ol li{
 .add-button{
   font-size: 50px;
   color: #433d3c;
-  background-color: white;
   border: 0;
   height:56px;
-  /* display: flex;
-  align-items: center
-  justify-content:center; */
+  background-color: transparent;
 }
 
 .buttonStyle{
@@ -427,7 +424,15 @@ ol li{
   padding: 0;
   right:10%;
   bottom:-32px;
-  background-color: white;
+  background-color: transparent;
+}
+
+.button-top-right{
+  border:none;
+    background-color:transparent;
+    position:absolute;
+    top:-30px;
+    right:10%;
 }
 
 /* ******* Register Component */

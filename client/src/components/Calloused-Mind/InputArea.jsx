@@ -55,7 +55,7 @@ function emptyInputError(){
       </div>
       <div className="input-fix" style={{height:"55px"}}>
         <input style={emptyInputError()} autoComplete="off" name='input' onChange={letsChange} className="inputStyle list-input" type="text" value={input.name} placeholder="I hate to..."/>
-        <button type='submit' style={{border:"none",backgroundColor:"white"}} onClick={function(e){
+        <button type='submit' className="button-top-right" onClick={function(e){
           e.preventDefault();
           setRequired(true);
           if(!input.name){
