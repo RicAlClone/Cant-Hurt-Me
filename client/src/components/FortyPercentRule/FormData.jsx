@@ -85,7 +85,7 @@ function saveButtonClass(){
         {
           toUpdate.sets !== null?
             <div>
-              <input className='inputStyle' name="sets" style={{width:"75px"}} type="number" min="0" onChange={setDataChange} value={toUpdate.sets}  disabled={disabled}/> <span style={{paddingRight:"20px"}}>sets</span>
+              <input className='inputStyle' name="sets" style={{width:"75px"}} type="number" pattern="\d*" min="0" onChange={setDataChange} value={toUpdate.sets}  disabled={disabled}/> <span style={{paddingRight:"20px"}}>sets</span>
             </div>
           : null
         }
@@ -93,7 +93,7 @@ function saveButtonClass(){
         {
           toUpdate.reps !==null?
             <div>
-              <input className='inputStyle' name="reps" type="number" min="0" onChange={setDataChange}  style={{width:"75px"}} value={toUpdate.reps} disabled={disabled}/>
+              <input className='inputStyle' name="reps" type="number" pattern="\d*" min="0" onChange={setDataChange}  style={{width:"75px"}} value={toUpdate.reps} disabled={disabled}/>
               <span style={{paddingRight:"20px"}}> reps</span>
             </div>
           : null
@@ -102,7 +102,7 @@ function saveButtonClass(){
         {
           toUpdate.hrs!==null?
             <div>
-              <input className='inputStyle' name="hrs" style={{width:"75px"}} type="number" min="0" onChange={setDataChange} value={toUpdate.hrs} disabled={disabled}/> <span style={{paddingRight:"20px"}}>hrs</span>
+              <input className='inputStyle' name="hrs" style={{width:"75px"}} type="number" pattern="\d*" min="0" onChange={setDataChange} value={toUpdate.hrs} disabled={disabled}/> <span style={{paddingRight:"20px"}}>hrs</span>
             </div>
           : null
         }
@@ -110,7 +110,7 @@ function saveButtonClass(){
         {
           toUpdate.mins!==null?
             <div>
-              <input className='inputStyle' name="mins" style={{width:"75px"}} type="number" min="0" max="60" onChange={setDataChange} value={toUpdate.mins} disabled={disabled}/> <span style={{paddingRight:"20px"}}>mins</span>
+              <input className='inputStyle' name="mins" style={{width:"75px"}} type="number" pattern="\d*" min="0" max="60" onChange={setDataChange} value={toUpdate.mins} disabled={disabled}/> <span style={{paddingRight:"20px"}}>mins</span>
             </div>
           :   null
         }
@@ -118,7 +118,7 @@ function saveButtonClass(){
         {
           toUpdate.sec!==null?
             <div>
-              <input className='inputStyle' name="sec" style={{width:"75px"}} type="number" min="0" max="60" onChange={setDataChange} value={toUpdate.sec} disabled={disabled}/> <span style={{paddingRight:"20px"}}>sec</span>
+              <input className='inputStyle' name="sec" style={{width:"75px"}} type="number" pattern="\d*" min="0" max="60" onChange={setDataChange} value={toUpdate.sec} disabled={disabled}/> <span style={{paddingRight:"20px"}}>sec</span>
             </div>
           : null
         }

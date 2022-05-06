@@ -74,7 +74,8 @@ return(
       <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#EmpFail' to="/EmpowermentFailure">10. Empowerment of Failure</NavDropdown.Item>
     </NavDropdown>
   </Nav>
-  <Nav className="justify-content-end">
+
+  <Nav>
     <BNavbar.Text style={{marginRight:"20px"}}>
       <FaUserCheck/> {user.username}
     </BNavbar.Text>
@@ -92,6 +93,7 @@ const blackText={
   return (
 
     <BNavbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
+      {/* <Container> */}
       <BNavbar.Brand  style={{color:"white"}} as={Link} to="/">Can't Hurt Me Challenges</BNavbar.Brand>
       <BNavbar.Toggle aria-controls="responsive-navbar-nav" />
       <BNavbar.Collapse id="responsive-navbar-nav">
@@ -99,6 +101,7 @@ const blackText={
         {!isAuthenticated? unAuthenticatedNavBar(): authenticatedNavBar()}
 
       </BNavbar.Collapse>
+      {/* </Container> */}
     </BNavbar>
 
   );

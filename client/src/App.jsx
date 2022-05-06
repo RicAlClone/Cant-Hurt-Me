@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route} from "react-router-dom";
-import Navbar from "./components/Navbar"
+import Navbar from "./components/Navbar";
 import About from "./components/About";
 import BadHand from "./components/hand/BadHand";
 import Mirror from "./components/mirror/Mirror";
@@ -17,6 +17,9 @@ import Register from "./components/Register";
 import DailyInstructions from "./components/DailyInstructions";
 import PrivateRoute from "./Hocs/PrivateRoute";
 import UnPrivateRoute from "./Hocs/UnPrivateRoute";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 const App = () => {
   return(
@@ -24,6 +27,8 @@ const App = () => {
   <Router>
     <Navbar/>
     <Route exact path="/" component={About}></Route>
+
+    {/* <UnPrivateRoute exact path="/" component={About}></UnPrivateRoute> */}
     <UnPrivateRoute path="/Register" component={Register}></UnPrivateRoute>
     <UnPrivateRoute path="/Login" component={Login}></UnPrivateRoute>
     <PrivateRoute path="/DailyInstructions" roles={['user']} component={DailyInstructions}></PrivateRoute>

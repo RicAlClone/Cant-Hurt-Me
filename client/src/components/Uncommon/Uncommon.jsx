@@ -8,6 +8,9 @@ import Message from "../Message";
 import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
 import {Alert} from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
+import {GiMountainRoad} from 'react-icons/gi';
+import { IconContext } from "react-icons";
 
 function Uncommon(){
 
@@ -82,24 +85,30 @@ UncommonService.delete(id).then(data=>{
         <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/EmpowermentFailure">Next Challenge</Link>
       </div>
       <h1 className="all-title">Uncommon Challenge</h1>
-      <Alert className="instruction-bullets" variant='primary'>
-        <p>
-          Uncommon amongst uncommon is about being the best, in a group of people that are the uncommon.This challenge is
-          geared towards the people who are already successful and have reached the highest
-          of goals they created. The people who feel they made it in life. David Goggins explains that some of these
-          people feel they lost drive because they reached the top of a mountain and no longer are hungry. These
-          individuals have to keep putting more effort everyday and climb new bigger mountains. For the common person
-          who are trying to become uncommon, the first step is to find an uncommon person and get to their level. The second
-          step is to actually work harder than them. For example if Bruce Lee practiced 1000 kicks a day, then you will
-          have to practice 1001 kicks a day.
-        </p>
-
-      </Alert>
-      {/* addJournal entry is used to trigger addJournalEntry with the body we want sent */}
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <GiMountainRoad size='25px'/>Instructions
+          </IconContext.Provider>
+        </Accordion.Header>
+        <Accordion.Body>
+          <p>
+            Uncommon amongst uncommon is about being the best, in a group of people that are the uncommon.This challenge is
+            geared towards the people who are already successful and have reached the highest
+            of goals they created. The people who feel they made it in life. David Goggins explains that some of these
+            people feel they lost drive because they reached the top of a mountain and no longer are hungry. These
+            individuals have to keep putting more effort everyday and climb new bigger mountains. For the common person
+            who are trying to become uncommon, the first step is to find an uncommon person and get to their level. The second
+            step is to actually work harder than them. For example if Bruce Lee practiced 1000 kicks a day, then you will
+            have to practice 1001 kicks a day.
+          </p>
+        </Accordion.Body>
+      </Accordion>
       <CreateArea
         addNote={addJournalEntry}
         inputPlaceHolder="Enter an Uncommon Person..."
         textAreaPlaceHolder="How did you surpass that person..."
+        message={message}
       />
       {
         isLoaded?

@@ -5,6 +5,7 @@ import {AuthContext} from '../../../Context/AuthContext';
 import { SpinnerDiamond } from 'spinners-react';
 import {FiArrowLeftCircle,FiArrowRightCircle} from 'react-icons/fi';
 
+
 function Week1(props){
 
 const [color,setColor]=useState("")
@@ -42,6 +43,10 @@ function orange(){
 }
 function purple(){
   setColor("purple");
+}
+
+function torquoise(){
+  setColor("#40E0D0");
 }
   //All our day models are based on skeleton object
 let skeleton={
@@ -599,36 +604,15 @@ setEditButtonStyle('btn btn-info');
         <button  onClick={black} type="button" className="btn btn-dark">Sleep</button>
         <button  onClick={orange} style={{backgroundColor:"orange"}} type="button" className="btn">Eating</button>
         <button  onClick={purple} style={{backgroundColor:"purple",color:"white"}} type="button" className="btn">Commuting</button>
+        <button onClick={torquoise} style={{backgroundColor:'#40E0D0',color:'white'}} type="button" className="btn">Prepare</button>
       </div>
 
 
-      {/* <div style={stepContainer}>
-        <h4>Step 2</h4>
-        <ul>
-          <li>click on time block to fill</li>
-        </ul>
-      </div> */}
+      <div id="week1" className="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
 
-
-
-      <div id="week1" className="carousel slide" data-ride="carousel" data-interval="false">
-        {/* <div style={{display:'flex',justifyContent:'space-evenly',height:'50px'}}>
-        {/* className="carousel-control-prev" */}
-        {/* <a onClick={slide}  href="#week1" role="button" data-slide="prev">
-        <FiArrowLeftCircle size='50'/> */}
-        {/* <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span className="sr-only">Previous</span> */}
-        {/* </a> */}
-        {/* className="carousel-control-next" */}
-        {/* <a onClick={slide}  href="#week1" role="button" data-slide="next">
-        <FiArrowRightCircle size='50'/> */}
-        {/* <span className="carousel-control-next-icon" aria-hidden="true"></span>
-        <span className="sr-only">Next</span> */}
-        {/* </a>
-        </div> */}
         <div className="carousel-inner">
 
-          <div className="carousel-item active">
+          <div className="carousel-item active" >
             <Day
               week="1"
               dayName={isLoaded?"Monday":"Loading..."}
@@ -642,16 +626,13 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
 
 
-
-
-
-          <div className="carousel-item ">
+          <div className="carousel-item" >
             <Day
               week="1"
               dayName={isLoaded?"Tuesday":"Loading..."}
@@ -665,13 +646,13 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
 
 
-          <div className="carousel-item ">
+          <div className="carousel-item " >
             <Day
               week="1"
               dayName={isLoaded?"Wednesday":"Loading..."}
@@ -685,7 +666,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -705,13 +686,13 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
 
 
-          <div className="carousel-item ">
+          <div className="carousel-item " >
             <Day
               week="1"
               dayName={isLoaded?"Friday":"Loading..."}
@@ -725,13 +706,13 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
 
 
-          <div className="carousel-item ">
+          <div className="carousel-item " >
             <Day
               week="1"
               dayName={isLoaded?"Saturday":"Loading..."}
@@ -745,7 +726,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -765,7 +746,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>

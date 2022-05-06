@@ -2,6 +2,8 @@
 import React, {useState,useRef,useEffect} from "react";
 import AuthService from '../Services/AuthService';
 import Message from "./Message";
+import {AiFillEye} from 'react-icons/ai';
+import {AiFillEyeInvisible} from 'react-icons/ai';
 
 function Register(props){
 
@@ -23,6 +25,7 @@ const [message, setMessage]= useState(null);
 const [clickAdd,setClickAdd]=useState(null);
 const [usernameCheck,setUserNameCheck]=useState(false);
 const [passwordCheck, setPasswordCheck]=useState(false);
+const [readable,setReadable]=useState(false);
 
 let timerId= useRef(null);
 useEffect(()=>{
@@ -113,8 +116,11 @@ const exlamMark={
 
       <div className="input-and-label-padding">
         <label>Password</label>
+        <span style={{marginLeft:'15px'}} onClick={()=>!readable?setReadable(true):setReadable(false)}>
+          {!readable?<AiFillEye size='25px' />:<AiFillEyeInvisible size='25px'/>}
+        </span>
         {clickAdd&&passwordCheck ? <span style={exlamMark}><i class="fas fa-exclamation-circle"></i></span> : null}
-        <input className="inputStyle" type="password" name="password" onChange={handleChange} value={registerData.password} style={inputStyle} placeholder="Password" required/>
+        <input className="inputStyle" type={!readable?"password" :"text"} name="password" onChange={handleChange} value={registerData.password} style={inputStyle} placeholder="Password" required/>
       </div>
 
       <button onClick={onSubmit} className="btn btn-primary">Register</button>

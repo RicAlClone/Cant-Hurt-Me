@@ -19,9 +19,9 @@ router.post('/addArmoredNote',passport.authenticate('jwt', { session: false }),(
       req.user.armoredmindurls.push(saved);
       req.user.save((err)=>{
         if(err){
-          res.status(500).json({message:{msgBody:"error occurred",msgError:true}});
+          res.status(500).json({message:{msgBody:"error occurred ❕",msgError:true}});
         }else{
-          res.status(200).json({message:{msgBody:"Note added",msgError:false}});
+          res.status(200).json({message:{msgBody:"Note added ✔",msgError:false}});
         }
       })
 
@@ -54,10 +54,10 @@ router.delete('/deleteArmoredNote/:deleteNote',passport.authenticate('jwt', { se
 
     User.updateOne({_id:userId},{$pull:{armoredmindurls:id}},(err)=>{
       if(err){
-        res.status(500).json({message:{msgBody:"error occurred",msgError:true}});
+        res.status(500).json({message:{msgBody:"error occurred ❕",msgError:true}});
       }else{
 
-        res.status(200).json({message:{msgBody:"Deleted Note", msgError:false}});
+        res.status(200).json({message:{msgBody:"Deleted Note ✖", msgError:false}});
       }
     })
 

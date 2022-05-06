@@ -2,6 +2,10 @@ import React, {useState, useContext} from "react";
 import AuthService from "../Services/AuthService"
 import Message from "./Message";
 import {AuthContext} from "../Context/AuthContext";
+import {Link} from 'react-router-dom';
+import Register from './Register';
+import {AiFillEye} from 'react-icons/ai';
+import {AiFillEyeInvisible} from 'react-icons/ai';
 
 function Login(props){
 
@@ -29,6 +33,7 @@ const [signInData,setSignInData]=useState(
 );
 
 const [message, setMessage]= useState(null);
+const [readable,setReadable]=useState(false);
 
 const authContext = useContext(AuthContext);
 
@@ -80,11 +85,16 @@ function onSubmit(e){
 
       <div className="input-and-label-padding">
         <label>Password</label>
-        <input className="inputStyle" style={inputStyle} type="password" name="password" onChange={handleChange} value={signInData.password} placeholder="Password" required/>
+        <span style={{marginLeft:'15px'}} onClick={()=>!readable?setReadable(true):setReadable(false)}>
+          {!readable?<AiFillEye size='25px' />:<AiFillEyeInvisible size='25px'/>}
+        </span>
+        <input className="inputStyle" style={inputStyle} type={!readable?"password" :"text"} name="password" onChange={handleChange} value={signInData.password} placeholder="Password" required/>
       </div>
 
       <button onClick={onSubmit} className="btn btn-primary">Login</button>
     </form>
+
+    <p style={{marginTop:'1rem'}}>Dont Have an account? <Link  as={Link} to="/Register"> Register First</Link></p>
     {message? <Message message={message}/>:null}
   </div>
   );

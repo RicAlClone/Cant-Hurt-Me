@@ -10,6 +10,9 @@ import {Link} from "react-router-dom";
 import { SpinnerDiamond } from 'spinners-react';
 import {Alert} from 'react-bootstrap';
 import {BsFillExclamationCircleFill} from 'react-icons/bs';
+import Accordion from 'react-bootstrap/Accordion';
+import {GrDocumentTime} from 'react-icons/gr';
+import { IconContext } from "react-icons";
 
 function EmpowermentFailure(){
 
@@ -158,14 +161,20 @@ function dateEmptyCheck(){
         <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/BadHand">First Challenge</Link>
       </div>
       <h1 className="all-title">Empowerment of Failure Challenge</h1>
-
-      <Alert className="instruction-bullets" variant='primary'>
-        <p>
-          Note all the failures you had with these challenges. Note the positives from these failures. Note your
-          mind set during your failing and how that made you feel. Note how you can tackle these failures again
-          and schedule it. If you keep failing dont give up and keep attacking until you reach the goal.
-        </p>
-      </Alert>
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <GrDocumentTime size='25px'/>Instructions
+          </IconContext.Provider>
+        </Accordion.Header>
+        <Accordion.Body>
+          <p>
+            Note all the failures you had with these challenges. Note the positives from these failures. Note your
+            mind set during your failing and how that made you feel. Note how you can tackle these failures again
+            and schedule it. If you keep failing dont give up and keep attacking until you reach the goal.
+          </p>
+        </Accordion.Body>
+      </Accordion>
 
       <div className="all-main-containers">
         <div className="main-contain" style={{height:'500px',display:'flex',flexDirection:'column',justifyContent:'space-evenly',marginBottom:'30px'}}>

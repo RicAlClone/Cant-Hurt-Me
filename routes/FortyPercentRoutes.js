@@ -26,10 +26,10 @@ router.post('/postRuleNote', passport.authenticate('jwt', {session: false}), (re
       req.user.fortyPercentRule.push(saved);
       req.user.save((err) => {
         if (err) {
-          res.status(500).json({message: {msgBody: "not saved,error occured",msgError: true}});
+          res.status(500).json({message: {msgBody: "not saved,error occured ❕",msgError: true}});
 
         } else {
-          res.status(200).json({message: {msgBody: "saved",msgError: false}})
+          res.status(200).json({message: {msgBody: "saved ✔",msgError: false}})
         }
       })
     }
@@ -59,10 +59,10 @@ User.findOneAndUpdate({_id:req.user._id},{"$pull":{"fortyPercentRule":idParams}}
   else{
     fortyPercentRule.findByIdAndDelete({_id:idParams},(err)=>{
       if(err){
-        res.status(500).json({message:{msgBody:"not found,second",msgError:true}});
+        res.status(500).json({message:{msgBody:"not found,second ❕",msgError:true}});
       }
       else{
-        res.status(200).json({message:{msgBody:"deleted",msgError:false}});
+        res.status(200).json({message:{msgBody:"deleted ✖",msgError:false}});
       }
     })
   }
@@ -83,10 +83,10 @@ router.put('/updateRuleNote/:id',passport.authenticate('jwt', {session: false}),
   //what if when we create a new user we create all models for our days in
   fortyPercentRule.findOneAndReplace({_id:id},req.body,{},(err,result)=>{
     if(err){
-      res.status(500).json({message:{msgBody:"not found",msgError:true}});
+      res.status(500).json({message:{msgBody:"not found ❕",msgError:true}});
     }
     else{
-      res.status(200).json({message:{msgBody:"updated",msgError:false}});
+      res.status(200).json({message:{msgBody:"updated ✔",msgError:false}});
     }
   })
 })

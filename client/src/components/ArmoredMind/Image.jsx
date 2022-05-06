@@ -31,7 +31,7 @@ useEffect(()=>{
 
           <div >
 
-            <img  style={{width: "320px",height:"240px"}} alt="" src={props.arrayItem} />
+            <img  style={{width: "100%",height:"240px"}} alt="" src={props.arrayItem} />
 
           </div>
 

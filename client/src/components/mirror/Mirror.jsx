@@ -10,8 +10,10 @@ import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond,SpinnerCircularFixed } from 'spinners-react';
 import FileBase64 from 'react-file-base64';
 import {Alert, Button} from 'react-bootstrap'
+import Accordion from 'react-bootstrap/Accordion';
+import { IconContext } from "react-icons";
+import {GiMirrorMirror} from 'react-icons/gi';
 
-//lets test ourselfs in using our message component and using the timer component when making a message
 
 const Mirror = function(props) {
 
@@ -186,15 +188,22 @@ MirrorService.updateImage(imageID,image).then(data=>{
       </div>
 
       <h1 className="all-title">The Accountability Mirror Challenge</h1>
-      <Alert className="instruction-bullets" variant="primary">
-        <p>In this challenge you must face and be brutaly honest about yourself. If you are lazy then
-          call yourself lazy. Are you are overweight? Call yourself
-          fat. There is no need to sugar coat it. Write down all goals and every step it takes to get there. For example if you have a goal
-          of losing 40 pounds, make a note of losing 2 pounds in a week. Once you lose 2 pounds,delete the note and
-        write another of losing 3 pounds.</p>
-        {/* <li>Make notes on all your insecurities, dreams, and goals.</li>
-        <li>Note every step it will take to reach a goal.</li> */}
-      </Alert>
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <GiMirrorMirror size='25px'/>Instructions
+          </IconContext.Provider>
+        </Accordion.Header>
+        <Accordion.Body>
+          <p>In this challenge you must face and be brutaly honest about yourself. If you are lazy then
+            call yourself lazy. Are you are overweight? Call yourself
+            fat. There is no need to sugar coat it. Write down all goals and every step it takes to get there. For example if you have a goal
+            of losing 40 pounds, make a note of losing 2 pounds in a week. Once you lose 2 pounds,delete the note and
+          write another of losing 3 pounds.</p>
+
+        </Accordion.Body>
+      </Accordion>
+
 
       <CreateArea
         addNote={addNote}
@@ -273,21 +282,22 @@ MirrorService.updateImage(imageID,image).then(data=>{
         }
       </div>
       {isLoaded?
-        <div className="row">
+        <div className="container">
+          <div className="row">
+            {
+              array.map(function(item, index) {
 
-          {
-            array.map(function(item, index) {
-
-              return <EachNote
-                key={index}
-                id={item._id}
-                title={item.title}
-                message={item.message}
-                deleteNote={deleteNote}
-                     />
-            })
-          }
-        </div>
+                return <EachNote
+                  key={index}
+                  id={item._id}
+                  title={item.title}
+                  message={item.message}
+                  deleteNote={deleteNote}
+                       />
+              })
+            }
+          </div>
+          </div>
       :
       <div className="all-main-containers">
         <SpinnerDiamond size="150px"/>

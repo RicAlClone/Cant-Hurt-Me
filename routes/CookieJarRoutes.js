@@ -20,10 +20,10 @@ newCookie.save((err,savedObj)=>{
     req.user.cookies.push(savedObj);
     req.user.save((err)=>{
       if(err){
-        res.status(500).json({message:{msgBody:"not saved",msgError:true}});
+        res.status(500).json({message:{msgBody:"not saved ❕",msgError:true}});
       }
       else{
-        res.status(200).json({message:{msgBody:"Cookie added",msgError:false}});
+        res.status(200).json({message:{msgBody:"Cookie added ✔",msgError:false}});
       }
     })
   }
@@ -60,10 +60,10 @@ router.delete('/deleteCookie/:id',passport.authenticate('jwt', { session: false 
     else{
       Cookie.findByIdAndDelete(idSentOver,(err)=>{
         if(err){
-          res.status(500).json({message:{msgBody:"not deleted",msgError:true}});
+          res.status(500).json({message:{msgBody:"not deleted ❕",msgError:true}});
         }
         else{
-          res.status(200).json({message:{msgBody:"cookie deleted",msgError:false}});
+          res.status(200).json({message:{msgBody:"cookie deleted ✖",msgError:false}});
         }
       })
     }

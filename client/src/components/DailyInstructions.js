@@ -22,7 +22,7 @@ function DailyInstructions(){
           <li style={marginBottom}>Attempt any challenges failed in
             <Link  as={Link} to="/EmpowermentFailure"> Empowerment of Failure Challenge</Link>. When straining to
             complete a goal or task, use a cookie from
-            <Link  as={Link} to="/CookieJar"> The Cookie Jar</Link> to get a boost in energy.
+            <Link  as={Link} to="/CookieJar"> The Cookie Jar</Link> to get a boost in confidence.
           </li>
           <li style={marginBottom}>Attempt, add, delete, or review a goal for today in
             <Link  as={Link} to="/Mirror"> Accountability Mirror Challenge</Link>

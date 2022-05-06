@@ -33,9 +33,9 @@ newModel.save(function(err,result){
     req.user.calluses.push(result);
     req.user.save(function(err){
       if(err){
-          res.status(500).json({message:{msgBody:"error",msgError:true}});
+          res.status(500).json({message:{msgBody:"error ❕",msgError:true}});
       }else{
-        res.status(200).json({message:{msgBody:"created callus note",msgError:false}});
+        res.status(200).json({message:{msgBody:"created callus note ✔",msgError:false}});
       }
     });
   }
@@ -66,9 +66,9 @@ CallousedModel.findByIdAndDelete({_id:id},function(err){
   }else{
     User.updateOne({_id:req.user.id},{$pull:{calluses:id}},{multi:true},function(err){
       if(err){
-        res.status(500).json({message:{msgBody:"Error occured",msgError:true}});
+        res.status(500).json({message:{msgBody:"Error occured ❕",msgError:true}});
       }else{
-        res.status(200).json({message:{msgBody:"Callus note deleted",msgError:false}});
+        res.status(200).json({message:{msgBody:"Callus note deleted ✖",msgError:false}});
       }
     })
   }

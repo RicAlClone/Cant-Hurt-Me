@@ -3,9 +3,9 @@ html{
   overflow-y: scroll;
 }
 
-b {
+/* b {
   color:#525252;
-}
+} */
 
 .shadow{
   box-shadow: 5px 5px 15px -5px #888888;
@@ -37,10 +37,12 @@ b {
   width:50%;
 }
 
-/* .row{
-  padding-top: 30px;
-} */
+
 /* BadHand CSS */
+
+.navbar-collapse{
+  justify-content: space-between;
+}
 
 .all-main-containers {
   display: flex;
@@ -144,6 +146,10 @@ input[type=number]::-webkit-inner-spin-button {
   line-height: 1.1;
 }
 @media only screen and (max-width: 376px) {
+  .accordion{
+    width:100%;
+  }
+
   .main-contain {
     width: 95%;
   }
@@ -162,10 +168,7 @@ input[type=number]::-webkit-inner-spin-button {
   justify-content: center;
 }
 
-.row {
-  width: 100%;
-  margin: 0;
-}
+
 
 /* cookie Jar */
 .jar-container {
@@ -216,11 +219,10 @@ input[type=number]::-webkit-inner-spin-button {
     }
   }
 
-  #down {
-    animation-name: cookie;
+  .down {
+        animation-name: cookie;
     animation-duration: 0.5s;
-
-  }
+      }
 
   @keyframes cookie {
     0% {
@@ -245,30 +247,43 @@ input[type=number]::-webkit-inner-spin-button {
 
 
 .cookie-icon{
-  font-size:10rem;
+  font-size:4rem;
   display: inline-block;
-  width: 11rem;
 
 }
 
 .cookie-text {
   display: inline-block;
   position: relative;
-  width: 300px;
+  width:100%;
   font-size: 90%;
   font-weight:bold;
   color:black ;
-  text-shadow: 2px 2px 5px #fecb89;
-  z-index: 2;
+    z-index: 2;
+    }
+.text-container{
+  width:60%;
 }
-
+.cookie-icon-container{
+    width:60%;
+}
 .text-cookie-container{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-margin-top:15px;
+  margin-top:15px;
+
+}
+
+.navbar{
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 @media only screen and (max-width: 320px){
+  .accordion{
+    width:100%;
+  }
   .chip-container{
     width:100%;
     height:auto;
@@ -293,34 +308,25 @@ body{
     padding: 10px;
 }
 
-table{
+.table{
   width: 100%;
 }
 
-
-
-th{
-  text-align: center;
-}
-
- td{
+ .td{
    width:20%;
    height:30px;
    border: 0.5px solid grey;
-   text-align: center;
+
  }
-table,td{
+.table, .td{
   border-collapse: separate;
   border-radius: 8px;
   padding:5px;
 }
-.small-font{
-  font-size: 12px;
-  color: grey;
-  padding:0;
-  border: 0.1px grey solid;
-  background-color: #f5f5f5;
+.small-font {
+text-align:center;
 }
+
 .week-title{
   text-align: center;
   margin-bottom:30px;
@@ -343,6 +349,9 @@ table,td{
 .Unproductive{
   padding:20px;
   text-align: center;
+}
+.carousel-item {
+  transition: transform 2.6s ease-in-out;
 }
 
 .carousel-control-prev {
@@ -383,6 +392,7 @@ table,td{
 }
 .goggins-pic{
   width:100%;
+  margin-bottom: 60px;
 }
 
 ol{
@@ -400,6 +410,10 @@ ol li{
   justify-content: flex-end;
   font-size: 2rem;
   padding-top: 2rem;
+}
+.accordion{
+  width:60%;
+  margin:0 auto 50px auto;
 }
 
 /* add button */
@@ -520,17 +534,28 @@ label{
   margin-bottom: 0;
 }
 
+
+
+.icon{
+  margin-right:0.7rem;
+}
 @media only screen and (max-width: 585px) {
 
+.text-container{
+  width:100%;
+}
+
+.cookie-icon-container{
+  width:100%;
+}
+
+
+
+.accordion{
+  width:100%;
+}
   .main-contain {
     width: 95%;
-  }
-
-  .cookie-icon{
-    font-size:10rem;
-    display: inline-block;
-    width: 5rem;
-
   }
 
   .challenge-paragraph{
@@ -606,6 +631,8 @@ label{
   padding:0
 }
 }
+
+
 @media only screen and (max-width: 992px) {
 .instruction-bullets{
   width:100%;

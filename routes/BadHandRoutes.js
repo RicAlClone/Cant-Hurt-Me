@@ -16,7 +16,7 @@ router.post('/postBadHand', passport.authenticate('jwt', {session : false}), (re
 
   badhand.save(err=>{
     if(err){
-          res.status(500).json({message:{msgBody:"empty, try again",msgError:true}});
+          res.status(500).json({message:{msgBody:"empty, try again ❕",msgError:true}});
     }
     else{ //what i didnt include was being able to push
       //our badhand onto our array of badhands. then we need
@@ -32,10 +32,10 @@ router.post('/postBadHand', passport.authenticate('jwt', {session : false}), (re
       // to save the req.user.
       req.user.save(err=>{
         if(err){
-          res.status(500).json({message:{msgbody:'2 error found',msgError:true}});
+          res.status(500).json({message:{msgbody:'error try again ❕',msgError:true}});
         }
         else{
-          res.status(200).json({message:{msgBody : "Bad Hand added", msgError: false}});
+          res.status(200).json({message:{msgBody : "Bad Hand added ✔", msgError: false}});
         }
       })
     }
@@ -70,7 +70,7 @@ if(err){
     if(err){
       res.status(500).json({message:{msgBody:"Unable to delete",msgError:true}});
     }else{
-      res.status(200).json({message:{msgBody:'Deleted Bad Hand',msgError:false}})
+      res.status(200).json({message:{msgBody:'Deleted Bad Hand ✖',msgError:false}})
     }
   })
 }

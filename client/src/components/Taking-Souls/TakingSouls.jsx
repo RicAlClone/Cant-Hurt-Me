@@ -8,13 +8,15 @@ import Message from "../Message";
 import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
 import {Alert} from 'react-bootstrap';
-const TakingSouls= function(props){
+import Accordion from 'react-bootstrap/Accordion';
+import {CgGhostCharacter} from 'react-icons/cg';
+import { IconContext } from "react-icons";
 
+const TakingSouls= function(props){
 
 const [array, setArray]=useState([]);
 const [message,setMessage]=useState(null);
 const [isLoaded,setIsLoaded]=useState(false);
-//how are we going to use authContext
 const authContext=useContext(AuthContext);
 
 let timer= useRef(null);
@@ -93,22 +95,26 @@ tsService.deleteTSNote(id).then(data=>{
         <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/ArmoredMind">Next Challenge</Link>
       </div>
       <h1 className="all-title">Taking Souls Challenge</h1>
-
-      <Alert className="instruction-bullets" variant="primary"><p>
-        Taking souls means when you outwork or exceed expectation from a person who rivals or undermines you.
-        In a competative setting taking souls is meant to break your component in a way you could see it in their
-        reaction. An example David Goggins like to give is in the movie about a boxer, Rocky. In the movie Rocky 1, Rocky is getting
-        beat sensless by the better opponent Apollo Creed. Appollo is able to knock Rocky down,and everyone is telling
-        Rocky to stay down. When Rocky refuses, Apollo has a reaction of disbelief and it saps his energy.
-        That reaction is what is considered taking ones soul. In a real life setting, you want to pass work expectation that
-        a collegue,teacher,coach or boss, will have to respect you. You want to reach goals that they could never
-        imagine themselves doing.
-      </p></Alert>
-      {/* <ul className="instruction-bullets">
-        <li>Document everytime you outwork anyone in any situation.
-        In example check out the hardest worker in the room and work harder.</li>
-        <li>Earn peoples respect by going beyond what they set as an example or ask you to complete.</li>
-      </ul> */}
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <CgGhostCharacter size='25px'/>Instructions
+          </IconContext.Provider>
+        </Accordion.Header>
+        <Accordion.Body>
+          <p>
+            Taking souls means when you outwork or exceed expectation from a person who rivals or undermines you.
+            In a competative setting taking souls is meant to break your component in a way you could see it in their
+            reaction. An example David Goggins like to give is in the movie about a boxer, Rocky. In the movie Rocky 1, Rocky is getting
+            beat sensless by the better opponent Apollo Creed. Appollo is able to knock Rocky down,and everyone is telling
+            Rocky to stay down. When Rocky refuses, Apollo has a reaction of disbelief and it saps his energy.
+            That reaction is what is considered taking ones soul. In a real life setting, you want to pass work expectation that
+            a collegue,teacher,coach or boss, will have to respect you. You want to reach goals that they could never
+            imagine themselves doing.
+          </p>
+        </Accordion.Body>
+      </Accordion>
+      
 
       <CreateNote
         addJournalEntry={addJournalEntry}

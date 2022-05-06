@@ -8,8 +8,12 @@ import Message from '../Message';
 import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
 import {Alert} from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
+import {GiBrain} from 'react-icons/gi';
+import { IconContext } from "react-icons";
+
+
 const Calloused= function(props){
-  //
   const authContext= useContext(AuthContext);
 
 const [items, setItems]= useState([]);
@@ -92,14 +96,20 @@ if(!data.message.msgError){
       </div>
 
       <h1 className="all-title">Calloused Mind Challenge</h1>
-      <Alert className="instruction-bullets" variant="primary">
-        <p>  This challenge is intended to toughen and build a callus over your mind. To do this we must get out
-          of our comfort zone and do things everyday that we dont want to do,that will improve your life. Even if
-          its as simple as making your bed, or washing your dishes. The key to this is doing it every day. Once this
-          becomes normal and comfortable,its time to add more. For example if running 1 mile everyday becomes comfortable,
-        increase it by 1.5 miles everyday.The goal is to keep callousing the mind.</p>
-      </Alert>
-
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <GiBrain size='25px'/>Instructions
+          </IconContext.Provider>
+        </Accordion.Header>
+        <Accordion.Body>
+          <p>  This challenge is intended to toughen and build a callus over your mind. To do this we must get out
+            of our comfort zone and do things everyday that we dont want to do,that will improve your life. Even if
+            its as simple as making your bed, or washing your dishes. The key to this is doing it every day. Once this
+            becomes normal and comfortable,its time to add more. For example if running 1 mile everyday becomes comfortable,
+          increase it by 1.5 miles everyday.The goal is to keep callousing the mind.</p>
+        </Accordion.Body>
+      </Accordion>
 
       {
         isLoaded?

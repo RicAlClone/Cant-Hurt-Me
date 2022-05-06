@@ -23,9 +23,9 @@ let check=props.check;
       check?
       <div style={{width:"235px",margin:"0 auto",display:"flex",justifyContent:"center"}}>{props.message.msgBody}</div>
       :
-      <Alert className="alert-message-style" variant={Style(props)}>
+      // <Alert className="alert-message-style" variant={Style(props)}>
         <div>{props.message.msgBody}</div>
-      </Alert>
+        //{/* </Alert> */}
 
         );
 }

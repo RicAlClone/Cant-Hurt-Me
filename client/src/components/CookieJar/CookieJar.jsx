@@ -8,7 +8,13 @@ import {AuthContext} from "../../Context/AuthContext";
 import AuthService from "../../Services/AuthService";
 import {Alert} from "react-bootstrap";
 import{BsFillExclamationCircleFill} from "react-icons/bs";
+import Accordion from 'react-bootstrap/Accordion';
+
 import {FaCookie} from "react-icons/fa";
+import {BiCookie} from 'react-icons/bi';
+import { IconContext } from "react-icons";
+
+
 const CookieJar = function() {
 
   const [cookie, setCookie] = useState({cookie: ""});
@@ -149,18 +155,27 @@ const CookieJar = function() {
       </div>
       <h1 className="all-title">The Cookie Jar</h1>
 
-      <Alert className="instruction-bullets" variant="primary">
-        <p>
-          This challenge is to get motivation and energy, in a time where you want to quit. The cookie is
-          any obstacle that you have passed in life or goal you have accomplished. Steps to reaching a goal everyday can get repetative
-          and fatiguing. In these times you need to reach in to your cookie jar and get a cookie that reminds you
-          how much of a badass you can be.
-        </p>
-        <ul >
-          <li>Enter anything you achieved no matter how small or big.</li>
-          <li>Once added you can click on the cookie jar to get a reminder of an accomplishment you can use as motivation.</li>
-        </ul>
-      </Alert>
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <BiCookie size='25px'/>Instructions
+          </IconContext.Provider>
+
+        </Accordion.Header>
+        <Accordion.Body>
+          <p>
+            This challenge is to get motivation and energy, in a time where you want to quit. The cookie is
+            any obstacle that you have passed in life or goal you have accomplished. Steps to reaching a goal everyday can get repetative
+            and fatiguing. In these times you need to reach in to your cookie jar and get a cookie that reminds you
+            how much of a badass you can be.
+          </p>
+          <ul >
+            <li>Enter anything you achieved no matter how small or big.</li>
+            <li>Once added you can click on the cookie jar to get a reminder of an accomplishment you can use as motivation.</li>
+          </ul>
+        </Accordion.Body>
+      </Accordion>
+      
 
       <form>
         <div className="all-main-containers">
@@ -200,7 +215,7 @@ const CookieJar = function() {
         <div style={{position:'absolute',top:"40%",right:"35%",color:"#bd7e00"}}>
           <FaCookie size='70px'/>
         </div>
-        <div style={{position:'absolute',bottom:"10%",left:"30%",color:"#bd7e00"}}>
+        <div style={{position:'absolute',bottom:"13%",left:"30%",color:"#bd7e00"}}>
           <FaCookie size='70px'/>
         </div>
 
@@ -217,7 +232,7 @@ const CookieJar = function() {
                 array={array}
                 index={index}
                 secAni={secAni}
-              delete={deleteCookie}/>
+                delete={deleteCookie}/>
           }
         })
         : null

@@ -14,14 +14,14 @@ router.post('/postFailureNote',passport.authenticate('jwt', { session: false }),
       res.status(500).json({message:{msgBody:"Error occurred",msgError:true}})
     }
     else{
-      
+
       req.user.failure.push(saved);
       req.user.save(err=>{
         if(err){
-          res.status(500).json({message:{msgBody:"Error occurred",msgError:true}})
+          res.status(500).json({message:{msgBody:"Error occurred ❕",msgError:true}})
         }
         else{
-          res.status(200).json({message:{msgBody:"saved note",msgError:false}})
+          res.status(200).json({message:{msgBody:"saved note ✔",msgError:false}})
         }
       })
     }
@@ -51,10 +51,10 @@ const id=req.params.id;
     else{
       Failure.findByIdAndDelete(id,(err,deleted)=>{
         if(err){
-          res.status(500).json({message:{msgBody:"error",msgError:true}})
+          res.status(500).json({message:{msgBody:"error ❕",msgError:true}})
         }
         else{
-          res.status(200).json({message:{msgBody:"deleted note",msgError:false}})
+          res.status(200).json({message:{msgBody:"deleted note ✖",msgError:false}})
         }
       })
     }

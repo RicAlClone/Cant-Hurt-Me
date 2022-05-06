@@ -46,7 +46,9 @@ function orange(){
 function purple(){
   setColor("purple");
 }
-
+function torquoise(){
+  setColor("#40E0D0");
+}
 //All our day models are based on skeleton object
 let skeleton={
 
@@ -497,10 +499,12 @@ setEditButtonStyle('btn btn-info');
         <button  onClick={black} type="button" className="btn btn-dark">Sleep</button>
         <button  onClick={orange} style={{backgroundColor:"orange"}} type="button" className="btn">Eating</button>
         <button  onClick={purple} style={{backgroundColor:"purple",color:"white"}} type="button" className="btn">Commuting</button>
+        <button onClick={torquoise} style={{backgroundColor:'#40E0D0',color:'white'}} type="button" className="btn">Prepare</button>
+        
       </div>
 
 
-      <div id="week2" className="carousel slide" data-ride="carousel" data-interval="false">
+      <div id="week2" className="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
         <div className="carousel-inner">
           <div className="carousel-item active">
             <Day
@@ -516,7 +520,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -536,7 +540,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -556,7 +560,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -576,7 +580,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -596,7 +600,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -616,7 +620,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>
@@ -636,7 +640,7 @@ setEditButtonStyle('btn btn-info');
               id={idHolder}
               saveButtonStyle={saveButtonStyle}
               editButtonStyle={editButtonStyle}
-              classAnimation={isLoaded?"":"schedule-loader"}
+              classAnimation={isLoaded?"td":"schedule-loader"}
               slide={slide}
             />
           </div>

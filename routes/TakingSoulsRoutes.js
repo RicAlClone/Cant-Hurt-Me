@@ -20,9 +20,9 @@ newNote.save(function(err,result){
     req.user.takingSouls.push(result);
     req.user.save(function(err){
       if(err){
-        res.status(500).json({message:{msgBody:"Error occured 2, please retry",msgError:true}})
+        res.status(500).json({message:{msgBody:"Error occured ❕, please retry",msgError:true}})
       }else{
-        res.status(200).json({message:{msgBody:"Taking Souls note saved",msgError:false}})
+        res.status(200).json({message:{msgBody:"Taking Souls note saved ✔",msgError:false}})
       }
     })
   }
@@ -49,9 +49,9 @@ router.delete('/deleteTSNotes/:id', passport.authenticate('jwt', { session: fals
     }else{
       User.updateOne({_id:req.user._id},{$pull:{takingSouls:theParams}},function(err,result){
         if(err){
-          res.status(500).json({message:{msgBody:"Error occured , please retry",msgError:true}})
+          res.status(500).json({message:{msgBody:"Error occured ❕, please retry",msgError:true}})
         }else{
-          res.status(200).json({message:{msgBody:"Taking Souls note deleted",msgError:false}})
+          res.status(200).json({message:{msgBody:"Taking Souls note deleted ✖",msgError:false}})
         }
       });
 

@@ -9,6 +9,9 @@ import AuthService from '../../Services/AuthService';
 import { SpinnerDiamond } from 'spinners-react';
 import {Alert} from 'react-bootstrap';
 import {BsFillExclamationCircleFill} from "react-icons/bs"
+import Accordion from 'react-bootstrap/Accordion';
+import {GiCrestedHelmet} from 'react-icons/gi';
+import { IconContext } from "react-icons";
 
 
 
@@ -123,15 +126,22 @@ if(!value.imageURL&&submitCheck){
         <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/CookieJar">Next Challenge</Link>
       </div>
       <h1 className="all-title">Armored Mind Challenge</h1>
-
-      <Alert className="instruction-bullets"  variant="primary">
-        <p>Visualization is an important tool to reaching a goal.
-        Visualize not only the victory but the challenges and failures.</p>
-        <ul className="instruction-bullets" style={{width:"100%"}}>
-          <li>Add images from the internet that will help you visualize your goals.</li>
-          <li>Copy image address for example: <b style={{overflowWrap:"break-word"}}> https://impressivetrophies.com/wp-content/uploads/billboard-trophy.jpg</b> , paste inside input bar and add.</li>
-        </ul>
-      </Alert>
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <GiCrestedHelmet size='25px'/>Instructions
+          </IconContext.Provider>
+        </Accordion.Header>
+        <Accordion.Body>
+          <p>Visualization is an important tool to reaching a goal.
+          Visualize not only the victory but the challenges and failures.</p>
+          <ul className="instruction-bullets" style={{width:"100%"}}>
+            <li>Add images from the internet that will help you visualize your goals.</li>
+            <li>Copy image address for example: <b style={{overflowWrap:"break-word"}}> https://impressivetrophies.com/wp-content/uploads/billboard-trophy.jpg</b> , paste inside input bar and add.</li>
+          </ul>
+        </Accordion.Body>
+      </Accordion>
+      
 
       <form>
         <div className="all-main-containers">

@@ -15,7 +15,7 @@ const ImageModel= require('../models/ImageModel');
 router.post("/addMirrorNote",passport.authenticate('jwt', { session: false }), function(req,res){
 
       const temp=req.body;
-          
+
       const newMirrorNote= new Mirror({
         title:temp.title,
         message:temp.message
@@ -31,7 +31,7 @@ router.post("/addMirrorNote",passport.authenticate('jwt', { session: false }), f
                res.status(500).json({message:{msgBody:'not saved',msgError:true}});
             }
             else{
-               res.status(200).json({message:{msgBody:"Mirror note added",msgError:false}});
+               res.status(200).json({message:{msgBody:"Mirror note added ✔",msgError:false}});
             }
           })
 
@@ -65,9 +65,9 @@ User.updateOne({_id:req.user.id},{"$pull":{"mirrors":idParams}},{safe:true, mult
   }else{
     Mirror.findByIdAndDelete(idParams,function(err){
       if(err){
-        res.status(500).json({message:{msgBody:"Unable to delete Mirror note",msgError:true}});
+        res.status(500).json({message:{msgBody:"Unable to delete Mirror note ❕",msgError:true}});
       }else{
-        res.status(200).json({message:{msgBody:"Mirror note deleted",msgError:false}});//i added 400 instead of 200!!
+        res.status(200).json({message:{msgBody:"Mirror note deleted ✖",msgError:false}});//i added 400 instead of 200!!
       }
     })
   }
@@ -85,7 +85,7 @@ router.post('/postImage',passport.authenticate('jwt', { session: false }), funct
               req.user.imageModel.push(saved);
               req.user.save(err=>{
                 if(err){
-                  res.status(500).json({message:{msgBody:"error",msgError:true}})
+                  res.status(500).json({message:{msgBody:"error ❕",msgError:true}})
                 }
                 else{
                   res.status(200).json({message:{msgBody:"Saved ✔",msgError:false}});

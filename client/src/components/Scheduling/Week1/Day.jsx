@@ -31,22 +31,20 @@ function week(){
 }
 
 
+
   return(
     // col-sm-3
           <div style={props.backgroundColor} className="day-container col-lg  col-xs">
             <div className='days-arrow-container'>
 
-              <a onClick={props.slide}  href={week()} role="button" data-slide="prev">
+              <a onClick={props.slide}  href={week()} role="button" data-bs-slide="prev">
                 <FiArrowLeftCircle size='70'/>
-                {/* <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span className="sr-only">Previous</span> */}
               </a>
-              {/* className="carousel-control-next" */}
-              <a onClick={props.slide}  href={week()} role="button" data-slide="next">
+
+              <a onClick={props.slide}  href={week()} role="button" data-bs-slide="next">
                 <FiArrowRightCircle size='70'/>
-                {/* <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                <span className="sr-only">Next</span> */}
               </a>
+
             </div>
             <button className={props.editButtonStyle} onClick={()=>{
               authCheck();
@@ -57,17 +55,17 @@ function week(){
               props.saveClick(props.id,props.evolve)}}
             >save</button>
 
-            <table>
+            <table className='table'>
               <tbody>
                 <tr>
-                  <th colSpan="5">{props.dayName}</th>
+                  <th className='small-font' colSpan="5">{props.dayName}</th>
                 </tr>
               </tbody>
 
               <tbody>
                 <tr>
 
-                  <td className="small-font">12am</td>
+                  <td  className="small-font">12am</td>
                   <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block1[0]} name="block1"></td>
                   <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block2[0]} name="block2"></td>
                   <td className={props.classAnimation} onClick={props.ourFunction} style={props.evolve.block3[0]} name="block3"></td>

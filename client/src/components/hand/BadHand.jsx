@@ -9,6 +9,9 @@ import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
 import {Alert} from 'react-bootstrap';
 import {BsFillExclamationCircleFill} from "react-icons/bs"
+import Accordion from 'react-bootstrap/Accordion';
+import {CgCardSpades} from 'react-icons/cg';
+import { IconContext } from "react-icons";
 
 const BadHand= function(){
 
@@ -149,19 +152,24 @@ function emptyInputError(){
 
 
       <h1 className="all-title">Bad Hand Challenge</h1>
-      <Alert className="instruction-bullets" variant="primary">
-        <p>
-          List all the bad things life has given you from birth. Write everything that has bothered you about
-          yourself. Were you bullied? Were you beaten? Were you poor? Are you insecure? Did you have a
-          fortunate comfortable life, that hindered you? Are you dealing with something now?
-          List every little detail life has dealt you. Once the challenges ahead start changing the script
-          that is your life, you can come back and see the progress you made.
-        </p>
-        {/* <ul className="instruction-bullets">
-          <li>Make a list of the bad cards that life has dealt you in the past and present.</li>
-        </ul> */}
-      </Alert>
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{className:'icon'}}>
+            <CgCardSpades size='25px'/>
+          </IconContext.Provider>
+        Instructions</Accordion.Header>
+        <Accordion.Body>
+          <p>
+            List all the bad things life has given you from birth. Write everything that has bothered you about
+            yourself. Were you bullied? Were you beaten? Were you poor? Are you insecure? Did you have a
+            fortunate comfortable life, that hindered you? Are you dealing with something now?
+            List every little detail life has dealt you. Once the challenges ahead start changing the script
+            that is your life, you can come back and see the progress you made.
+          </p>
 
+        </Accordion.Body>
+
+    </Accordion>
 
 
       {isLoaded?

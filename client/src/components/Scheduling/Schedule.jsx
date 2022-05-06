@@ -6,6 +6,10 @@ import {Link} from "react-router-dom";
 import {AuthContext} from "../../Context/AuthContext";
 import AuthService from "../../Services/AuthService";
 import {Alert} from 'react-bootstrap';
+import Accordion from 'react-bootstrap/Accordion';
+import {AiOutlineSchedule} from 'react-icons/ai';
+import { IconContext } from "react-icons";
+
 
 const Schedule= function(){
 const authContext=useContext(AuthContext);
@@ -30,31 +34,39 @@ const authContext=useContext(AuthContext);
         </div>
 
         <h1 className="all-title">Schedule Challenge</h1>
-        <Alert className="instruction-bullets" variant='primary'>
-          <p >
-            This challenge will help you cut out all wasted time. You will cut your day into time slots and that
-            will help you recognize what you can optimize. For the first week, document what you did for every 15 minute
-            time block in a day. The second week you want to improve your schedule by cutting out the wasted time.
-            Your going to want to follow every scheduled time block completely and move on to the next, once completed.You can schedule breaks that help
-            you rest but that doesn't mean do unecessary things like checking emails or social media. Give yourself
-            enough time for meals but don't leave them open ended. Even after scheduling week 2 there still might be
-            some dead space. Week 3 is your perfect schedule with no time wasted.
-          </p>
-          <ul >
-            <p>☀ Each day is made up of 96, 15 minute blocks.</p>
+        <Accordion>
+          <Accordion.Header>
+            <IconContext.Provider value={{className:'icon'}}>
+              <AiOutlineSchedule size='25px'/>Instructions
+            </IconContext.Provider>
+          </Accordion.Header>
+          <Accordion.Body>
+            <p >
+              This challenge will help you cut out all wasted time. You will cut your day into time slots and that
+              will help you recognize what you can optimize. For the first week, document what you did for every 15 minute
+              time block in a day. The second week you want to improve your schedule by cutting out the wasted time.
+              Your going to want to follow every scheduled time block completely and move on to the next, once completed.You can schedule breaks that help
+              you rest but that doesn't mean do unecessary things like checking emails or social media. Give yourself
+              enough time for meals but don't leave them open ended. Even after scheduling week 2 there still might be
+              some dead space. Week 3 is your perfect schedule with no time wasted.
+            </p>
+            <ul >
+              <p>☀ Each day is made up of 96, 15 minute blocks.</p>
 
-            <div style={{paddingBottom:"15px"}}>
-              <b>Week 1</b><li>Document your normal daily activities with the blocks.</li>
-            </div>
-            <div style={{paddingBottom:"15px"}}>
-              <b>Week 2</b><li>Optimize your week by cutting out unproductivity. When a block is scheduled only focus on that activity.</li>
-            </div>
-            <div style={{paddingBottom:"15px"}}>
-              <b>Week 3</b>
-              <li>If there is room for optimization do so without sacrificing sleep.</li>
-            </div>
-          </ul>
-        </Alert>
+              <div style={{paddingBottom:"15px"}}>
+                <b>Week 1</b><li>Document your normal daily activities with the blocks.</li>
+              </div>
+              <div style={{paddingBottom:"15px"}}>
+                <b>Week 2</b><li>Optimize your week by cutting out unproductivity. When a block is scheduled only focus on that activity.</li>
+              </div>
+              <div style={{paddingBottom:"15px"}}>
+                <b>Week 3</b>
+                <li>If there is room for optimization do so without sacrificing sleep.</li>
+              </div>
+            </ul>
+          </Accordion.Body>
+        </Accordion>
+
 
       </div>
       <div className='body-padding' style={{paddingTop:'20px',paddingBottom:'20px'}}>

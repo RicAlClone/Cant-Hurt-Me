@@ -14,7 +14,7 @@ useEffect(()=>{
 
   return(
 
-    <div className="col-lg-4" >
+    <div className="col-lg-4" style={{padding:'0'}}>
       <Animated
         animationIn="fadeIn"
         animationOut="bounceOut"
