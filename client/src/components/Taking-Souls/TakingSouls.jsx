@@ -35,6 +35,7 @@ useEffect(()=>{
   tsService.getTSNotes().then(data=>{
     setIsLoaded(true);
     setArray(data.takingSouls)
+    console.log('data i need:',data.takingSouls);
   });
   return ()=>{clearTimeout(timer)};
 },[]);
@@ -114,7 +115,7 @@ tsService.deleteTSNote(id).then(data=>{
           </p>
         </Accordion.Body>
       </Accordion>
-      
+
 
       <CreateNote
         addJournalEntry={addJournalEntry}

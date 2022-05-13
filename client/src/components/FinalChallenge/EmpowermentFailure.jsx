@@ -201,8 +201,11 @@ function dateEmptyCheck(){
             placeholder="What adjustments can we make on our next attempt..."/>
           </div>
 
+          {/* took off className:'inputStyle' */}
+          {/* style={{display:"inline-block"}} */}
           <div>
-            <p style={{display:"inline-block"}}>Fix failures on </p> <input type="date" className="inputStyle" style={dateEmptyCheck()} onChange={handleChange}  name="date" value={failNote.date} />
+            <label style={{display:'block'}}><b>Fix Date:</b></label>
+            <input type="date"  style={dateEmptyCheck()} className='inputStyle' onChange={handleChange}  name="date" value={failNote.date}/>
             {clickedAdd && !failNote.date?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:"0 10px"}}/>:null}
           </div>
 

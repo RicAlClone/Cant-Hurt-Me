@@ -3,7 +3,8 @@ import AddIcon from "../AddIcon";
 import RequiredMessage from "../RequiredMessage";
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Message from "../Message";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function CreateNote(props,{children}) {
 
@@ -61,6 +62,7 @@ if(!entry.date||!entry.title||!entry.paragraph){
   console.log('something is empty');
 }
 else{
+console.log('sending this as date to backend:',entry.date);
   props.addJournalEntry(entry);
   setEntry(()=>{
     setSubmitCheck(false);
@@ -118,14 +120,16 @@ function paragraphFilled(property){
                 null
               }
             </div>
-            {/* className="inputStyle list-input" */}
+
+            <label style={{marginRight:'0.8rem'}}>Date:</label>
             <input
               className="inputStyle list-input"
               type="date"
               name="date"
               style={dateFilled('date')}
               onChange={ourChange}  value={entry.date}
-              />
+
+            />
 
 
 
