@@ -63,7 +63,7 @@ const [isLoaded,setIsLoaded]=useState(false);
         setImageExists(true);
         setImageID(data.documents[0]._id);
       }
-      else if(data.documents.length==0){
+      else if(data.documents.length===0){
       setInitialImageLoading(false);
       }
     })

@@ -7,7 +7,6 @@ import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
 import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
-import {Alert} from 'react-bootstrap';
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Accordion from 'react-bootstrap/Accordion';
 import {CgCardSpades} from 'react-icons/cg';

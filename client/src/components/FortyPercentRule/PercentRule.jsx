@@ -7,12 +7,10 @@ import {AuthContext} from "../../Context/AuthContext";
 import Message from '../Message';
 import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
-import {Alert} from "react-bootstrap";
 import {BsFillExclamationCircleFill} from 'react-icons/bs';
 import Accordion from 'react-bootstrap/Accordion';
 import {FaRunning} from 'react-icons/fa';
 import { IconContext } from "react-icons";
-import InputNumber from 'react-input-number';
 
 const PercentRule = function() {
 
@@ -206,9 +204,8 @@ function updateNote(id,toUpdate){
 
             <label style={{display:"block",marginBottom:'0'}}>Sets</label>
             <input type="number" pattern="\d*" min="0" className="inputStyle" onChange={handleChange} name="sets" value={formData.sets} />
+            
 
-            {/* <InputNumber  min="0" className="inputStyle" onChange={handleChange} name="sets" value={Number(formData.sets)} enableMobileNumericKeyboard/>
-            */}
             <label style={{display:"block",marginBottom:'0'}}>Reps</label>
             <input type="number" pattern="\d*" min="0" className="inputStyle" onChange={handleChange} name="reps" value={formData.reps}  />
 

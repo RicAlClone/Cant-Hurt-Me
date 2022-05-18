@@ -1,4 +1,4 @@
-import React,{useState, useContext} from "react";
+import React, {useContext} from "react";
 import AuthService from "../../../Services/AuthService";
 import {AuthContext} from '../../../Context/AuthContext';
 import {FiArrowLeftCircle, FiArrowRightCircle} from 'react-icons/fi';
@@ -19,13 +19,13 @@ const authContext=useContext(AuthContext);
   }
 
 function week(){
-  if(props.week=='1'){
+  if(props.week==='1'){
     return '#week1';
   }
-  else if(props.week=='2'){
+  else if(props.week==='2'){
     return '#week2';
   }
-  else if(props.week=='3'){
+  else if(props.week==='3'){
     return '#week3';
   }
 }

@@ -387,13 +387,13 @@ Object.values(sunObj).forEach(val=>{
 });
 
 
-const stepContainer={
-  display:"block",
-  width: "50%",
-  margin:"0 auto 0 auto",
-  padding: "15px 0",
-  // backgroundColor:"pink"
-}
+// const stepContainer={
+//   display:"block",
+//   width: "50%",
+//   margin:"0 auto 0 auto",
+//   padding: "15px 0",
+//   // backgroundColor:"pink"
+// }
 
 
 const [backColorDay,setBackColorDay]=useState({backgroundColor:'lightcyan'});
@@ -500,7 +500,7 @@ setEditButtonStyle('btn btn-info');
         <button  onClick={orange} style={{backgroundColor:"orange"}} type="button" className="btn">Eating</button>
         <button  onClick={purple} style={{backgroundColor:"purple",color:"white"}} type="button" className="btn">Commuting</button>
         <button onClick={torquoise} style={{backgroundColor:'#40E0D0',color:'white'}} type="button" className="btn">Prepare</button>
-        
+
       </div>
 
 

@@ -17,7 +17,6 @@ import Register from "./components/Register";
 import DailyInstructions from "./components/DailyInstructions";
 import PrivateRoute from "./Hocs/PrivateRoute";
 import UnPrivateRoute from "./Hocs/UnPrivateRoute";
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 

@@ -7,7 +7,6 @@ import {AuthContext} from "../../Context/AuthContext";
 import Message from "../Message";
 import AuthService from '../../Services/AuthService';
 import { SpinnerDiamond } from 'spinners-react';
-import {Alert} from 'react-bootstrap';
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Accordion from 'react-bootstrap/Accordion';
 import {GiCrestedHelmet} from 'react-icons/gi';
@@ -141,7 +140,7 @@ if(!value.imageURL&&submitCheck){
           </ul>
         </Accordion.Body>
       </Accordion>
-      
+
 
       <form>
         <div className="all-main-containers">

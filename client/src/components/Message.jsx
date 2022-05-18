@@ -1,19 +1,17 @@
 import React from "react";
-import Alert from "react-bootstrap/Alert";
+
+// function Style(props){
 
 
-function Style(props){
-
-
-  if(props.message.msgError){
-
-    return 'danger';
-  }else{
-
-    return 'primary';
-  }
-
-}
+//   if(props.message.msgError){
+//
+//     return 'danger';
+//   }else{
+//
+//     return 'primary';
+//   }
+//
+// }
 
 
 function Message(props){

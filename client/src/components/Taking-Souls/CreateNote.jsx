@@ -1,10 +1,7 @@
 import React, {useState} from "react";
 import AddIcon from "../AddIcon";
-import RequiredMessage from "../RequiredMessage";
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Message from "../Message";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 function CreateNote(props,{children}) {
 
@@ -16,7 +13,6 @@ function CreateNote(props,{children}) {
 
 const [submitCheck,setSubmitCheck]=useState(false);
 
-const [inputCheck,setInputCheck]=useState("pink");
 
   function ourChange(event) {
     // const newValue=event.target.value;
@@ -48,11 +44,6 @@ const [inputCheck,setInputCheck]=useState("pink");
     })
   }
 
-  const block = {
-    display: "block",
-    width: "100%",
-    border: "none"
-  }
 
   function handleAddEntry(event) {
     event.preventDefault();
@@ -82,10 +73,10 @@ console.log('sending this as date to backend:',entry.date);
 
 function dateFilled(property){
   if (!entry[property] && submitCheck){
-    return {width:"59%",margin:"0",backgroundColor:"#ffdede"}
+    return {margin:"0",backgroundColor:"#ffdede"}
   }
   else{
-    return {width:"59%",margin:"0",backgroundColor:"white"}
+    return {margin:"0",backgroundColor:"white"}
   }
 }
 
@@ -121,9 +112,9 @@ function paragraphFilled(property){
               }
             </div>
 
-            <label style={{marginRight:'0.8rem'}}>Date:</label>
+            <label style={{display:"block"}}>Date:</label>
             <input
-              className="inputStyle list-input"
+              className="inputStyle date-input"
               type="date"
               name="date"
               style={dateFilled('date')}
@@ -152,7 +143,7 @@ function paragraphFilled(property){
               {!entry.paragraph&&submitCheck?
                 <p style={{color:"#bf2121",marginBottom:"0"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/></p>:null}
             </div>
-            <textarea style={paragraphFilled('paragraph')} name="paragraph" onChange={ourChange}  placeholder="Write how you beat your competitor..." value={entry.paragraph} />
+            <textarea style={paragraphFilled('paragraph')} name="paragraph" onChange={ourChange}  placeholder="Explain how you beat your competitor..." value={entry.paragraph} />
           </div>
 
           <div style={{height:"39px",margin:"10px 0"}}>

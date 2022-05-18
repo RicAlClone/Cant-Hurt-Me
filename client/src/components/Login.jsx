@@ -3,22 +3,21 @@ import AuthService from "../Services/AuthService"
 import Message from "./Message";
 import {AuthContext} from "../Context/AuthContext";
 import {Link} from 'react-router-dom';
-import Register from './Register';
 import {AiFillEye} from 'react-icons/ai';
 import {AiFillEyeInvisible} from 'react-icons/ai';
 
 function Login(props){
 
-let center={
-  margin:"0 auto 0 auto",
-  display:"flex",
-  justifyContent:"center",
-  alignItems:"center",
-  backgroundColor: "green",
-  width:"320px",
-  height:"320px",
-  padding:"10px"
-}
+// let center={
+//   margin:"0 auto 0 auto",
+//   display:"flex",
+//   justifyContent:"center",
+//   alignItems:"center",
+//   backgroundColor: "green",
+//   width:"320px",
+//   height:"320px",
+//   padding:"10px"
+// }
 let inputStyle={
   width:"100%",
   display:"block"

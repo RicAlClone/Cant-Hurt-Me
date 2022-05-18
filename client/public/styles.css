@@ -98,11 +98,11 @@ justify-content: space-between;
   width:100%;
 }
 
-
-input[type=number]::-webkit-inner-spin-button {
-  width: 30px;
-  height: 30px;
+.date-input{
+  width: 60%;
 }
+
+
 
 /* Accountability Mirror */
 .schedule-loader {

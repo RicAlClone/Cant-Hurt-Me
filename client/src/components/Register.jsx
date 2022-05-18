@@ -64,17 +64,17 @@ timerId= setTimeout(()=>{
 },5000)
 }
 
-  else if(message.msgBody ==bothVal){
+  else if(message.msgBody === bothVal){
     setUserNameCheck(true);
     setPasswordCheck(true);
 
   }
-  else if(message.msgBody == usernameVal){
+  else if(message.msgBody === usernameVal){
     setUserNameCheck(true);
     setPasswordCheck(false);
 
   }
-  else if(message.msgBody == passwordVal){
+  else if(message.msgBody === passwordVal){
     setPasswordCheck(true);
     setUserNameCheck(false);
 

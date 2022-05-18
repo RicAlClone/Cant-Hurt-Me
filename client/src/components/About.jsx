@@ -15,7 +15,7 @@ import {GrDocumentTime} from 'react-icons/gr';
 import { IconContext } from "react-icons";
 
 export default function About(){
-const {isAuthenticated,setIsAuthenticated,setUser,user}=useContext(AuthContext)
+const {isAuthenticated}=useContext(AuthContext)
 
 const [isLogged,setIsLogged]=useState(false);
 
@@ -27,7 +27,7 @@ useEffect(()=>{
   else{
     setIsLogged(false)
       }
-},[])
+},[isAuthenticated]);
 
 
 const bookLink="https://www.amazon.com/Cant-Hurt-Me-Master-Your/dp/1544512279/ref=asc_df_1544512279/?tag=hyprod-20&linkCode=df0&hvadid=316651574325&hvpos=&hvnetw=g&hvrand=256222697005570643&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9031226&hvtargid=pla-553981143753&psc=1"

@@ -6,7 +6,6 @@ import CookieJarService from "../../Services/CookieJarService"
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
 import AuthService from "../../Services/AuthService";
-import {Alert} from "react-bootstrap";
 import{BsFillExclamationCircleFill} from "react-icons/bs";
 import Accordion from 'react-bootstrap/Accordion';
 
@@ -175,7 +174,7 @@ const CookieJar = function() {
           </ul>
         </Accordion.Body>
       </Accordion>
-      
+
 
       <form>
         <div className="all-main-containers">
@@ -223,16 +222,16 @@ const CookieJar = function() {
 
       {
         turnOn
-          ? array.map((element, index) => {
+          ? array.map((element, index)=>{
 
             if (index === index2) {
 
               return <TheCookie
-                key={index}
-                array={array}
-                index={index}
-                secAni={secAni}
-                delete={deleteCookie}/>
+              key={index}
+              array={array}
+              index={index}
+              secAni={secAni}
+              delete={deleteCookie}/>
           }
         })
         : null

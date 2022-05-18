@@ -10,7 +10,7 @@ useEffect(()=>{
   return ()=>{
     clearTimeout(timerId);
   }
-});
+},[]);
 
   function dateFunc(str) {
     let fixRegex = /(\w+)-(\w+)-(\w+)/; // Change this line
@@ -20,11 +20,6 @@ useEffect(()=>{
 
   }
 
-function handleDelete(){
-  setVisible(false);
-  timerId=setTimeout(()=>{setVisible(true);},1000);
-  props.deleteJournalEntry(props.id);
-}
 
 return(
   <div className="col-lg-4" >
@@ -40,7 +35,11 @@ return(
           <h6>{dateFunc(props.calendar)}</h6>
           <p className="mirror-note-title">{props.title}</p>
           <p>{props.paragraph}</p>
-          <i className="fas fa-trash-alt delete-bottom-right" onClick={handleDelete} />
+          <i className="fas fa-trash-alt delete-bottom-right" onClick={()=>{
+            setVisible(false);
+            timerId=setTimeout(()=>{setVisible(true);},1000);
+            props.deleteJournalEntry(props.id);
+          }}></i>
         </div>
       </div>
     </Animated>

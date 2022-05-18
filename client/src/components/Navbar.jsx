@@ -1,11 +1,10 @@
-import React, {useContext,useState} from "react";
+import React, {useContext} from "react";
  import { Link,useHistory } from 'react-router-dom';
 import BNavbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import AuthService from '../Services/AuthService';
 import {AuthContext} from '../Context/AuthContext';
-import Container from 'react-bootstrap/Container';
 import {FaUserCheck} from 'react-icons/fa';
 
 
@@ -93,7 +92,6 @@ const blackText={
   return (
 
     <BNavbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
-      {/* <Container> */}
       <BNavbar.Brand  style={{color:"white"}} as={Link} to="/">Can't Hurt Me Challenges</BNavbar.Brand>
       <BNavbar.Toggle aria-controls="responsive-navbar-nav" />
       <BNavbar.Collapse id="responsive-navbar-nav">
@@ -101,7 +99,6 @@ const blackText={
         {!isAuthenticated? unAuthenticatedNavBar(): authenticatedNavBar()}
 
       </BNavbar.Collapse>
-      {/* </Container> */}
     </BNavbar>
 
   );

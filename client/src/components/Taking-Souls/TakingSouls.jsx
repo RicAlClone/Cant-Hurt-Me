@@ -4,10 +4,8 @@ import CreateNote from "./CreateNote";
 import {Link} from "react-router-dom";
 import tsService from "../../Services/TakingSoulsService";
 import {AuthContext} from "../../Context/AuthContext";
-import Message from "../Message";
 import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
-import {Alert} from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import {CgGhostCharacter} from 'react-icons/cg';
 import { IconContext } from "react-icons";
@@ -35,8 +33,7 @@ useEffect(()=>{
   tsService.getTSNotes().then(data=>{
     setIsLoaded(true);
     setArray(data.takingSouls)
-    console.log('data i need:',data.takingSouls);
-  });
+      });
   return ()=>{clearTimeout(timer)};
 },[]);
 

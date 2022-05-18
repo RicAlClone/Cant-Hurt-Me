@@ -4,11 +4,9 @@ import AddIcon from "../AddIcon";
 import FailureService from "../../Services/FailureService";
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
-import RqMs from "../RequiredMessage";
 import AuthService from "../../Services/AuthService";
 import {Link} from "react-router-dom";
 import { SpinnerDiamond } from 'spinners-react';
-import {Alert} from 'react-bootstrap';
 import {BsFillExclamationCircleFill} from 'react-icons/bs';
 import Accordion from 'react-bootstrap/Accordion';
 import {GrDocumentTime} from 'react-icons/gr';
@@ -120,12 +118,6 @@ FailureService.delete(id).then(data=>{
 
 }
 
-  const block={
-    display: "block",
-    width: "100%",
-    border:"1px solid #ccc",
-    borderRadius: "8px"
-  }
 
   function emptyInputError(x){
     if(clickedAdd &&!failNote[x]){
@@ -205,7 +197,7 @@ function dateEmptyCheck(){
           {/* style={{display:"inline-block"}} */}
           <div>
             <label style={{display:'block'}}><b>Fix Date:</b></label>
-            <input type="date"  style={dateEmptyCheck()} className='inputStyle' onChange={handleChange}  name="date" value={failNote.date}/>
+            <input type="date"  style={dateEmptyCheck()} className='inputStyle date-input' onChange={handleChange}  name="date" value={failNote.date}/>
             {clickedAdd && !failNote.date?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:"0 10px"}}/>:null}
           </div>
 

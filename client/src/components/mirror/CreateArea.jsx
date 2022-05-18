@@ -41,12 +41,6 @@ setClickAdd(true);
   }
 };
 
-  const block={
-    display: "block",
-    width: "100%",
-    border: "none"
-  }
-
 
 function inputErrorCatcher(x){
   if(clickAdd && !note[x]){
