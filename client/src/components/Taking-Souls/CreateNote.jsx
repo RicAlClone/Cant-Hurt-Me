@@ -73,10 +73,10 @@ console.log('sending this as date to backend:',entry.date);
 
 function dateFilled(property){
   if (!entry[property] && submitCheck){
-    return {margin:"0",backgroundColor:"#ffdede"}
+    return {width:'60%',margin:"0",backgroundColor:"#ffdede"}
   }
   else{
-    return {margin:"0",backgroundColor:"white"}
+    return {width:'60%',margin:"0",backgroundColor:"white"}
   }
 }
 
@@ -112,9 +112,10 @@ function paragraphFilled(property){
               }
             </div>
 
+            {/* date-input */}
             <label style={{display:"block"}}>Date:</label>
             <input
-              className="inputStyle date-input"
+              className="inputStyle "
               type="date"
               name="date"
               style={dateFilled('date')}

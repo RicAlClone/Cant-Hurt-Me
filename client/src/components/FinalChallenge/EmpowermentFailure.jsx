@@ -140,10 +140,10 @@ FailureService.delete(id).then(data=>{
   }
 function dateEmptyCheck(){
   if(clickedAdd && !failNote.date){
-    return {backgroundColor:"#ffdede"}
+    return {width:'60%',backgroundColor:"#ffdede"}
   }
   else{
-    return null;
+    return {width:'60%'};
   }
 }
   return(
@@ -195,9 +195,10 @@ function dateEmptyCheck(){
 
           {/* took off className:'inputStyle' */}
           {/* style={{display:"inline-block"}} */}
+          {/* date-input */}
           <div>
             <label style={{display:'block'}}><b>Fix Date:</b></label>
-            <input type="date"  style={dateEmptyCheck()} className='inputStyle date-input' onChange={handleChange}  name="date" value={failNote.date}/>
+            <input type="date"  style={dateEmptyCheck()} className='inputStyle ' onChange={handleChange}  name="date" value={failNote.date}/>
             {clickedAdd && !failNote.date?<BsFillExclamationCircleFill style={{color:"#bf2121",margin:"0 10px"}}/>:null}
           </div>
 
