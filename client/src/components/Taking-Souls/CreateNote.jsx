@@ -2,11 +2,15 @@ import React, {useState} from "react";
 import AddIcon from "../AddIcon";
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Message from "../Message";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function CreateNote(props,{children}) {
 
+// const [startDate,setStartDate]=useState(new Date());
+
   const [entry, setEntry] = useState({
-    date: "",
+    date: new Date().toISOString().slice(0,10),
     title: "",
     paragraph: ""
   })
@@ -24,7 +28,7 @@ const [submitCheck,setSubmitCheck]=useState(false);
         ...prevValue,
         [name]: value
       }
-
+console.log('ourChange():',entry);
 
         //event.target.name is given when we change the html input for date and we give it the value we enter.
         //we are adding that ontop of the new object properties. but when the property key is the same
@@ -53,13 +57,13 @@ if(!entry.date||!entry.title||!entry.paragraph){
   console.log('something is empty');
 }
 else{
-console.log('sending this as date to backend:',entry.date);
+console.log('handleAddEntry():',entry);
   props.addJournalEntry(entry);
   setEntry(()=>{
     setSubmitCheck(false);
     return(
       {
-        date:"",
+        date:new Date().toISOString().slice(0,10),
         title:"",
         paragraph:""
       }
@@ -98,6 +102,8 @@ function paragraphFilled(property){
   }
 }
 
+
+console.log('entry:',entry);
   return (
     <form >
       <div className="all-main-containers">
@@ -114,6 +120,12 @@ function paragraphFilled(property){
 
             {/* date-input */}
             <label style={{display:"block"}}>Date:</label>
+
+            {/* <DatePicker
+              selected={entry.date}
+              onChange={(date)=>{}}
+            /> */}
+
             <input
               className="inputStyle "
               type="date"

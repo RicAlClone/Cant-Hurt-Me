@@ -32,7 +32,8 @@ return(
     >
       <div className="note-container">
         <div className="note" >
-          <h6>{dateFunc(props.calendar)}</h6>
+          {/* dateFunc(props.calendar.slice(0,10)) */}
+          <h6>{dateFunc(props.calendar.slice(0,10))}</h6>
           <p className="mirror-note-title">{props.title}</p>
           <p>{props.paragraph}</p>
           <i className="fas fa-trash-alt delete-bottom-right" onClick={()=>{
