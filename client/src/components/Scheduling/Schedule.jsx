@@ -71,13 +71,18 @@ const authContext=useContext(AuthContext);
       </div>
       <div className='body-padding' style={{paddingTop:'20px',paddingBottom:'20px'}}>
         <Alert className="instruction-bullets"  variant='success'>
-          <ol style={{width:'100%'}}>
-            <h6>Steps</h6>
 
+
+          {/* style={{width:'100%'}} */}
+
+          <ol >
+            <h6>Steps</h6>
             <li>Click edit</li>
             <li>Choose event</li>
             <li>Choose time block to fill and save</li>
           </ol>
+
+
         </Alert>
       </div>
       <Week1

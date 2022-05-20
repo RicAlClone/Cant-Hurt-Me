@@ -143,7 +143,7 @@ function dateEmptyCheck(){
     return {width:'60%',backgroundColor:"#ffdede"}
   }
   else{
-    return {width:'60%'};
+    return {width:'60%',backgroundColor:"white"};
   }
 }
   return(

@@ -2,15 +2,14 @@ import React, {useState} from "react";
 import AddIcon from "../AddIcon";
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Message from "../Message";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 
 function CreateNote(props,{children}) {
 
 // const [startDate,setStartDate]=useState(new Date());
-
+//new Date().toISOString().slice(0,10)
   const [entry, setEntry] = useState({
-    date: new Date().toISOString().slice(0,10),
+    date:"",
     title: "",
     paragraph: ""
   })
@@ -63,7 +62,7 @@ console.log('handleAddEntry():',entry);
     setSubmitCheck(false);
     return(
       {
-        date:new Date().toISOString().slice(0,10),
+        date:"",
         title:"",
         paragraph:""
       }
@@ -121,10 +120,7 @@ console.log('entry:',entry);
             {/* date-input */}
             <label style={{display:"block"}}>Date:</label>
 
-            {/* <DatePicker
-              selected={entry.date}
-              onChange={(date)=>{}}
-            /> */}
+
 
             <input
               className="inputStyle "
@@ -132,6 +128,7 @@ console.log('entry:',entry);
               name="date"
               style={dateFilled('date')}
               onChange={ourChange}  value={entry.date}
+              placeholder='enter date'
 
             />
 

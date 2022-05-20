@@ -34,7 +34,7 @@ html{
 
 .instruction-bullets{
   margin:0 auto 0 auto;
-  width:50%;
+  width:30%;
 }
 
 
@@ -408,7 +408,7 @@ ol{
 }
 
 ol li{
-  padding:20px;
+  padding:10px;
 }
 .first-challenge-link-container{
   display: flex;
@@ -576,7 +576,7 @@ label{
   }
 
   ol{
-    width:100%;
+    /* width:100%; */
     margin: 0 auto 0 auto;
     padding:0;
   }
