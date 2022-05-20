@@ -6,10 +6,10 @@ import Message from "../Message";
 
 function CreateNote(props,{children}) {
 
-// const [startDate,setStartDate]=useState(new Date());
+
 //new Date().toISOString().slice(0,10)
   const [entry, setEntry] = useState({
-    date:"",
+    date:new Date().toISOString().slice(0,10),
     title: "",
     paragraph: ""
   })
@@ -27,7 +27,7 @@ const [submitCheck,setSubmitCheck]=useState(false);
         ...prevValue,
         [name]: value
       }
-console.log('ourChange():',entry);
+
 
         //event.target.name is given when we change the html input for date and we give it the value we enter.
         //we are adding that ontop of the new object properties. but when the property key is the same
@@ -62,7 +62,7 @@ console.log('handleAddEntry():',entry);
     setSubmitCheck(false);
     return(
       {
-        date:"",
+        date:new Date().toISOString().slice(0,10),
         title:"",
         paragraph:""
       }
@@ -120,15 +120,12 @@ console.log('entry:',entry);
             {/* date-input */}
             <label style={{display:"block"}}>Date:</label>
 
-
-
             <input
               className="inputStyle "
               type="date"
               name="date"
               style={dateFilled('date')}
               onChange={ourChange}  value={entry.date}
-              placeholder='enter date'
 
             />
 

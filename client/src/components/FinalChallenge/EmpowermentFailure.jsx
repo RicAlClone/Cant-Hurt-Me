@@ -21,7 +21,7 @@ const [failNote, setFailNote]=useState({
   positives:"",
   mindset: "",
   fixes:"",
-  date:""
+  date:new Date().toISOString().slice(0,10)
 });
 
 const [array,setArray]=useState([]);
@@ -95,7 +95,7 @@ else{
     positives:"",
     mindset:"",
     fixes:"",
-    date:""
+    date:new Date().toISOString().slice(0,10)
   })
 }
 }
