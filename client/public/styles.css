@@ -146,6 +146,10 @@ justify-content: space-between;
   line-height: 1.1;
 }
 @media only screen and (max-width: 376px) {
+
+  .navbar-brand{
+    font-size: 16px;
+  }
   .accordion{
     width:100%;
   }
@@ -153,9 +157,7 @@ justify-content: space-between;
   .main-contain {
     width: 95%;
   }
-  /* .navbar{
-    width:100%;
-  } */
+
 }
 
 .col-lg-3 {
@@ -281,6 +283,11 @@ justify-content: space-between;
   padding-right: 1rem;
 }
 @media only screen and (max-width: 320px){
+
+.navbar-brand{
+  font-size: 16px;
+}
+
   .accordion{
     width:100%;
   }
@@ -288,16 +295,11 @@ justify-content: space-between;
     width:100%;
     height:auto;
   }
-body{
-  background-color: yellow;
-}
 
 .dropdown-item{
   padding:5px;
 }
-.navbar{
-  width:342px;
-}
+
 }
 
 /* weekly schedule  */

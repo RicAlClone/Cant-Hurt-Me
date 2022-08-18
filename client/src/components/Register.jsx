@@ -117,7 +117,7 @@ const exlamMark={
       <div className="input-and-label-padding">
         <label>Password</label>
         <span style={{marginLeft:'15px'}} onClick={()=>!readable?setReadable(true):setReadable(false)}>
-          {!readable?<AiFillEye size='25px' />:<AiFillEyeInvisible size='25px'/>}
+          {readable?<AiFillEye size='25px' />:<AiFillEyeInvisible size='25px'/>}
         </span>
         {clickAdd&&passwordCheck ? <span style={exlamMark}><i class="fas fa-exclamation-circle"></i></span> : null}
         <input className="inputStyle" type={!readable?"password" :"text"} name="password" onChange={handleChange} value={registerData.password} style={inputStyle} placeholder="Password" required/>

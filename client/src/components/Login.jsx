@@ -85,7 +85,7 @@ function onSubmit(e){
       <div className="input-and-label-padding">
         <label>Password</label>
         <span style={{marginLeft:'15px'}} onClick={()=>!readable?setReadable(true):setReadable(false)}>
-          {!readable?<AiFillEye size='25px' />:<AiFillEyeInvisible size='25px'/>}
+          {readable?<AiFillEye size='25px' />:<AiFillEyeInvisible size='25px'/>}
         </span>
         <input className="inputStyle" style={inputStyle} type={!readable?"password" :"text"} name="password" onChange={handleChange} value={signInData.password} placeholder="Password" required/>
       </div>
