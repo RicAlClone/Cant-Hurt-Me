@@ -1,12 +1,5 @@
-// const DayModel= require('../models/Schedule.model');
-// const skeleton = require('../models/Skeleton');
+
 const User= require('../models/User');
-
-
-//we write a function that has a loop that returns every elem in array
-// ii feeel like i did this before but send result._id to everytime
-//we save a day and use result._id to look up the User and find the dayModel area and add
-//the saved._id
 
 function everyDayFunction(DayModel,skeleton,result){
 

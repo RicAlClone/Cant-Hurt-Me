@@ -12,7 +12,6 @@ const PORT= process.env.PORT || 5000;
 
 app.use(cookieParser()); // I was missing this code!!!! which didnt
 //let me- continue making notes on this code i was missing
-// app.use(express.json());//dont know if i would need this since its also used at line 17.
 
 app.use(express.json({limit: '50mb',extended:true}));
 app.use(express.urlencoded({limit: '50mb',extended:true}));
@@ -64,8 +63,6 @@ app.get('/',(req,res)=>{
   res.send('App is running...')
 })
 }
-
-
 
 
 app.listen(PORT,function(){

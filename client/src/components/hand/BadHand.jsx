@@ -1,4 +1,6 @@
 import React,{useState,useEffect,useRef, useContext} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import ListItem from "./ListItem";
 import {Link} from "react-router-dom";
 import BadhandService from "../../Services/BadhandService.js";
