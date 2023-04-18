@@ -6,7 +6,7 @@ const passport = require('passport');
 
 const passportConfig = require('../passport');
 
-const User = require('../models/User');// i uncapped the user here 5-5-2021 to test.
+const User = require('../models/User');
 
 const Mirror = require('../models/Mirror.model');
 

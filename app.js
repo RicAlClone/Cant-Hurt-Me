@@ -10,13 +10,11 @@ require("dotenv").config();
 
 const PORT= process.env.PORT || 5000;
 
-app.use(cookieParser()); // I was missing this code!!!! which didnt
-//let me- continue making notes on this code i was missing
+app.use(cookieParser());
 
 app.use(express.json({limit: '50mb',extended:true}));
 app.use(express.urlencoded({limit: '50mb',extended:true}));
 
-// const uri= process.env.ATLAS_URI;
 
 mongoose.connect(process.env.ATLAS_URI,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
   console.log("MongoDB database connected successfully");

@@ -42,8 +42,6 @@ router.get('/getArmoredNotes',passport.authenticate('jwt', { session: false }),(
 });
 
 router.delete('/deleteArmoredNote/:deleteNote',passport.authenticate('jwt', { session: false }),(req,res)=>{
-  //where do we delete first? the notes object or from the user object??
-  //lets try the note object
   const id= req.params.deleteNote;
   ArmoredMindURL.findByIdAndDelete(id,(err)=>{
     if(err){

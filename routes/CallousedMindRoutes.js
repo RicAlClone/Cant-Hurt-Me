@@ -1,8 +1,3 @@
-//what do we need to require?
-  //express
-  //make a name to make express.Router();
-
-//require all the jwt and models.
 
 var express=require('express');
 
@@ -12,17 +7,15 @@ const passport = require('passport');
 
 const passportConfig = require('../passport');
 
-const User = require('../models/User');// i uncapped the user here 5-5-2021 to test.
+const User = require('../models/User');
 
 const CallousedModel= require('../models/CallousedMind.model');
 
-// first lets see if we can make a post
+
 
 router.post('/postCallousedNote', passport.authenticate('jwt', { session: false }), function(req,res){
-// new plan lets make a  new model to insert into our DB
 
 let reqBody=req.body;
-
 
 let newModel= new CallousedModel(reqBody);
 
@@ -43,9 +36,9 @@ newModel.save(function(err,result){
 
 })
 
-//lets make a get route
+
 router.get('/getCallousedNotes', passport.authenticate('jwt', { session: false }),function(req,res){
-  //what do we need to do to send back data
+
 User.findById({_id:req.user._id}).populate('calluses').exec(function(err, document){
   if(err){
     res.status(500).json({message:{msgBody:"Error occured",msgError:true}});
@@ -56,7 +49,7 @@ User.findById({_id:req.user._id}).populate('calluses').exec(function(err, docume
 
 });
 
-//build delete route
+
 router.delete('/deleteCallusNote/:id', passport.authenticate('jwt', { session: false }),function(req,res){
 let id=req.params.id;
 
@@ -73,7 +66,6 @@ CallousedModel.findByIdAndDelete({_id:id},function(err){
     })
   }
 })
-
 
 
 });

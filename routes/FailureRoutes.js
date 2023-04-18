@@ -4,7 +4,7 @@ const router= express.Router();
 const User =require("../models/User");
 const Failure=require("../models/Failure.model");
 
-//post
+
 router.post('/postFailureNote',passport.authenticate('jwt', { session: false }),(req,res)=>{
 
   const newFailureNote= new Failure(req.body);
@@ -28,8 +28,6 @@ router.post('/postFailureNote',passport.authenticate('jwt', { session: false }),
   })
 })
 
-
-//get
 router.get('/getFailureNotes',passport.authenticate('jwt', { session: false }),(req,res)=>{
   User.findById(req.user._id).populate("failure").exec((err,docs)=>{
     if(err){
@@ -41,7 +39,6 @@ router.get('/getFailureNotes',passport.authenticate('jwt', { session: false }),(
   })
 })
 
-//delete
 router.delete('/deleteFailureNote/:id',passport.authenticate('jwt', { session: false }),(req,res)=>{
 const id=req.params.id;
   User.findByIdAndUpdate(req.user._id,{$pull:{failure:id}},(err,temp)=>{

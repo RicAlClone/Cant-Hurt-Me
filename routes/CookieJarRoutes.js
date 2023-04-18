@@ -5,7 +5,7 @@ const Cookie = require('../models/CookieJar.model');
 const User = require('../models/User');
 
 router.post('/postCookie',passport.authenticate('jwt', { session: false }),(req,res)=>{
-  const temp= req.body.cookie;//our cookie is named cookie already
+  const temp= req.body.cookie;
 
   let newCookie= new Cookie({
     cookie: temp
@@ -33,9 +33,6 @@ newCookie.save((err,savedObj)=>{
 })
 
 router.get('/getCookies',passport.authenticate('jwt', { session: false }),(req,res)=>{
-  //so we want to reach into cookies model?
-//i want to find all documents in the collection that pertains to
-//current user.
 
 User.findById({_id:req.user._id}).populate('cookies').exec((err,document)=>{
     if(err){
@@ -50,7 +47,7 @@ User.findById({_id:req.user._id}).populate('cookies').exec((err,document)=>{
 
 
 router.delete('/deleteCookie/:id',passport.authenticate('jwt', { session: false }),(req,res)=>{
-  //so we have to delete from req.user.cookies and also delete from our Cookie collection
+  
   const idSentOver=req.params.id;
   const userID=req.user._id;
   User.findByIdAndUpdate({_id:userID},{$pull:{cookies:idSentOver}},(err)=>{

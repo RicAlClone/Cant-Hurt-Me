@@ -103,5 +103,3 @@
 const DayModel = mongoose.model('DayModel',daySchema);
 
 module.exports= DayModel;
- ////////////////this will be our pseudo route
-//since we dont have a router.post we need each day in 3 weeks to already have an id
