@@ -14,7 +14,6 @@ login: (user)=>{
         msgBody:"Check username and password",
         msgError:true
       }
-
     }
     }
   })
@@ -53,20 +52,8 @@ logOut: ()=>{
         return {isAuthenticated:false, user:{username:''}}
       }
     })
-  },
-
-  googleAuth:()=>{
-    return fetch('/user/auth/google')
-    .then(res=>{
-      if(res.status !== 401){
-
-        return res.json().then(data=>data);
-      }
-      else{
-        return {isAuthenticated:false, user:{username:''}}
-      }
-    })
   }
+
 }
 
 export default authService;

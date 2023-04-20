@@ -15,12 +15,15 @@ import {CgCardSpades} from 'react-icons/cg';
 import { IconContext } from "react-icons";
 
 const BadHand= function(){
-
+//authContext is like useState for all components.
 const authContext=useContext(AuthContext);
 
 function authCheck(){
 AuthService.isAuthenticated().then(data=>{
+  //if our /authenticated route tells us we arent authenticated then we set
+  //isAuthenticated to false and user to empty
   if(!data.isAuthenticated){
+    //reaches into authContext to set isAuthenticated and user
     const {setIsAuthenticated,setUser}=authContext;
     setIsAuthenticated(false);
     setUser({username:""})
@@ -38,12 +41,14 @@ const [message, setMessage]=useState(null);
 
 let timerID=useRef(null);
 
+//use loading spinner if not loaded
 const [isLoaded,setIsLoaded]=useState(false);
 const [clickedToAdd,setClickedToAdd]=useState(false);
 
 useEffect(()=>{
   window.scrollTo(0,0);
   BadhandService.getBadhands().then(data=>{
+    //once we recieve data set isloaded to true returning form
     setIsLoaded(true);
     newItems(data.badhands);
   });
@@ -72,8 +77,8 @@ else{
 setClickedToAdd(false);
   BadhandService.postBadhand(input).then((data)=>{
 
+//if no errors then update newItems to database items
     if(!data.message.msgError){
-
       BadhandService.getBadhands().then(data=>{
         newItems(data.badhands);
       });
@@ -83,9 +88,10 @@ setClickedToAdd(false);
           setMessage(null);
       }, 2000)
 
-
       setInput({name:""});
-    } else if(data.message.msgBody === "Unauthorized"){
+    }
+    //if we are unauthorized we will be logged out
+    else if(data.message.msgBody === "Unauthorized"){
       authContext.setUser({username:""});
       authContext.setIsAuthenticated(false);
     }
@@ -103,8 +109,8 @@ setClickedToAdd(false);
 
 function deleteItem(id){
 
+//sends over id of item to our route to delete from database
 BadhandService.deleteBadhand(id).then(data=>{
-
   if(!data.message.msgError){
 
 BadhandService.getBadhands().then(data => {
@@ -120,7 +126,6 @@ else if (data.message.msgBody === "Unauthorized"){
   authContext.setIsAuthenticated(false);
 }
 else{
-
   setMessage(message);
   timerID = setTimeout(() => {
     setMessage(null);
@@ -128,7 +133,7 @@ else{
 }
 })
 }
-
+//if we add with an empty input it will give us a warning
 function emptyInputError(){
   if(clickedToAdd && !input.name){
     return {
@@ -139,10 +144,9 @@ function emptyInputError(){
   else{
     return {
        marginRight:'10px'
-}
+    }
   }
 }
-
 
   return(
     <div className="body-padding">
@@ -170,15 +174,17 @@ function emptyInputError(){
 
         </Accordion.Body>
 
-    </Accordion>
+      </Accordion>
 
-
+      {/* checks if is loaded */}
       {isLoaded?
 
         <form>
           <div className="all-main-containers">
             <div className="inner-container" style={{position:'relative'}}>
+
               <div style={{height:"45px",display:'flex',flexDirection:'column',justifyContent:'center',paddingLeft:'10px'}}>
+                {/* if we try to add an empty note we get a warning */}
                 {clickedToAdd && !input.name?<BsFillExclamationCircleFill
                   style={{color:"#bf2121",marginBottom:"0",display:'flex',alignItems:'center',marginLeft:'10px',height:'34px'
                   }}/>
@@ -192,10 +198,6 @@ function emptyInputError(){
                   <AddIcon/>
                 </button>
               </div>
-
-              {/* <div style={{display:"flex",justifyContent:"flex-start",alignItems:"center",height:'40px',paddingLeft:'15px'}}>
-                {message?<Message message={message}/> : null}
-              </div> */}
 
               <div>
                 <ul className="list-container" style={{paddingTop:'0'}}>

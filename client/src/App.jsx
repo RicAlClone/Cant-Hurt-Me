@@ -26,8 +26,6 @@ const App = () => {
   <Router>
     <Navbar/>
     <Route exact path="/" component={About}></Route>
-
-    {/* <UnPrivateRoute exact path="/" component={About}></UnPrivateRoute> */}
     <UnPrivateRoute path="/Register" component={Register}></UnPrivateRoute>
     <UnPrivateRoute path="/Login" component={Login}></UnPrivateRoute>
     <PrivateRoute path="/DailyInstructions" roles={['user']} component={DailyInstructions}></PrivateRoute>
