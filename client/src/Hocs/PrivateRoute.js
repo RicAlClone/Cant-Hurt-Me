@@ -2,11 +2,17 @@ import React,{useContext} from "react";
 import {Route, Redirect} from "react-router-dom";
 import {AuthContext} from "../Context/AuthContext";
 
+//the props are being destructored and component is being given a value
+//of Component with capital C to return Badhands component.
+//roles returns the roles attribute
+//path will be included with ...rest
 function PrivateRoute({component:Component,roles,...rest}){
 
   const {isAuthenticated}= useContext(AuthContext);
 
   return(
+  //props is an object of with properties of history: , location:, and match:
+  //this object, which includes information about the current route
     <Route {...rest} render={props=> {
 
       if(!isAuthenticated){
@@ -15,14 +21,9 @@ function PrivateRoute({component:Component,roles,...rest}){
           to={{pathname:'/login', state:{from:props.location}}}
                />
       }
-
-      //if someone is trying to enter the admin page then
-      //this is where the mernJwt project says if its not user
-      //then go back home. If all the statements dont pass then
-      //it will take us to our admin component. Since we dont have
-      //roles we are checking if it is authenticated. if it is then we
-      //return our component below.
-
+      // e.g this would return <BadHand> with all its props
+      //When adding a component the rule states the name should be capital thats
+      // why we re-assign the component prop to Component
       return <Component {...props}/>
     }}/>
 

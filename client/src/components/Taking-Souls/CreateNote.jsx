@@ -4,8 +4,7 @@ import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Message from "../Message";
 
 
-function CreateNote(props,{children}) {
-
+function CreateNote(props) {
 
 //new Date().toISOString().slice(0,10)
   const [entry, setEntry] = useState({
@@ -18,8 +17,7 @@ const [submitCheck,setSubmitCheck]=useState(false);
 
 
   function ourChange(event) {
-    // const newValue=event.target.value;
-    // const name= event.target.name;
+
     const {name, value} = event.target;
 
     setEntry(function(prevValue) {
@@ -128,9 +126,6 @@ console.log('entry:',entry);
               onChange={ourChange}  value={entry.date}
 
             />
-
-
-
           </div>
 
 
