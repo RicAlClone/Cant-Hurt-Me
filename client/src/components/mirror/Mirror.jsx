@@ -32,6 +32,7 @@ const [newImage,setNewImage]=useState(false);
 const [imageLoader,setImageLoader]=useState(false);
 const [initialImageLoading,setInitialImageLoading]=useState(false);
 const [hide,setHide]=useState(false);
+
   let timer = useRef(null);
 
 const [isLoaded,setIsLoaded]=useState(false);
@@ -68,7 +69,7 @@ const [isLoaded,setIsLoaded]=useState(false);
       }
     })
     return() => {
-      clearTimeout(timer);
+      clearTimeout(timer.current);
     }
 
   }, []);
@@ -82,7 +83,7 @@ const [isLoaded,setIsLoaded]=useState(false);
             // setArray(getData.mirrorArray);
 
           setMessage(data.message);
-          timer = setTimeout(() => {
+          timer.current = setTimeout(() => {
             setMessage(null)
           }, 2000)
 
@@ -108,7 +109,7 @@ if(!data.message.msgError){
     setArray(getData.mirrors);
 
     setMessage(data.message);
-    timer = setTimeout(() => {
+    timer.current = setTimeout(() => {
       setMessage(null)
     }, 2000);
   })
@@ -118,7 +119,7 @@ if(!data.message.msgError){
   authContext.setIsAuthenticated(false);
 }else{
   setMessage(message);
-  timer = setTimeout(() => {
+  timer.current = setTimeout(() => {
     setMessage(null)
   }, 2000);
 }
@@ -136,7 +137,7 @@ function addImage(){
         setImage({image:gData.documents[0].image})
         setImageID(gData.documents[0]._id)
         setImageMessage(data.message);
-        timer = setTimeout(() => {
+        timer.current = setTimeout(() => {
           setImageMessage(null);
           setHide(false);
         }, 2000)
@@ -163,7 +164,7 @@ MirrorService.updateImage(imageID,image).then(data=>{
     MirrorService.getImage().then(gData=>{
       setImage({image:gData.documents[0].image})
       setImageMessage(data.message);
-      timer = setTimeout(() => {
+      timer.current = setTimeout(() => {
         setImageMessage(null);
         setHide(false);
       }, 2000)

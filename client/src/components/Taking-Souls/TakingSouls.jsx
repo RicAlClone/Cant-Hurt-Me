@@ -17,6 +17,7 @@ const [message,setMessage]=useState(null);
 const [isLoaded,setIsLoaded]=useState(false);
 const authContext=useContext(AuthContext);
 
+//this returns and object with property of current:null unil we change it.
 let timer= useRef(null);
 
 function authCheck(){
@@ -34,7 +35,7 @@ useEffect(()=>{
     setIsLoaded(true);
     setArray(data.takingSouls)
       });
-  return ()=>{clearTimeout(timer)};
+  return ()=>{clearTimeout(timer.current)};
 },[]);
 
 function addJournalEntry(entry){
@@ -46,7 +47,7 @@ tsService.addTSNote(entry).then(data=>{
   tsService.getTSNotes().then(getData=>{
     setArray(getData.takingSouls);
     setMessage(data.message);
-    timer= setTimeout(function(){ setMessage(null);}, 2000);
+    timer.current= setTimeout(function(){ setMessage(null);}, 2000);
     });
 
 }else if(data.message.msgBody === "Unauthorized"){
@@ -57,7 +58,7 @@ tsService.addTSNote(entry).then(data=>{
 }else{
 
 setMessage(data.message);
-timer= setTimeout(function(){ setMessage(null);}, 2000);
+timer.current= setTimeout(function(){ setMessage(null);}, 2000);
 }
 
 });
@@ -71,7 +72,7 @@ tsService.deleteTSNote(id).then(data=>{
     tsService.getTSNotes().then(getData=>{
       setArray(getData.takingSouls);
       setMessage(data.message);
-      timer=setTimeout(()=>setMessage(null), 2000);
+      timer.current=setTimeout(()=>setMessage(null), 2000);
     });
   }else if(data.message.msgBody === "Unauthorized"){
     authContext.setIsAuthenticated(false);
@@ -79,7 +80,7 @@ tsService.deleteTSNote(id).then(data=>{
     // props.history.push('/login')
   }else{
     setMessage(data.message);
-    timer= setTimeout(function(){ setMessage(null);}, 2000);
+    timer.current= setTimeout(function(){ setMessage(null);}, 2000);
   }
 
 });

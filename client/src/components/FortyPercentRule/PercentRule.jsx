@@ -53,7 +53,7 @@ useEffect(()=>{
   });
 
   return ()=>{
-     clearTimeout(timer);
+     clearTimeout(timer.current);
   }
 },[]);
 
@@ -84,7 +84,7 @@ else{
       fps.getRuleNotes().then(getData=>{
         setArray(getData.fortyPercentRules);
         setMessage(data.message);
-        timer=setTimeout(()=>{setMessage(null)},2000)
+        timer.current=setTimeout(()=>{setMessage(null)},2000)
       });
     }
     else if(data.message.msgBody === "Unauthorized"){
@@ -93,7 +93,7 @@ else{
     }
     else{
     setMessage(data.message);
-    timer=setTimeout(()=>{setMessage(null)},2000)
+    timer.current=setTimeout(()=>{setMessage(null)},2000)
 
     }
   });
@@ -122,7 +122,7 @@ function deleteBaseLine(e,id){
       fps.getRuleNotes().then(getData=>{
         setArray(getData.fortyPercentRules)
         setMessage(data.message);
-        timer=setTimeout(()=>{setMessage(null)},2000)
+        timer.current=setTimeout(()=>{setMessage(null)},2000)
 
       })
     }
@@ -132,7 +132,7 @@ function deleteBaseLine(e,id){
     }
     else{
       setMessage(data.message);
-      timer=setTimeout(()=>{setMessage(null)},2000)
+      timer.current=setTimeout(()=>{setMessage(null)},2000)
 
     }
     });
@@ -144,7 +144,7 @@ function updateNote(id,toUpdate){
       fps.getRuleNotes().then(getData=>{
         setArray(getData.fortyPercentRules);
         setMessage(data.message);
-        timer=setTimeout(()=>{setMessage(null)},2000)
+        timer.current=setTimeout(()=>{setMessage(null)},2000)
 
       });
     }
@@ -154,7 +154,7 @@ function updateNote(id,toUpdate){
     }
     else{
       setMessage(data.message);
-      timer=setTimeout(()=>{setMessage(null)},2000)
+      timer.current=setTimeout(()=>{setMessage(null)},2000)
 
     }
   })
@@ -204,7 +204,7 @@ function updateNote(id,toUpdate){
 
             <label style={{display:"block",marginBottom:'0'}}>Sets</label>
             <input type="number" pattern="\d*" min="0" className="inputStyle" onChange={handleChange} name="sets" value={formData.sets} />
-            
+
 
             <label style={{display:"block",marginBottom:'0'}}>Reps</label>
             <input type="number" pattern="\d*" min="0" className="inputStyle" onChange={handleChange} name="reps" value={formData.reps}  />

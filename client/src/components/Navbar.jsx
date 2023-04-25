@@ -12,6 +12,7 @@ function Navbar() {
 
 const {isAuthenticated,setIsAuthenticated,setUser,user}=useContext(AuthContext)
 
+//used to take us home when logging off
 const history= useHistory();
 
 let onClickLogoutHandler = ()=>{

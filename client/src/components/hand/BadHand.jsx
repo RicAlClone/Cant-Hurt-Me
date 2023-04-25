@@ -39,7 +39,7 @@ const [input, setInput ]= useState({
 const [message, setMessage]=useState(null);
 
 
-let timerID=useRef(null);
+let timer=useRef(null);
 
 //use loading spinner if not loaded
 const [isLoaded,setIsLoaded]=useState(false);
@@ -53,7 +53,7 @@ useEffect(()=>{
     newItems(data.badhands);
   });
 return ()=>{
-  clearTimeout(timerID);
+  clearTimeout(timer.current);
 }
 
 },[]);
@@ -84,7 +84,7 @@ setClickedToAdd(false);
       });
 
         setMessage(data.message);
-        timerID = setTimeout(() => {
+        timer.current = setTimeout(() => {
           setMessage(null);
       }, 2000)
 
@@ -97,7 +97,7 @@ setClickedToAdd(false);
     }
     else{
       setMessage(data.message);
-      timerID = setTimeout(() => {
+      timer.current = setTimeout(() => {
         setMessage(null);
     }, 2000);
     }
@@ -117,7 +117,7 @@ BadhandService.getBadhands().then(data => {
   newItems(data.badhands);
 });
 setMessage(data.message);
-timerID = setTimeout(() => {
+timer.current= setTimeout(() => {
   setMessage(null);
 }, 2000);
 }
@@ -127,7 +127,7 @@ else if (data.message.msgBody === "Unauthorized"){
 }
 else{
   setMessage(message);
-  timerID = setTimeout(() => {
+  timer.current = setTimeout(() => {
     setMessage(null);
   }, 2000);
 }

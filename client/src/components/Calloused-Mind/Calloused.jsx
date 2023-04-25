@@ -36,7 +36,7 @@ CallousedService.getCallousedNotes().then(data=>{
   setItems(data.calluses);
 });
 return ()=>{
-  clearTimeout(timer);
+  clearTimeout(timer.current);
 }
 },[]);
 
@@ -48,7 +48,7 @@ if(!data.message.msgError){
     CallousedService.getCallousedNotes().then(getData=>{
       setItems(getData.calluses);
       setMessage(data.message);
-          timer = setTimeout(()=>setMessage(null),2000);
+          timer.current = setTimeout(()=>setMessage(null),2000);
     });
 
 
@@ -58,7 +58,7 @@ if(!data.message.msgError){
   authContext.setIsAuthenticated(false);
   }else{
     setMessage(data.message);
-    timer = setTimeout(()=>setMessage(null),2000);
+    timer.current = setTimeout(()=>setMessage(null),2000);
   }
 
 })
@@ -71,7 +71,7 @@ if(!data.message.msgError){
         CallousedService.getCallousedNotes().then(data=>{
           setItems(data.calluses);
           setMessage(getData.message);
-          timer=setTimeout(()=>setMessage(null),2000);
+          timer.current=setTimeout(()=>setMessage(null),2000);
         });
 
       }
@@ -81,7 +81,7 @@ if(!data.message.msgError){
       }
       else{
         setMessage(getData.message);
-        timer=setTimeout(()=>setMessage(null),2000);
+        timer.current=setTimeout(()=>setMessage(null),2000);
       }
     });
   }
