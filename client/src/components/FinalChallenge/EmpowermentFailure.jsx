@@ -30,7 +30,7 @@ const [message,setMessage]=useState(null);
 
 const [isLoaded,setIsLoaded]=useState(false);
 
-let timerID=useRef(null);
+let timer=useRef(null);
 
 function authCheck(){
 AuthService.isAuthenticated().then(data=>{
@@ -49,7 +49,7 @@ useEffect(()=>{
   })
 
   return ()=>{
-    clearTimeout(timerID);
+    clearTimeout(timer.current);
   }
 },[])
 
@@ -81,7 +81,7 @@ else{
         setArray(gData.message.documents);
       })
       setMessage(data.message);
-      timerID=setTimeout(()=>{setMessage(null)},2000)
+      timer.current=setTimeout(()=>{setMessage(null)},2000)
     }
     else if(data.message.msgBody==="Unauthorized"){
       const {setIsAuthenticated,setUser}= authContext;
@@ -107,7 +107,7 @@ FailureService.delete(id).then(data=>{
       setArray(gData.message.documents);
     })
     setMessage(data.message);
-    timerID=setTimeout(()=>{setMessage(null)},2000)
+    timer.current=setTimeout(()=>{setMessage(null)},2000)
   }
   else if(data.message.msgBody==="Unauthorized"){
     const {setIsAuthenticated,setUser}= authContext;

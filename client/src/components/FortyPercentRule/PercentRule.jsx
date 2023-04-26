@@ -200,7 +200,7 @@ function updateNote(id,toUpdate){
               {required?<p style={{marginBottom:'0',color:"#bf2121"}}><BsFillExclamationCircleFill style={{color:"#bf2121"}}/> Must enter at least one field</p>:null}
             </div>
             <label  style={{display:"block",marginBottom:'0'}}>Title</label>
-            <input className="inputStyle list-input" onChange={handleChange} name="title" value={formData.title }  type="text" placeholder="I.e. pushups, situps, study/work time"/>
+            <input className="inputStyle list-input" onChange={handleChange} name="title" value={formData.title }  type="text" placeholder="e.g pushups, situps, study/work time"/>
 
             <label style={{display:"block",marginBottom:'0'}}>Sets</label>
             <input type="number" pattern="\d*" min="0" className="inputStyle" onChange={handleChange} name="sets" value={formData.sets} />

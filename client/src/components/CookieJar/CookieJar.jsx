@@ -46,7 +46,7 @@ const CookieJar = function() {
       setArray(data.cookies)
     });
     return() => {
-      clearTimeout(timer);
+      clearTimeout(timer.current);
       clearTimeout(aniProblem);
     }
   }, []);
@@ -73,7 +73,7 @@ const CookieJar = function() {
           CookieJarService.getCookies().then((getData) => {
             setArray(getData.cookies);
             setMessage(data.message);
-            timer = setTimeout(() => {
+            timer.current = setTimeout(() => {
               setMessage(null)
             }, 2000);
           })
@@ -122,7 +122,7 @@ const CookieJar = function() {
       if (!data.message.msgError) {
         CookieJarService.getCookies().then(data => setArray(data.cookies));
         setMessage(data.message);
-        timer = setTimeout(() => {
+        timer.current = setTimeout(() => {
           setMessage(null)
         }, 2000);
       } else if (data.message.msgBody === "Unauthorized") {

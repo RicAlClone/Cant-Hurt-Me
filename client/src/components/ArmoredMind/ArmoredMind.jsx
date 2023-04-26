@@ -49,7 +49,7 @@ ArmoredMindService.getArmoredNotes().then(data=>{
 });
 
 return ()=>{
-   clearTimeout(timer);
+   clearTimeout(timer.current);
 }
 },[]);
 
@@ -72,7 +72,7 @@ else{
               if(!data.message.msgError){
                 setArray(getData.armoredmindurls)
                 setMessage(data.message);
-                timer= setTimeout(()=>{
+                timer.current= setTimeout(()=>{
                   setMessage(null)
                 },2000);
               }
@@ -95,7 +95,7 @@ ArmoredMindService.deleteArmoredNote(id).then(data=>{
     if(!data.message.msgError){
       setArray(getData.armoredmindurls);
       setMessage(data.message);
-      timer= setTimeout(()=>{setMessage(null)},2000);
+      timer.current= setTimeout(()=>{setMessage(null)},2000);
     }
     else if(data.message.msgBody === "Unauthorized"){
       auth.setIsAuthenticated(false);

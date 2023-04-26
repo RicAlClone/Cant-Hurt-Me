@@ -20,7 +20,7 @@ const [isLoaded,setIsLoaded]=useState(false);
 
 const authContext=useContext(AuthContext);
 
-let timerID=useRef(null);
+let timer=useRef(null);
 
 function authCheck(){
 AuthService.isAuthenticated().then(data=>{
@@ -37,7 +37,7 @@ useEffect(()=>{
     setIsLoaded(true);
     setArray(data.message.documents)
   })
-  return ()=>{clearTimeout(timerID)}
+  return ()=>{clearTimeout(timer.current)}
 },[])
 
 function addJournalEntry(entry){
@@ -49,7 +49,7 @@ function addJournalEntry(entry){
         setArray(gData.message.documents);
       })
       setMessage(data.message);
-      timerID= setTimeout(()=>{setMessage(null)},2000);
+      timer.current= setTimeout(()=>{setMessage(null)},2000);
     }
     else if(data.message.msgBody==="Unauthorized"){
       const {setUser,setIsAuthenticated}=authContext;
@@ -66,7 +66,7 @@ UncommonService.delete(id).then(data=>{
       setArray(gData.message.documents);
     })
     setMessage(data.message);
-    timerID= setTimeout(()=>{setMessage(null)},2000);
+    timer.current= setTimeout(()=>{setMessage(null)},2000);
   }
   else if(data.message.msgBody==="Unauthorized"){
     const {setUser,setIsAuthenticated}=authContext;
