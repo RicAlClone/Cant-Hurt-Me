@@ -47,12 +47,15 @@ AuthService.isAuthenticated().then(data=>{
 let timer=useRef(null);
 
 useEffect(()=>{
+  const abortController = new AbortController()
+
   fps.getRuleNotes().then(data=>{
     setIsLoaded(true);
       setArray(data.fortyPercentRules)
   });
 
   return ()=>{
+    abortController.abort();
      clearTimeout(timer.current);
   }
 },[]);

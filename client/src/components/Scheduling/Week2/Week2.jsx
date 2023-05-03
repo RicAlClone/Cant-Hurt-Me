@@ -170,6 +170,7 @@ let skeleton={
 
   //Brings our data when page loads for the first time
   useEffect(()=>{
+    const abortController = new AbortController();
 
     ScheduleService.getSchedule().then(data=>{
       if(data.message.msgBody==="Unauthorized"){
@@ -185,6 +186,9 @@ let skeleton={
         setFriObj(data.message.documents[11]);
         setSatObj(data.message.documents[12]);
         setSunObj(data.message.documents[13]);
+      }
+      return ()=>{
+        abortController.abort();
       }
     })
   },[])

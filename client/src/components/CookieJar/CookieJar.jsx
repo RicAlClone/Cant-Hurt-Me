@@ -42,10 +42,13 @@ const CookieJar = function() {
   }
 
   useEffect(() => {
+    const abortController = new AbortController()
+
     CookieJarService.getCookies().then((data) => {
       setArray(data.cookies)
     });
     return() => {
+      abortController.abort();
       clearTimeout(timer.current);
       clearTimeout(aniProblem);
     }

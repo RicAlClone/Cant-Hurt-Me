@@ -273,6 +273,7 @@ let skeleton={
   const [isLoaded,setIsLoaded]=useState(false);
 //Brings our data when page loads for the first time
   useEffect(()=>{
+    const abortController = new AbortController();
 
     ScheduleService.getSchedule().then(data=>{
       if(data.message.msgBody==="Unauthorized"){
@@ -287,6 +288,9 @@ let skeleton={
         setFriObj(data.message.documents[4]);
         setSatObj(data.message.documents[5]);
         setSunObj(data.message.documents[6]);
+      }
+      return ()=>{
+        abortController.abort();
       }
     })
   },[])
@@ -592,7 +596,7 @@ setEditButtonStyle('btn btn-info');
           <li>click on button to choose color</li>
         </ul>
       </div> */}
-      
+
 
       <div className="buttons-container">
         <button onClick={blue} type="button" className="btn btn-primary">Work</button>

@@ -27,9 +27,11 @@ const Mirror = function(props) {
 
 const [image,setImage]=useState({image:""});
 const [imageID,setImageID]=useState('');
+//boolean to check if database contains an image set by user
 const [imageExists,setImageExists]=useState(false);
 const [newImage,setNewImage]=useState(false);
 const [imageLoader,setImageLoader]=useState(false);
+//
 const [initialImageLoading,setInitialImageLoading]=useState(false);
 const [hide,setHide]=useState(false);
 
@@ -48,6 +50,7 @@ const [isLoaded,setIsLoaded]=useState(false);
   }
 
   useEffect(() => {
+    const abortController = new AbortController()
 
     MirrorService.getMirrorNotes().then(data => {
       setIsLoaded(true);
@@ -57,18 +60,20 @@ const [isLoaded,setIsLoaded]=useState(false);
 
     setInitialImageLoading(true);
     MirrorService.getImage().then(data=>{
-
+      //if there is an image then set imageExist to true
       if(data.documents.length>0){
         setImage({image:data.documents[0].image})
         setInitialImageLoading(false);
         setImageExists(true);
         setImageID(data.documents[0]._id);
       }
+      //no image exists so initialImageLoading is false
       else if(data.documents.length===0){
       setInitialImageLoading(false);
       }
     })
     return() => {
+      abortController.abort();
       clearTimeout(timer.current);
     }
 
@@ -80,8 +85,6 @@ const [isLoaded,setIsLoaded]=useState(false);
 
         MirrorService.getMirrorNotes().then(getData => {
           setArray(getData.mirrors);
-            // setArray(getData.mirrorArray);
-
           setMessage(data.message);
           timer.current = setTimeout(() => {
             setMessage(null)
@@ -129,7 +132,7 @@ if(!data.message.msgError){
   };
 
 function addImage(){
-    setHide(true);
+  setHide(true);
   setImageLoader(true);
   MirrorService.postImage(image).then(data=>{
     if(!data.message.msgError){
@@ -137,11 +140,13 @@ function addImage(){
         setImage({image:gData.documents[0].image})
         setImageID(gData.documents[0]._id)
         setImageMessage(data.message);
+        console.log(imageMessage);
         timer.current = setTimeout(() => {
           setImageMessage(null);
           setHide(false);
         }, 2000)
 
+//spinner while we add image
         setImageLoader(false);
         setNewImage(false);
         setImageExists(true);
@@ -164,6 +169,7 @@ MirrorService.updateImage(imageID,image).then(data=>{
     MirrorService.getImage().then(gData=>{
       setImage({image:gData.documents[0].image})
       setImageMessage(data.message);
+
       timer.current = setTimeout(() => {
         setImageMessage(null);
         setHide(false);
@@ -239,21 +245,24 @@ MirrorService.updateImage(imageID,image).then(data=>{
         </div>
 
         {
+          //will use a spinner while we check if database contains an image or not
           initialImageLoading?
             <SpinnerCircularFixed style={{display:"block",margin:'0 auto'}} size="50px"/>
           :
           null
         }
 
-        {image.image?
-          <>
-            <img style={{display:"block",width:"235px",height:"300px",margin:"0 auto",paddingBottom:"20px"}} src={image.image} alt=""></img>
-          </>
-        :
+        {
+          image.image?
+            <>
+              <img style={{display:"block",width:"235px",height:"300px",margin:"0 auto",paddingBottom:"20px"}} src={image.image} alt=""></img>
+            </>
+          :
           null
         }
 
         {
+          //update button with appear when we try to update an image
           imageExists&&newImage&&!hide?
             <>
               <Button variant="primary" style={{display:"block",margin:"0 auto"}} onClick={updateImage}>update image</Button>
@@ -263,20 +272,22 @@ MirrorService.updateImage(imageID,image).then(data=>{
 
 
         {
+          //first time adding an image
           !imageExists&&newImage&&!hide?
             <>
               <Button variant="primary" style={{display:"block",margin:"0 auto"}} onClick={addImage}>save image</Button>
-              {/* <button style={{display:"block",margin:"0 auto"}} onClick={addImage}>save image</button> */}
             </>
           :null
         }
         {
+          //spinner while added image waits to display
           imageLoader?
             <SpinnerCircularFixed style={{display:"block",margin:'0 auto'}} size="50px"/>
           :
           null
         }
         {
+          //will either be null or updated ✔
           imageMessage?
             <Message message={imageMessage} check={true}/>
           :null
@@ -287,7 +298,6 @@ MirrorService.updateImage(imageID,image).then(data=>{
           <div className="row">
             {
               array.map(function(item, index) {
-
                 return <EachNote
                   key={index}
                   id={item._id}

@@ -33,11 +33,16 @@ AuthService.isAuthenticated().then(data=>{
 }
 
 useEffect(()=>{
+  const abortController = new AbortController();
+
   UncommonService.get().then(data=>{
     setIsLoaded(true);
     setArray(data.message.documents)
   })
-  return ()=>{clearTimeout(timer.current)}
+  return ()=>{
+    abortController.abort();
+    clearTimeout(timer.current)
+  }
 },[])
 
 function addJournalEntry(entry){
