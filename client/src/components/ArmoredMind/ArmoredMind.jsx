@@ -29,6 +29,10 @@ const ArmoredMind = function(props) {
 
   let timer = useRef(null);
 
+  let httpRegex=/http/;
+
+  let imageTypeRegex=/.jpg|.jpeg|.png/;
+
   function authCheck() {
     AuthService.isAuthenticated().then(data => {
       if (!data.isAuthenticated) {
@@ -61,18 +65,14 @@ const ArmoredMind = function(props) {
   function addImage(e) {
     e.preventDefault();
     setSubmitCheck(true);
-    if (!value.imageURL) {
-      console.log('empty');
-    }
-    else if(value.imageURL === ""){
-      console.log('not an image url');
-    }
-    else {
+
+    if(httpRegex.test(value.imageURL) && imageTypeRegex.test(value.imageURL)) {
       ArmoredMindService.postArmoredNote(value).then(data => {
         ArmoredMindService.getArmoredNotes().then(getData => {
           if (!data.message.msgError) {
             setArray(getData.armoredmindurls)
             setMessage(data.message);
+            console.log('i want to see this msg-->',data.message);
             timer.current = setTimeout(() => {
               setMessage(null)
             }, 2000);
@@ -85,6 +85,13 @@ const ArmoredMind = function(props) {
       });
       setSubmitCheck(false);
       setValue({imageURL: ""});
+    }
+    else{
+      console.log('not a real url');
+      setMessage({msgBody:'🚫 Enter jpg or png image url',msgError:false});
+      timer.current = setTimeout(() => {
+        setMessage(null)
+      }, 3000);
     }
   }
 
@@ -106,6 +113,7 @@ const ArmoredMind = function(props) {
   }
 
   function emptyStyle() {
+    //if value is '' and we hit add image(submitCheck =true)
     if (!value.imageURL && submitCheck) {
       return {marginRight: "10px", backgroundColor: "#ffdede"}
     } else {
@@ -123,7 +131,7 @@ const ArmoredMind = function(props) {
       <Accordion.Header>
         <IconContext.Provider value={{
             className: 'icon'
-          }}>
+        }}>
           <GiCrestedHelmet size='25px'/>Instructions
         </IconContext.Provider>
       </Accordion.Header>
@@ -131,14 +139,14 @@ const ArmoredMind = function(props) {
         <p>Visualization is an important tool to reaching a goal. Visualize not only the victory but the challenges and failures.</p>
         <ul className="instruction-bullets" style={{
             width: "100%"
-          }}>
+        }}>
           <li>Add images from the internet that will help you visualize your goals.</li>
           <li>Copy image address for example:
             <b style={{
                 overflowWrap: "break-word"
-              }}>
-              https://impressivetrophies.com/wp-content/uploads/billboard-trophy.jpg</b>
-            , paste inside input bar and add.</li>
+            }}>
+            https://impressivetrophies.com/wp-content/uploads/billboard-trophy.jpg</b>
+          , paste inside input bar and add.</li>
         </ul>
       </Accordion.Body>
     </Accordion>
@@ -148,29 +156,29 @@ const ArmoredMind = function(props) {
         <div className="inner-container" style={{
             marginBottom: '20px',
             position: 'relative'
-          }}>
+        }}>
           <div style={{
               height: "34px"
-            }}>
+          }}>
             {
               !value.imageURL && submitCheck
                 ? <p style={{
-                      color: "#bf2121",
-                      marginBottom: "0",
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginLeft: '10px',
-                      height: '34px'
-                    }}><BsFillExclamationCircleFill style={{
-                      color: "#bf2121"
-                    }}/></p>
+                  color: "#bf2121",
+                  marginBottom: "0",
+                  display: 'flex',
+                  alignItems: 'center',
+                  marginLeft: '10px',
+                  height: '34px'
+                }}><BsFillExclamationCircleFill style={{
+                  color: "#bf2121"
+                }}/></p>
                 : null
             }
           </div>
           <div className="input-fix" style={{
               paddingBottom: "0",
               height: "42px"
-            }}>
+          }}>
             <input type="text" style={emptyStyle()} className="inputStyle list-input" onChange={handleChange} value={value.imageURL}/> {/* <button onClick={addImage} type="button" className="btn btn-primary">add</button> */}
             <button type='submit' className="button-top-right" onClick={addImage}>
               <AddIcon/>
