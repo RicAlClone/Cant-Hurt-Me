@@ -23,8 +23,8 @@ const mirrorService={
 
  },
 
-getMirrorNotes:()=>{
-  return fetch('/user/mirror/getMirrorNotes')
+getMirrorNotes:(signal)=>{
+  return fetch('/user/mirror/getMirrorNotes',{signal})
   .then(response=>{
     if(response.status !== 401){
     return response.json().then(data=>data)
@@ -65,8 +65,8 @@ postImage:(body)=>{
     }
   })
 },
-getImage:()=>{
-  return fetch('/user/mirror/getImage')
+getImage:(signal)=>{
+  return fetch('/user/mirror/getImage',{signal})
   .then(res=>{
     if(res.status!==401){
       return res.json().then(data=>data);

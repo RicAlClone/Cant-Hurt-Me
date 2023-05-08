@@ -50,16 +50,15 @@ const [isLoaded,setIsLoaded]=useState(false);
   }
 
   useEffect(() => {
-    const abortController = new AbortController()
-
-    MirrorService.getMirrorNotes().then(data => {
+    const controller = new AbortController()
+    const signal= controller.signal;
+    MirrorService.getMirrorNotes(signal).then(data => {
       setIsLoaded(true);
       setArray(data.mirrors);
     })
 
-
     setInitialImageLoading(true);
-    MirrorService.getImage().then(data=>{
+    MirrorService.getImage(signal).then(data=>{
       //if there is an image then set imageExist to true
       if(data.documents.length>0){
         setImage({image:data.documents[0].image})
@@ -73,7 +72,7 @@ const [isLoaded,setIsLoaded]=useState(false);
       }
     })
     return() => {
-      abortController.abort();
+      controller.abort();
       clearTimeout(timer.current);
     }
 

@@ -19,8 +19,8 @@
     })
 
   },
-  getArmoredNotes:()=>{
-    return fetch('/user/armoredMind/getArmoredNotes',{method:'GET'})
+  getArmoredNotes:(signal)=>{
+    return fetch('/user/armoredMind/getArmoredNotes',{method:'GET'},{signal})
     .then(res=>{
       if(res.status !==401){
         return res.json()

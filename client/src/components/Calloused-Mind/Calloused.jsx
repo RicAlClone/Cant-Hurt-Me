@@ -29,15 +29,15 @@ const Calloused = function(props) {
   }
 
   useEffect(() => {
-    const abortController = new AbortController()
-
+    const controller = new AbortController()
+    const signal= controller.signal;
     window.scrollTo(0, 0);
-    CallousedService.getCallousedNotes().then(data => {
+    CallousedService.getCallousedNotes(signal).then(data => {
       setIsLoaded(true);
       setItems(data.calluses);
     });
     return() => {
-      abortController.abort();
+      controller.abort();
       clearTimeout(timer.current);
     }
   }, []);

@@ -19,8 +19,8 @@ postCallousedNote: (input)=>{
   })
 },
 
-getCallousedNotes: ()=>{
-  return fetch('/user/calloused/getCallousedNotes')
+getCallousedNotes: (signal)=>{
+  return fetch('/user/calloused/getCallousedNotes',{signal})
   .then(res=>{
     if(res.status !== 401){
       return res.json().then(data=>data)

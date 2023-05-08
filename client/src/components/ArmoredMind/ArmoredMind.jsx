@@ -44,15 +44,15 @@ const ArmoredMind = function(props) {
   }
 
   useEffect(() => {
-    const abortController = new AbortController()
-
-    ArmoredMindService.getArmoredNotes().then(data => {
+    const controller = new AbortController()
+      const signal= controller.signal;
+    ArmoredMindService.getArmoredNotes(signal).then(data => {
       setIsLoaded(true);
       setArray(data.armoredmindurls);
     });
 
     return() => {
-      abortController.abort();
+      controller.abort();
       clearTimeout(timer.current);
     }
   }, []);
