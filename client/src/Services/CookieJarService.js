@@ -14,8 +14,8 @@ const cookieJarService={
       }
     })
   },
-  getCookies:()=>{
-    return fetch('/user/cookieJar/getCookies')
+  getCookies:(signal)=>{
+    return fetch('/user/cookieJar/getCookies',{signal})
     .then((res)=>{
       if(res.status!==401){
         return res.json().then((data)=>data);

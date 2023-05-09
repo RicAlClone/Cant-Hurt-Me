@@ -33,14 +33,14 @@ AuthService.isAuthenticated().then(data=>{
 }
 
 useEffect(()=>{
-  const abortController = new AbortController();
-
-  UncommonService.get().then(data=>{
+  const controller = new AbortController();
+  const signal= controller.signal;
+  UncommonService.get(signal).then(data=>{
     setIsLoaded(true);
     setArray(data.message.documents)
   })
   return ()=>{
-    abortController.abort();
+    controller.abort();
     clearTimeout(timer.current)
   }
 },[])

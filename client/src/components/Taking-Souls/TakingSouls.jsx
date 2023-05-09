@@ -31,14 +31,14 @@ const TakingSouls = function(props) {
   }
 
   useEffect(() => {
-    const abortController = new AbortController()
-
-    tsService.getTSNotes().then(data => {
+    const controller = new AbortController()
+    const signal= controller.signal;
+    tsService.getTSNotes(signal).then(data => {
       setIsLoaded(true);
       setArray(data.takingSouls)
     });
     return() => {
-      abortController.abort();
+      controller.abort();
       clearTimeout(timer.current)
     };
   }, []);

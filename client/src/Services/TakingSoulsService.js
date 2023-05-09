@@ -16,8 +16,8 @@ const takingSoulsService={
       }
     })
   },
-  getTSNotes: ()=>{
-    return fetch('/user/takingSouls/getTSNotes')
+  getTSNotes: (signal)=>{
+    return fetch('/user/takingSouls/getTSNotes',{signal})
     .then(res=>{
       if(res.status !== 401){
         return res.json().then(data=>data);

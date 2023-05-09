@@ -15,8 +15,8 @@ const uncommonService={
       }
     })
   },
-  get:()=>{
-    return fetch('/user/uncommon/getUncommonNotes')
+  get:(signal)=>{
+    return fetch('/user/uncommon/getUncommonNotes',{signal})
     .then(res=>{
       if(res.status!==401){
         return res.json().then(data=>data);

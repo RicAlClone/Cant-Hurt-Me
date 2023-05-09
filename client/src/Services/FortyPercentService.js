@@ -16,8 +16,8 @@ postRuleNote:(note)=>{
         }
       })
 },
-getRuleNotes:()=>{
-  return fetch('/user/fortyPercentRule/getRuleNotes')
+getRuleNotes:(signal)=>{
+  return fetch('/user/fortyPercentRule/getRuleNotes',{signal})
   .then(res=>{
     if(res.status !==401){
       return res.json().then(data=>data);

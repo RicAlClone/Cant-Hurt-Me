@@ -1,7 +1,7 @@
 
 const ScheduleService={
-  getSchedule:()=>{
-    return fetch('/user/schedule/scheduleGetDays')
+  getSchedule:(signal)=>{
+    return fetch('/user/schedule/scheduleGetDays',{signal})
     .then(res=>{
       if(res.status!==401){
         return res.json().then(data=>data);
