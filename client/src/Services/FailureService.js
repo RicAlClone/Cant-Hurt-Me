@@ -15,8 +15,8 @@ post:(note)=>{
     }
   })
 },
-get:()=>{
-  return fetch("/user/failure/getFailureNotes")
+get:(signal)=>{
+  return fetch("/user/failure/getFailureNotes",{signal})
   .then(res=>{
     if(res.status!==401){
       return res.json().then(data=>data)

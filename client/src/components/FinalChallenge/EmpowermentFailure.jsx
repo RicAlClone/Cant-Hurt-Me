@@ -43,15 +43,15 @@ AuthService.isAuthenticated().then(data=>{
 }
 
 useEffect(()=>{
-  const abortController = new AbortController();
-
+  const controller = new AbortController();
+  const signal= controller.signal;
   FailureService.get().then(data=>{
     setIsLoaded(true);
     setArray(data.message.documents);
   })
 
   return ()=>{
-    abortController.abort();
+    controller.abort();
     clearTimeout(timer.current);
   }
 },[])

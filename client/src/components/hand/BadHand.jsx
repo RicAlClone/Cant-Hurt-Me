@@ -46,7 +46,8 @@ const [isLoaded,setIsLoaded]=useState(false);
 const [clickedToAdd,setClickedToAdd]=useState(false);
 
 useEffect(()=>{
-  const abortController = new AbortController()
+  const controller = new AbortController()
+  const signal= controller.signal;
   window.scrollTo(0,0);
   BadhandService.getBadhands().then(data=>{
     //once we recieve data set isloaded to true returning form
@@ -54,7 +55,7 @@ useEffect(()=>{
     newItems(data.badhands);
   });
 return ()=>{
-  abortController.abort();
+  controller.abort();
   clearTimeout(timer.current);
 }
 

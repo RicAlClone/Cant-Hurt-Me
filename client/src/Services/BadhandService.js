@@ -1,7 +1,7 @@
 
 const badhandService={
-  getBadhands:()=>{
-    return fetch('/user/badhand/getBadHands')
+  getBadhands:(signal)=>{
+    return fetch('/user/badhand/getBadHands',{signal})
     .then((res)=>{
 
       if(res.status !== 401){
