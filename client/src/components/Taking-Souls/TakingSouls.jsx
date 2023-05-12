@@ -29,16 +29,15 @@ const TakingSouls = function(props) {
       }
     })
   }
-
+  const controller = new AbortController()
+  const signal= controller.signal;
   useEffect(() => {
-    const controller = new AbortController()
-    const signal= controller.signal;
+
     tsService.getTSNotes(signal).then(data => {
       setIsLoaded(true);
       setArray(data.takingSouls)
     });
     return() => {
-      controller.abort();
       clearTimeout(timer.current)
     };
   }, []);
@@ -100,14 +99,14 @@ const TakingSouls = function(props) {
 
   return (
     <div className="body-padding">
-    <div className="next-prev-challenge-spacing">
-      <Link onClick={authCheck} as={Link} to="/Calloused">Previous Challenge</Link>
-      <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/ArmoredMind">Next Challenge</Link>
-    </div>
-    <h1 className="all-title">Taking Souls Challenge</h1>
-    <Accordion>
-      <Accordion.Header>
-        <IconContext.Provider value={{
+      <div className="next-prev-challenge-spacing">
+        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/Calloused">Previous Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/ArmoredMind">Next Challenge</Link>
+      </div>
+      <h1 className="all-title">Taking Souls Challenge</h1>
+      <Accordion>
+        <Accordion.Header>
+          <IconContext.Provider value={{
             className: 'icon'
           }}>
           <CgGhostCharacter size='25px'/>Instructions

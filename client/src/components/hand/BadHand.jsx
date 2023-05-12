@@ -44,10 +44,10 @@ let timer=useRef(null);
 //use loading spinner if not loaded
 const [isLoaded,setIsLoaded]=useState(false);
 const [clickedToAdd,setClickedToAdd]=useState(false);
-
+const controller = new AbortController()
+const signal= controller.signal;
 useEffect(()=>{
-  const controller = new AbortController()
-  const signal= controller.signal;
+
   window.scrollTo(0,0);
   BadhandService.getBadhands().then(data=>{
     //once we recieve data set isloaded to true returning form
@@ -55,7 +55,7 @@ useEffect(()=>{
     newItems(data.badhands);
   });
 return ()=>{
-  controller.abort();
+
   clearTimeout(timer.current);
 }
 
@@ -154,8 +154,8 @@ function emptyInputError(){
   return(
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={authCheck}  as={Link} to="/EmpowermentFailure">Last Challenge</Link>
-        <Link onClick={authCheck} href="#top" className="first-challenge-link" as={Link} to="/mirror">Next Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}}  as={Link} to="/EmpowermentFailure">Last Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} href="#top" className="first-challenge-link" as={Link} to="/mirror">Next Challenge</Link>
       </div>
 
 

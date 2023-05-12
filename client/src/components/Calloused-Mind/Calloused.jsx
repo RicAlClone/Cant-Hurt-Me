@@ -27,17 +27,17 @@ const Calloused = function(props) {
       }
     })
   }
-
+  const controller = new AbortController()
+  const signal= controller.signal;
   useEffect(() => {
-    const controller = new AbortController()
-    const signal= controller.signal;
+
     window.scrollTo(0, 0);
     CallousedService.getCallousedNotes(signal).then(data => {
       setIsLoaded(true);
       setItems(data.calluses);
     });
     return() => {
-      controller.abort();
+
       clearTimeout(timer.current);
     }
   }, []);
@@ -87,9 +87,9 @@ const Calloused = function(props) {
 
   return (
     <div className="body-padding">
-    <div className="next-prev-challenge-spacing">
-      <Link onClick={authCheck} as={Link} to="/Mirror">Previous Challenge</Link>
-      <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/TakingSouls">Next Challenge</Link>
+      <div className="next-prev-challenge-spacing">
+        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/Mirror">Previous Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/TakingSouls">Next Challenge</Link>
     </div>
 
     <h1 className="all-title">Calloused Mind Challenge</h1>

@@ -41,14 +41,13 @@ const CookieJar = function() {
   })
   }
 
+  const controller = new AbortController()
+  const signal= controller.signal;
   useEffect(() => {
-    const controller = new AbortController()
-    const signal= controller.signal;
-    CookieJarService.getCookies(signal).then((data) => {
+      CookieJarService.getCookies(signal).then((data) => {
       setArray(data.cookies)
     });
     return() => {
-      controller.abort();
       clearTimeout(timer.current);
       clearTimeout(aniProblem);
     }
@@ -152,8 +151,8 @@ const CookieJar = function() {
   return (
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={authCheck} as={Link} to="/ArmoredMind">Previous Challenge</Link>
-        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/PercentRule">Next Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/ArmoredMind">Previous Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/PercentRule">Next Challenge</Link>
       </div>
       <h1 className="all-title">The Cookie Jar</h1>
 

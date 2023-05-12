@@ -46,16 +46,15 @@ AuthService.isAuthenticated().then(data=>{
 
 let timer=useRef(null);
 
+const controller = new AbortController()
+const signal= controller.signal;
 useEffect(()=>{
-  const controller = new AbortController()
-  const signal= controller.signal;
   fps.getRuleNotes(signal).then(data=>{
     setIsLoaded(true);
       setArray(data.fortyPercentRules)
   });
 
   return ()=>{
-    controller.abort();
      clearTimeout(timer.current);
   }
 },[]);
@@ -166,8 +165,8 @@ function updateNote(id,toUpdate){
   return (
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={authCheck}  as={Link} to="/CookieJar">Previous Challenge</Link>
-        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/Schedule">Next Challenge</Link>
+        <Link onClick= {()=>{authCheck();controller.abort();}}  as={Link} to="/CookieJar">Previous Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/Schedule">Next Challenge</Link>
       </div>
       <h1 className="all-title">40 Percent Rule Challenge</h1>
       <Accordion>

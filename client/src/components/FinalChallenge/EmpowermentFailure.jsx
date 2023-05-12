@@ -41,17 +41,16 @@ AuthService.isAuthenticated().then(data=>{
   }
 })
 }
-
+const controller = new AbortController();
+const signal= controller.signal;
 useEffect(()=>{
-  const controller = new AbortController();
-  const signal= controller.signal;
+
   FailureService.get().then(data=>{
     setIsLoaded(true);
     setArray(data.message.documents);
   })
 
   return ()=>{
-    controller.abort();
     clearTimeout(timer.current);
   }
 },[])
@@ -152,7 +151,7 @@ function dateEmptyCheck(){
   return(
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={authCheck} as={Link} to="/Uncommon">Previous Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/Uncommon">Previous Challenge</Link>
         <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/BadHand">First Challenge</Link>
       </div>
       <h1 className="all-title">Empowerment of Failure Challenge</h1>

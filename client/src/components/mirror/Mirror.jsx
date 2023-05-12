@@ -48,10 +48,10 @@ const [isLoaded,setIsLoaded]=useState(false);
     }
   })
   }
-
+  const controller = new AbortController()
+  const signal= controller.signal;
   useEffect(() => {
-    const controller = new AbortController()
-    const signal= controller.signal;
+
     MirrorService.getMirrorNotes(signal).then(data => {
       setIsLoaded(true);
       setArray(data.mirrors);
@@ -72,7 +72,6 @@ const [isLoaded,setIsLoaded]=useState(false);
       }
     })
     return() => {
-      controller.abort();
       clearTimeout(timer.current);
     }
 
@@ -189,8 +188,8 @@ MirrorService.updateImage(imageID,image).then(data=>{
     <div className="body-padding">
 
       <div className="next-prev-challenge-spacing">
-        <Link onClick={authCheck} as={Link} to="/BadHand">Previous Challenge</Link>
-        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/Calloused">Next Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/BadHand">Previous Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/Calloused">Next Challenge</Link>
       </div>
 
       <h1 className="all-title">The Accountability Mirror Challenge</h1>

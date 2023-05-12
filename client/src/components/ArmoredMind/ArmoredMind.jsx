@@ -42,18 +42,17 @@ const ArmoredMind = function(props) {
       }
     })
   }
-
+  const controller = new AbortController()
+  const signal= controller.signal;
   useEffect(() => {
-    const controller = new AbortController()
-      const signal= controller.signal;
+
     ArmoredMindService.getArmoredNotes(signal).then(data => {
       setIsLoaded(true);
       setArray(data.armoredmindurls);
     });
 
     return() => {
-      controller.abort();
-      clearTimeout(timer.current);
+            clearTimeout(timer.current);
     }
   }, []);
 
@@ -123,8 +122,8 @@ const ArmoredMind = function(props) {
 
   return (<div className="body-padding">
     <div className="next-prev-challenge-spacing">
-      <Link onClick={authCheck} as={Link} to="/TakingSouls">Previous Challenge</Link>
-      <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/CookieJar">Next Challenge</Link>
+      <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/TakingSouls">Previous Challenge</Link>
+      <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/CookieJar">Next Challenge</Link>
     </div>
     <h1 className="all-title">Armored Mind Challenge</h1>
     <Accordion>
