@@ -13,6 +13,8 @@ import { IconContext } from "react-icons";
 
 const Schedule= function(){
 const authContext=useContext(AuthContext);
+const controller = new AbortController();
+const signal = controller.signal;
 
   function authCheck(){
   AuthService.isAuthenticated().then(data=>{
@@ -29,7 +31,7 @@ const authContext=useContext(AuthContext);
     <div>
       <div className="body-padding" style={{paddingBottom:'20px'}}>
         <div className="next-prev-challenge-spacing">
-          <Link onClick={authCheck} as={Link} to="/PercentRule">Previous Challenge</Link>
+          <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/PercentRule">Previous Challenge</Link>
           <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/Uncommon">Next Challenge</Link>
         </div>
 
@@ -88,14 +90,21 @@ const authContext=useContext(AuthContext);
       <Week1
         weekName={"Week 1"}
         authCheck={authCheck}
+        controller={controller}
+        signal={signal}
+
       />
       <Week2
         weekName={"Week 2"}
         authCheck={authCheck}
+        controller={controller}
+        signal={signal}
       />
       <Week3
         weekName={"Week 3"}
         authCheck={authCheck}
+        controller={controller}
+        signal={signal}
       />
 
 
