@@ -18,8 +18,10 @@ const BadHand= function(){
 //authContext is like useState for all components.
 const authContext=useContext(AuthContext);
 
-function authCheck(){
-AuthService.isAuthenticated().then(data=>{
+function authCheck(signal){
+  console.log('authenticate from badhand');
+
+AuthService.isAuthenticated(signal).then(data=>{
   //if our /authenticated route tells us we arent authenticated then we set
   //isAuthenticated to false and user to empty
   if(!data.isAuthenticated){
@@ -44,20 +46,26 @@ let timer=useRef(null);
 //use loading spinner if not loaded
 const [isLoaded,setIsLoaded]=useState(false);
 const [clickedToAdd,setClickedToAdd]=useState(false);
-const controller = new AbortController()
-const signal= controller.signal;
+
 useEffect(()=>{
+  let mounted=true;
+  const controller = new AbortController()
+  const signal= controller.signal;
+  console.log('when does this get loaded?')
+  authCheck(signal);
 
   window.scrollTo(0,0);
-  BadhandService.getBadhands().then(data=>{
-    //once we recieve data set isloaded to true returning form
-    setIsLoaded(true);
-    newItems(data.badhands);
+  BadhandService.getBadhands(signal).then(data=>{
+    if(mounted){
+      setIsLoaded(true);
+      newItems(data.badhands);
+    }
   });
 return ()=>{
-
+  mounted=false;
+  controller.abort();
   clearTimeout(timer.current);
-}
+  }
 
 },[]);
 
@@ -154,8 +162,8 @@ function emptyInputError(){
   return(
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={()=>{authCheck();controller.abort();}}  as={Link} to="/EmpowermentFailure">Last Challenge</Link>
-        <Link onClick={()=>{authCheck();controller.abort();}} href="#top" className="first-challenge-link" as={Link} to="/mirror">Next Challenge</Link>
+        <Link  as={Link} to="/EmpowermentFailure">Last Challenge</Link>
+        <Link  href="#top" className="first-challenge-link" as={Link} to="/mirror">Next Challenge</Link>
       </div>
 
 

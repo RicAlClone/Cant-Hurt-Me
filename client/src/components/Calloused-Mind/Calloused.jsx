@@ -18,8 +18,9 @@ const Calloused = function(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   let timer = useRef(null);
 
-  function authCheck() {
-    AuthService.isAuthenticated().then(data => {
+  function authCheck(signal) {
+    console.log('authenticate from calloused');
+    AuthService.isAuthenticated(signal).then(data => {
       if (!data.isAuthenticated) {
         const {setIsAuthenticated, setUser} = authContext;
         setIsAuthenticated(false);
@@ -27,23 +28,27 @@ const Calloused = function(props) {
       }
     })
   }
-  const controller = new AbortController()
-  const signal= controller.signal;
-  useEffect(() => {
 
+  useEffect(() => {
+    let mounted=true;
+    const controller = new AbortController()
+    const signal= controller.signal;
+    authCheck(signal);
     window.scrollTo(0, 0);
     CallousedService.getCallousedNotes(signal).then(data => {
-      setIsLoaded(true);
-      setItems(data.calluses);
+      if(mounted){
+        setIsLoaded(true);
+        setItems(data.calluses);
+      }
     });
     return() => {
-
+      mounted=false;
+      controller.abort();
       clearTimeout(timer.current);
     }
   }, []);
 
   function addItems(e, input) {
-
     e.preventDefault();
     CallousedService.postCallousedNote(input).then(data => {
       if (!data.message.msgError) {
@@ -88,8 +93,8 @@ const Calloused = function(props) {
   return (
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/Mirror">Previous Challenge</Link>
-        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/TakingSouls">Next Challenge</Link>
+        <Link  as={Link} to="/Mirror">Previous Challenge</Link>
+        <Link  className="first-challenge-link" as={Link} to="/TakingSouls">Next Challenge</Link>
     </div>
 
     <h1 className="all-title">Calloused Mind Challenge</h1>

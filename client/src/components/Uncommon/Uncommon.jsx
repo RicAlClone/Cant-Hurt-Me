@@ -32,15 +32,15 @@ AuthService.isAuthenticated().then(data=>{
 })
 }
 
+const controller = new AbortController();
+const signal= controller.signal;
 useEffect(()=>{
-  const controller = new AbortController();
-  const signal= controller.signal;
-  UncommonService.get(signal).then(data=>{
+    UncommonService.get(signal).then(data=>{
     setIsLoaded(true);
     setArray(data.message.documents)
   })
   return ()=>{
-    controller.abort();
+
     clearTimeout(timer.current)
   }
 },[])
@@ -84,8 +84,8 @@ UncommonService.delete(id).then(data=>{
   return(
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={authCheck} as={Link} to="/Schedule">Previous Challenge</Link>
-        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/EmpowermentFailure">Next Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/Schedule">Previous Challenge</Link>
+        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/EmpowermentFailure">Next Challenge</Link>
       </div>
       <h1 className="all-title">Uncommon Challenge</h1>
       <Accordion>

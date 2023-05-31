@@ -21,6 +21,8 @@ const TakingSouls = function(props) {
   let timer = useRef(null);
 
   function authCheck() {
+    console.log('authenticate from taking souls');
+
     AuthService.isAuthenticated().then(data => {
       if (!data.isAuthenticated) {
         const {setIsAuthenticated, setUser} = authContext;
@@ -29,15 +31,21 @@ const TakingSouls = function(props) {
       }
     })
   }
-  const controller = new AbortController()
-  const signal= controller.signal;
-  useEffect(() => {
 
+  useEffect(() => {
+    const controller = new AbortController()
+    const signal= controller.signal;
+    authCheck(signal);
+    let mounted=true;
     tsService.getTSNotes(signal).then(data => {
-      setIsLoaded(true);
-      setArray(data.takingSouls)
+      if(mounted){
+        setIsLoaded(true);
+        setArray(data.takingSouls)
+      }
     });
     return() => {
+      mounted=false;
+      controller.abort();
       clearTimeout(timer.current)
     };
   }, []);
@@ -100,8 +108,8 @@ const TakingSouls = function(props) {
   return (
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/Calloused">Previous Challenge</Link>
-        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/ArmoredMind">Next Challenge</Link>
+        <Link as={Link} to="/Calloused">Previous Challenge</Link>
+        <Link className="first-challenge-link" as={Link} to="/ArmoredMind">Next Challenge</Link>
       </div>
       <h1 className="all-title">Taking Souls Challenge</h1>
       <Accordion>

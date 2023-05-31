@@ -41,8 +41,8 @@ logOut: ()=>{
   },
 
 
-  isAuthenticated: ()=>{
-    return fetch('/user/authenticated')
+  isAuthenticated: (signal)=>{
+    return fetch('/user/authenticated',{signal})
     .then(res=>{
       if(res.status !== 401){
 

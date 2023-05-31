@@ -39,39 +39,48 @@ const [hide,setHide]=useState(false);
 
 const [isLoaded,setIsLoaded]=useState(false);
 
-  function authCheck(){
-  AuthService.isAuthenticated().then(data=>{
+  function authCheck(signal){
+    console.log('authenticate from mirror');
+  AuthService.isAuthenticated(signal).then(data=>{
     if(!data.isAuthenticated){
       const {setIsAuthenticated,setUser}=authContext;
       setIsAuthenticated(false);
       setUser({username:""})
     }
   })
-  }
-  const controller = new AbortController()
+};
+
+useEffect(() => {
+  let mounted=true;
+  const controller = new AbortController();
   const signal= controller.signal;
-  useEffect(() => {
-
+  authCheck();
     MirrorService.getMirrorNotes(signal).then(data => {
-      setIsLoaded(true);
-      setArray(data.mirrors);
+      if(mounted){
+        setIsLoaded(true);
+        setArray(data.mirrors);
+      }
     })
-
     setInitialImageLoading(true);
     MirrorService.getImage(signal).then(data=>{
-      //if there is an image then set imageExist to true
-      if(data.documents.length>0){
-        setImage({image:data.documents[0].image})
+      if(mounted){
+        if(data.documents.length>0){
+          setImage({image:data.documents[0].image})
+          setInitialImageLoading(false);
+          setImageExists(true);
+          setImageID(data.documents[0]._id);
+        }
+        //no image exists so initialImageLoading is false
+        else if(data.documents.length===0){
         setInitialImageLoading(false);
-        setImageExists(true);
-        setImageID(data.documents[0]._id);
+        }
       }
-      //no image exists so initialImageLoading is false
-      else if(data.documents.length===0){
-      setInitialImageLoading(false);
-      }
+
     })
+
     return() => {
+      mounted=false;
+      controller.abort();
       clearTimeout(timer.current);
     }
 
@@ -188,8 +197,8 @@ MirrorService.updateImage(imageID,image).then(data=>{
     <div className="body-padding">
 
       <div className="next-prev-challenge-spacing">
-        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/BadHand">Previous Challenge</Link>
-        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/Calloused">Next Challenge</Link>
+        <Link  as={Link} to="/BadHand">Previous Challenge</Link>
+        <Link  className="first-challenge-link" as={Link} to="/Calloused">Next Challenge</Link>
       </div>
 
       <h1 className="all-title">The Accountability Mirror Challenge</h1>
@@ -261,7 +270,7 @@ MirrorService.updateImage(imageID,image).then(data=>{
 
         {
           //update button with appear when we try to update an image
-          imageExists&&newImage&&!hide?
+          imageExists&&newImage&&!hide ?
             <>
               <Button variant="primary" style={{display:"block",margin:"0 auto"}} onClick={updateImage}>update image</Button>
             </>

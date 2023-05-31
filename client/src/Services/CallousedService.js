@@ -28,8 +28,16 @@ getCallousedNotes: (signal)=>{
       return {message:{msgBody:"Unauthorized",msgError:true}}
     }
   })
-
-} ,
+  .catch(error => {
+    if (error.name === 'AbortError') {
+      // Handle the user-aborted request case
+      console.log('The calloused notes request was aborted by the user.');
+    } else {
+      // Handle other errors
+      console.log('An error occurred in calloused:', error);
+    }
+  })
+},
 
 deleteCallusNote:(id)=>{
   return fetch(`/user/calloused/deleteCallusNote/${id}`,{
