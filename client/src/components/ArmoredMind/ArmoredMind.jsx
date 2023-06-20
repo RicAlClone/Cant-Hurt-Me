@@ -35,6 +35,7 @@ const ArmoredMind = function(props) {
 
   function authCheck() {
     AuthService.isAuthenticated().then(data => {
+      console.log('authCheck in amored mind');
       if (!data.isAuthenticated) {
         const {setIsAuthenticated, setUser} = auth;
         setIsAuthenticated(false);
@@ -42,16 +43,22 @@ const ArmoredMind = function(props) {
       }
     })
   }
-  const controller = new AbortController()
-  const signal= controller.signal;
-  useEffect(() => {
 
+  useEffect(() => {
+    const controller = new AbortController()
+    const signal= controller.signal;
+    authCheck();
+    let mounted=true;
     ArmoredMindService.getArmoredNotes(signal).then(data => {
-      setIsLoaded(true);
-      setArray(data.armoredmindurls);
+      if(mounted){
+        setIsLoaded(true);
+        setArray(data.armoredmindurls);
+      }
     });
 
     return() => {
+            mounted=false;
+            controller.abort();
             clearTimeout(timer.current);
     }
   }, []);
@@ -122,8 +129,8 @@ const ArmoredMind = function(props) {
 
   return (<div className="body-padding">
     <div className="next-prev-challenge-spacing">
-      <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/TakingSouls">Previous Challenge</Link>
-      <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/CookieJar">Next Challenge</Link>
+      <Link as={Link} to="/TakingSouls">Previous Challenge</Link>
+      <Link className="first-challenge-link" as={Link} to="/CookieJar">Next Challenge</Link>
     </div>
     <h1 className="all-title">Armored Mind Challenge</h1>
     <Accordion>

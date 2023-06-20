@@ -29,6 +29,15 @@
         return {message:{msgBody:"Unauthorized",msgError:true}}
       }
     })
+    .catch(error => {
+      if (error.name === 'AbortError') {
+        // Handle the user-aborted request case
+        console.log('The armoured mind notes request was aborted by the user.');
+      } else {
+        // Handle other errors
+        console.log('An error occurred in armoured mind:', error);
+      }
+    })
   },
   deleteArmoredNote:(id)=>{
     return fetch(`/user/armoredMind/deleteArmoredNote/${id}`,{
