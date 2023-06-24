@@ -35,7 +35,7 @@ const TakingSouls = function(props) {
   useEffect(() => {
     const controller = new AbortController()
     const signal= controller.signal;
-    authCheck(signal);
+    authCheck();
     let mounted=true;
     tsService.getTSNotes(signal).then(data => {
       if(mounted){

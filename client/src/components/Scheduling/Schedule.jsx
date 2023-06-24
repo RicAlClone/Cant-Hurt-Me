@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React,{useContext,useEffect} from "react";
 import Week1 from "./Week1/Week1";
 import Week2 from "./Week2/Week2";
 import Week3 from "./Week3/Week3";
@@ -17,6 +17,7 @@ const controller = new AbortController();
 const signal = controller.signal;
 
   function authCheck(){
+    console.log('auth check in schedule');
   AuthService.isAuthenticated().then(data=>{
     if(!data.isAuthenticated){
       const {setIsAuthenticated,setUser}=authContext;
@@ -26,12 +27,20 @@ const signal = controller.signal;
   })
   }
 
+let mounted=true;
+useEffect(()=>{
+  return ()=>{
+    mounted=false;
+    controller.abort();
+  }
+},[]);
+
   return(
     // className="body-padding"
     <div>
       <div className="body-padding" style={{paddingBottom:'20px'}}>
         <div className="next-prev-challenge-spacing">
-          <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/PercentRule">Previous Challenge</Link>
+          <Link onClick={authCheck} as={Link} to="/PercentRule">Previous Challenge</Link>
           <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/Uncommon">Next Challenge</Link>
         </div>
 
@@ -92,19 +101,21 @@ const signal = controller.signal;
         authCheck={authCheck}
         controller={controller}
         signal={signal}
-
+        mounted={mounted}
       />
       <Week2
         weekName={"Week 2"}
         authCheck={authCheck}
         controller={controller}
         signal={signal}
+        mounted={mounted}
       />
       <Week3
         weekName={"Week 3"}
         authCheck={authCheck}
         controller={controller}
         signal={signal}
+        mounted={mounted}
       />
 
 

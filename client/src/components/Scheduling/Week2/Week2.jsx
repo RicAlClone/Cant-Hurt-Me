@@ -170,26 +170,30 @@ let skeleton={
 
   //Brings our data when page loads for the first time
   useEffect(()=>{
+let mounted=true;
+      ScheduleService.getSchedule(props.signal).then(data=>{
+        if (mounted){
+        if(data.message.msgBody==="Unauthorized"){
+          console.log('Unauthorized')
+        }
+        else{
+          setIsLoaded(true);
+          setArray(data.message.documents);
+          setEvolve(data.message.documents[7]);
+          setTuesObj(data.message.documents[8]);
+          setWedObj(data.message.documents[9]);
+          setThursObj(data.message.documents[10]);
+          setFriObj(data.message.documents[11]);
+          setSatObj(data.message.documents[12]);
+          setSunObj(data.message.documents[13]);
+        }
+      }
+      })
 
-    ScheduleService.getSchedule(props.signal).then(data=>{
-      if(data.message.msgBody==="Unauthorized"){
-        console.log('Unauthorized')
-      }
-      else{
-        setIsLoaded(true);
-        setArray(data.message.documents);
-        setEvolve(data.message.documents[7]);
-        setTuesObj(data.message.documents[8]);
-        setWedObj(data.message.documents[9]);
-        setThursObj(data.message.documents[10]);
-        setFriObj(data.message.documents[11]);
-        setSatObj(data.message.documents[12]);
-        setSunObj(data.message.documents[13]);
-      }
-      return ()=>{
-
-      }
-    })
+    return ()=>{
+      mounted=false;
+      props.controller.abort();
+    }
   },[])
 
   //Styles our edit,and save button

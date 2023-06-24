@@ -272,25 +272,31 @@ let skeleton={
   //We want to have a load spinner if its taking long to load
   const [isLoaded,setIsLoaded]=useState(false);
 //Brings our data when page loads for the first time
-  useEffect(()=>{
-        ScheduleService.getSchedule(props.signal).then(data=>{
-      if(data.message.msgBody==="Unauthorized"){
-        console.log('unauthorized');
-      }else{
-        setIsLoaded(true);
-        setArray(data.message.documents);
-        setEvolve(data.message.documents[0]);
-        setTuesObj(data.message.documents[1]);
-        setWedObj(data.message.documents[2]);
-        setThursObj(data.message.documents[3]);
-        setFriObj(data.message.documents[4]);
-        setSatObj(data.message.documents[5]);
-        setSunObj(data.message.documents[6]);
-      }
-      return ()=>{
+useEffect(()=>{
+let mounted=true;
+ScheduleService.getSchedule(props.signal).then(data=>{
+  if(mounted){
+    if(data.message.msgBody==="Unauthorized"){
+    console.log('unauthorized');
+    }
+    else{
+    setIsLoaded(true);
+    setArray(data.message.documents);
+    setEvolve(data.message.documents[0]);
+    setTuesObj(data.message.documents[1]);
+    setWedObj(data.message.documents[2]);
+    setThursObj(data.message.documents[3]);
+    setFriObj(data.message.documents[4]);
+    setSatObj(data.message.documents[5]);
+    setSunObj(data.message.documents[6]);
+    }
+  }
+})
 
-      }
-    })
+    return ()=>{
+      mounted=false;
+      props.controller.abort();
+    }
   },[])
 
 //Styles our edit,and save button

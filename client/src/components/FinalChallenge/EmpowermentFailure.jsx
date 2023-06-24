@@ -33,6 +33,7 @@ const [isLoaded,setIsLoaded]=useState(false);
 let timer=useRef(null);
 
 function authCheck(){
+  console.log('auth check in empowerment failure');
 AuthService.isAuthenticated().then(data=>{
   if(!data.isAuthenticated){
     const {setIsAuthenticated,setUser}=authContext;
@@ -41,16 +42,22 @@ AuthService.isAuthenticated().then(data=>{
   }
 })
 }
-const controller = new AbortController();
-const signal= controller.signal;
-useEffect(()=>{
 
+useEffect(()=>{
+  const controller = new AbortController();
+  const signal= controller.signal;
+  let mounted=true;
+  authCheck();
   FailureService.get().then(data=>{
-    setIsLoaded(true);
-    setArray(data.message.documents);
+    if(mounted){
+      setIsLoaded(true);
+      setArray(data.message.documents);
+    }
   })
 
   return ()=>{
+    mounted=false;
+    controller.abort();
     clearTimeout(timer.current);
   }
 },[])
@@ -151,8 +158,8 @@ function dateEmptyCheck(){
   return(
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick={()=>{authCheck();controller.abort();}} as={Link} to="/Uncommon">Previous Challenge</Link>
-        <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/BadHand">First Challenge</Link>
+        <Link as={Link} to="/Uncommon">Previous Challenge</Link>
+        <Link className="first-challenge-link" as={Link} to="/BadHand">First Challenge</Link>
       </div>
       <h1 className="all-title">Empowerment of Failure Challenge</h1>
       <Accordion>

@@ -25,6 +25,15 @@ const uncommonService={
         return {message:{msgBody:"Unauthorized",msgError:true}}
       }
     })
+    .catch(error => {
+      if (error.name === 'AbortError') {
+        // Handle the user-aborted request case
+        console.log('The uncommon notes request was aborted by the user.');
+      } else {
+        // Handle other errors
+        console.log('An error occurred in uncommon:', error);
+      }
+    })
   },
   delete:(id)=>{
     return fetch(`/user/uncommon/deleteUncommonNote/${id}`,{

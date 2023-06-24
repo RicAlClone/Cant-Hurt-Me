@@ -39,9 +39,9 @@ const [hide,setHide]=useState(false);
 
 const [isLoaded,setIsLoaded]=useState(false);
 
-  function authCheck(signal){
+  function authCheck(){
     console.log('authenticate from mirror');
-  AuthService.isAuthenticated(signal).then(data=>{
+  AuthService.isAuthenticated().then(data=>{
     if(!data.isAuthenticated){
       const {setIsAuthenticated,setUser}=authContext;
       setIsAuthenticated(false);

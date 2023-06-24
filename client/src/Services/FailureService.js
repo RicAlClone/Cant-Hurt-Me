@@ -25,6 +25,15 @@ get:(signal)=>{
       return {message:{msgBody:"Unauthorized",msgError:true}}
     }
   })
+  .catch(error => {
+    if (error.name === 'AbortError') {
+      // Handle the user-aborted request case
+      console.log('The failure notes request was aborted by the user.');
+    } else {
+      // Handle other errors
+      console.log('An error occurred in failure:', error);
+    }
+  })
 },
 delete:(id)=>{
   return fetch(`/user/failure/deleteFailureNote/${id}`,{

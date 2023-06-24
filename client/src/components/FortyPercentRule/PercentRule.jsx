@@ -46,16 +46,22 @@ AuthService.isAuthenticated().then(data=>{
 
 let timer=useRef(null);
 
-const controller = new AbortController()
-const signal= controller.signal;
+
 useEffect(()=>{
+  const controller = new AbortController()
+  const signal= controller.signal;
+  let mounted=true;
   fps.getRuleNotes(signal).then(data=>{
-    setIsLoaded(true);
-      setArray(data.fortyPercentRules)
+    if(mounted){
+      setIsLoaded(true);
+      setArray(data.fortyPercentRules);
+    }
   });
 
   return ()=>{
-     clearTimeout(timer.current);
+    mounted=false;
+    controller.abort();
+    clearTimeout(timer.current);
   }
 },[]);
 
@@ -116,16 +122,12 @@ else{
 }
 
 function deleteBaseLine(e,id){
-
-
   fps.deleteRuleNote(id).then(data=>{
-
     if(!data.message.msgError){
       fps.getRuleNotes().then(getData=>{
         setArray(getData.fortyPercentRules)
         setMessage(data.message);
         timer.current=setTimeout(()=>{setMessage(null)},2000)
-
       })
     }
     else if(data.message.msgBody === "Unauthorized"){
@@ -165,8 +167,8 @@ function updateNote(id,toUpdate){
   return (
     <div className="body-padding">
       <div className="next-prev-challenge-spacing">
-        <Link onClick= {()=>{authCheck();controller.abort();}}  as={Link} to="/CookieJar">Previous Challenge</Link>
-        <Link onClick={()=>{authCheck();controller.abort();}} className="first-challenge-link" as={Link} to="/Schedule">Next Challenge</Link>
+        <Link as={Link} to="/CookieJar">Previous Challenge</Link>
+        <Link className="first-challenge-link" as={Link} to="/Schedule">Next Challenge</Link>
       </div>
       <h1 className="all-title">40 Percent Rule Challenge</h1>
       <Accordion>
