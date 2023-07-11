@@ -4,7 +4,6 @@ import CreateNote from "./CreateNote";
 import {Link} from "react-router-dom";
 import tsService from "../../Services/TakingSoulsService";
 import {AuthContext} from "../../Context/AuthContext";
-import AuthService from "../../Services/AuthService";
 import {SpinnerDiamond} from 'spinners-react';
 import Accordion from 'react-bootstrap/Accordion';
 import {CgGhostCharacter} from 'react-icons/cg';
@@ -20,22 +19,9 @@ const TakingSouls = function(props) {
   //this returns and object with property of current:null unil we change it.
   let timer = useRef(null);
 
-  function authCheck() {
-    console.log('authenticate from taking souls');
-
-    AuthService.isAuthenticated().then(data => {
-      if (!data.isAuthenticated) {
-        const {setIsAuthenticated, setUser} = authContext;
-        setIsAuthenticated(false);
-        setUser({username: ""})
-      }
-    })
-  }
-
   useEffect(() => {
     const controller = new AbortController()
     const signal= controller.signal;
-    authCheck();
     let mounted=true;
     tsService.getTSNotes(signal).then(data => {
       if(mounted){

@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import ArmoredMindService from "../../Services/ArmoredMindService";
 import {AuthContext} from "../../Context/AuthContext";
 import Message from "../Message";
-import AuthService from '../../Services/AuthService';
 import {SpinnerDiamond} from 'spinners-react';
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Accordion from 'react-bootstrap/Accordion';
@@ -33,21 +32,10 @@ const ArmoredMind = function(props) {
 
   let imageTypeRegex=/.jpg|.jpeg|.png/;
 
-  function authCheck() {
-    AuthService.isAuthenticated().then(data => {
-      console.log('authCheck in amored mind');
-      if (!data.isAuthenticated) {
-        const {setIsAuthenticated, setUser} = auth;
-        setIsAuthenticated(false);
-        setUser({username: ""})
-      }
-    })
-  }
 
   useEffect(() => {
     const controller = new AbortController()
     const signal= controller.signal;
-    authCheck();
     let mounted=true;
     ArmoredMindService.getArmoredNotes(signal).then(data => {
       if(mounted){

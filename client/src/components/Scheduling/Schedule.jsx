@@ -1,10 +1,9 @@
-import React,{useContext,useEffect} from "react";
+import React from "react";//{useContext}
 import Week1 from "./Week1/Week1";
 import Week2 from "./Week2/Week2";
 import Week3 from "./Week3/Week3";
 import {Link} from "react-router-dom";
-import {AuthContext} from "../../Context/AuthContext";
-import AuthService from "../../Services/AuthService";
+// import {AuthContext} from "../../Context/AuthContext";
 import {Alert} from 'react-bootstrap';
 import Accordion from 'react-bootstrap/Accordion';
 import {AiOutlineSchedule} from 'react-icons/ai';
@@ -12,36 +11,25 @@ import { IconContext } from "react-icons";
 
 
 const Schedule= function(){
-const authContext=useContext(AuthContext);
-const controller = new AbortController();
-const signal = controller.signal;
+// const authContext=useContext(AuthContext);
+// const controller = new AbortController();
+// const signal = controller.signal;
 
-  function authCheck(){
-    console.log('auth check in schedule');
-  AuthService.isAuthenticated().then(data=>{
-    if(!data.isAuthenticated){
-      const {setIsAuthenticated,setUser}=authContext;
-      setIsAuthenticated(false);
-      setUser({username:""})
-    }
-  })
-  }
-
-let mounted=true;
-useEffect(()=>{
-  return ()=>{
-    mounted=false;
-    controller.abort();
-  }
-},[]);
+// useEffect(()=>{
+//   let mounted=true;
+//   return ()=>{
+//     mounted=false;
+//     controller.abort();
+//   }
+// },[]);
 
   return(
     // className="body-padding"
     <div>
       <div className="body-padding" style={{paddingBottom:'20px'}}>
         <div className="next-prev-challenge-spacing">
-          <Link onClick={authCheck} as={Link} to="/PercentRule">Previous Challenge</Link>
-          <Link onClick={authCheck} className="first-challenge-link" as={Link} to="/Uncommon">Next Challenge</Link>
+          <Link as={Link} to="/PercentRule">Previous Challenge</Link>
+          <Link className="first-challenge-link" as={Link} to="/Uncommon">Next Challenge</Link>
         </div>
 
         <h1 className="all-title">Schedule Challenge</h1>
@@ -98,27 +86,13 @@ useEffect(()=>{
       </div>
       <Week1
         weekName={"Week 1"}
-        authCheck={authCheck}
-        controller={controller}
-        signal={signal}
-        mounted={mounted}
       />
       <Week2
         weekName={"Week 2"}
-        authCheck={authCheck}
-        controller={controller}
-        signal={signal}
-        mounted={mounted}
       />
       <Week3
         weekName={"Week 3"}
-        authCheck={authCheck}
-        controller={controller}
-        signal={signal}
-        mounted={mounted}
       />
-
-
 
     </div>
       );

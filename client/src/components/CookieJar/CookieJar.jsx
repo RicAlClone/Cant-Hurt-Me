@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import CookieJarService from "../../Services/CookieJarService"
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
-import AuthService from "../../Services/AuthService";
 import{BsFillExclamationCircleFill} from "react-icons/bs";
 import Accordion from 'react-bootstrap/Accordion';
 
@@ -31,21 +30,9 @@ const CookieJar = function() {
   let timer = useRef(null);
   let aniProblem = useRef(null);
 
-  function authCheck(){
-  AuthService.isAuthenticated().then(data=>{
-    if(!data.isAuthenticated){
-      const {setIsAuthenticated,setUser}=authContext;
-      setIsAuthenticated(false);
-      setUser({username:""})
-    }
-  })
-  }
-
-
   useEffect(() => {
     const controller = new AbortController()
     const signal= controller.signal;
-    authCheck();
     let mount=true;
       CookieJarService.getCookies(signal).then((data) => {
         if(mount){

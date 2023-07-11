@@ -1,22 +1,12 @@
-import React, {useContext} from "react";
+import React from "react";//, {useContext}
 import AuthService from "../../../Services/AuthService";
-import {AuthContext} from '../../../Context/AuthContext';
+// import {AuthContext} from '../../../Context/AuthContext';
 import {FiArrowLeftCircle, FiArrowRightCircle} from 'react-icons/fi';
 
 
 function Day(props){
 
-const authContext=useContext(AuthContext);
-
-  function authCheck(){
-  AuthService.isAuthenticated().then(data=>{
-    if(!data.isAuthenticated){
-      const {setIsAuthenticated,setUser}=authContext;
-      setIsAuthenticated(false);
-      setUser({username:""})
-    }
-  })
-  }
+// const authContext=useContext(AuthContext);
 
 function week(){
   if(props.week==='1'){
@@ -47,11 +37,9 @@ function week(){
 
             </div>
             <button className={props.editButtonStyle} onClick={()=>{
-              authCheck();
               props.editClick(props.dayName)}}
             >edit</button>
             <button className={props.saveButtonStyle} onClick={()=>{
-              authCheck();
               props.saveClick(props.id,props.evolve)}}
             >save</button>
 

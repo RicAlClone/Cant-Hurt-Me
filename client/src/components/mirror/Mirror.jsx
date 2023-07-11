@@ -6,7 +6,6 @@ import {Link} from "react-router-dom";
 import MirrorService from "../../Services/MirrorService";
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
-import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond,SpinnerCircularFixed } from 'spinners-react';
 import FileBase64 from 'react-file-base64';
 import {Alert, Button} from 'react-bootstrap'
@@ -39,22 +38,11 @@ const [hide,setHide]=useState(false);
 
 const [isLoaded,setIsLoaded]=useState(false);
 
-  function authCheck(){
-    console.log('authenticate from mirror');
-  AuthService.isAuthenticated().then(data=>{
-    if(!data.isAuthenticated){
-      const {setIsAuthenticated,setUser}=authContext;
-      setIsAuthenticated(false);
-      setUser({username:""})
-    }
-  })
-};
 
 useEffect(() => {
   let mounted=true;
   const controller = new AbortController();
   const signal= controller.signal;
-  authCheck();
     MirrorService.getMirrorNotes(signal).then(data => {
       if(mounted){
         setIsLoaded(true);
@@ -75,7 +63,6 @@ useEffect(() => {
         setInitialImageLoading(false);
         }
       }
-
     })
 
     return() => {

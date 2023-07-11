@@ -4,7 +4,6 @@ import CreateArea from "../mirror/CreateArea";
 import {Link} from "react-router-dom";
 import UncommonService from '../../Services/UncommonService';
 import {AuthContext} from "../../Context/AuthContext";
-import AuthService from "../../Services/AuthService";
 import { SpinnerDiamond } from 'spinners-react';
 import Accordion from 'react-bootstrap/Accordion';
 import {GiMountainRoad} from 'react-icons/gi';
@@ -22,21 +21,10 @@ const authContext=useContext(AuthContext);
 
 let timer=useRef(null);
 
-function authCheck(){
-AuthService.isAuthenticated().then(data=>{
-  if(!data.isAuthenticated){
-    const {setIsAuthenticated,setUser}=authContext;
-    setIsAuthenticated(false);
-    setUser({username:""})
-  }
-})
-}
-
 useEffect(()=>{
     const controller = new AbortController();
     const signal= controller.signal;
     let mounted=true;
-    authCheck();
     UncommonService.get(signal).then(data=>{
     if(mounted){
       setIsLoaded(true);

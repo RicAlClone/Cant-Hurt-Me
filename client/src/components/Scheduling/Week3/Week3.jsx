@@ -2,6 +2,7 @@ import React,{useState,useEffect,useContext} from "react";
 import Day from "../Week1/Day";
 import ScheduleService from '../../../Services/ScheduleService';
 import {AuthContext} from '../../../Context/AuthContext';
+import AuthService from '../Services/AuthService';
 
 
 function Week3(props){
@@ -170,10 +171,21 @@ let skeleton={
 
   const [idHolder,setIdHolder]=useState(null);
 
+  function authCheck(){
+    AuthService.isAuthenticated().then(data=>{
+      if(!data.isAuthenticated){
+        setIsAuthenticated(false);
+        setUser({username:""});
+      }
+    })
+  }
   //Brings our data when page loads for the first time
   useEffect(()=>{
-let mounted=true;
-      ScheduleService.getSchedule(props.signal).then(data=>{
+    const controller = new AbortController()
+    const signal = controller.signal;
+      let mounted=true;
+      authCheck();
+      ScheduleService.getSchedule(signal).then(data=>{
       if(mounted){
         if(data.message.msgBody==="Unauthorized"){
           console.log('Unauthorized');
@@ -194,7 +206,7 @@ let mounted=true;
 
       return ()=>{
         mounted=false;
-        props.controller.abort();
+        controller.abort();
       }
   },[])
 

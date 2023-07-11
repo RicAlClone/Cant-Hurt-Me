@@ -4,7 +4,6 @@ import AddIcon from "../AddIcon";
 import FailureService from "../../Services/FailureService";
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
-import AuthService from "../../Services/AuthService";
 import {Link} from "react-router-dom";
 import { SpinnerDiamond } from 'spinners-react';
 import {BsFillExclamationCircleFill} from 'react-icons/bs';
@@ -32,23 +31,11 @@ const [isLoaded,setIsLoaded]=useState(false);
 
 let timer=useRef(null);
 
-function authCheck(){
-  console.log('auth check in empowerment failure');
-AuthService.isAuthenticated().then(data=>{
-  if(!data.isAuthenticated){
-    const {setIsAuthenticated,setUser}=authContext;
-    setIsAuthenticated(false);
-    setUser({username:""})
-  }
-})
-}
-
 useEffect(()=>{
   const controller = new AbortController();
   const signal= controller.signal;
   let mounted=true;
-  authCheck();
-  FailureService.get().then(data=>{
+  FailureService.get(signal).then(data=>{
     if(mounted){
       setIsLoaded(true);
       setArray(data.message.documents);
@@ -64,7 +51,6 @@ useEffect(()=>{
 
 function handleChange(event){
   const {name, value}=event.target;
-
   setFailNote(function(prev){
     return{
       ...prev,

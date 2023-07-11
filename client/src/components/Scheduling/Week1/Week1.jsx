@@ -1,6 +1,7 @@
 import React,{useState,useEffect,useContext} from "react";
 import Day from "./Day";
 import ScheduleService from '../../../Services/ScheduleService';
+import AuthService from '../Services/AuthService';
 import {AuthContext} from '../../../Context/AuthContext';
 // import {FiArrowLeftCircle,FiArrowRightCircle} from 'react-icons/fi';
 
@@ -272,9 +273,21 @@ let skeleton={
   //We want to have a load spinner if its taking long to load
   const [isLoaded,setIsLoaded]=useState(false);
 //Brings our data when page loads for the first time
+
+function authCheck(){
+  AuthService.isAuthenticated().then(data=>{
+    if(!data.isAuthenticated){
+      setIsAuthenticated(false);
+      setUser({username:""});
+    }
+  })
+}
 useEffect(()=>{
+  const controller = new AbortController()
+  const signal = controller.signal;
 let mounted=true;
-ScheduleService.getSchedule(props.signal).then(data=>{
+authCheck();
+ScheduleService.getSchedule(signal).then(data=>{
   if(mounted){
     if(data.message.msgBody==="Unauthorized"){
     console.log('unauthorized');
@@ -295,7 +308,7 @@ ScheduleService.getSchedule(props.signal).then(data=>{
 
     return ()=>{
       mounted=false;
-      props.controller.abort();
+      controller.abort();
     }
   },[])
 
@@ -562,8 +575,7 @@ else{
 //changed but not saved. We also want to turn off the ability to change the object
 //unless we click edit again.
 function slide(){
-  props.authCheck();
-  if(update){
+    if(update){
 ScheduleService.getSchedule().then(data=>{
   if(!data.message.msgError){
   setArray(data.message.documents);

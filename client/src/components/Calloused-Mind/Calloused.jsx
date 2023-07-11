@@ -4,7 +4,6 @@ import ListItem from "../hand/ListItem";
 import {Link} from "react-router-dom";
 import CallousedService from "../../Services/CallousedService";
 import {AuthContext} from "../../Context/AuthContext";
-import AuthService from "../../Services/AuthService";
 import {SpinnerDiamond} from 'spinners-react';
 import Accordion from 'react-bootstrap/Accordion';
 import {GiBrain} from 'react-icons/gi';
@@ -18,22 +17,10 @@ const Calloused = function(props) {
   const [isLoaded, setIsLoaded] = useState(false);
   let timer = useRef(null);
 
-  function authCheck(signal) {
-    console.log('authenticate from calloused');
-    AuthService.isAuthenticated(signal).then(data => {
-      if (!data.isAuthenticated) {
-        const {setIsAuthenticated, setUser} = authContext;
-        setIsAuthenticated(false);
-        setUser({username: ""})
-      }
-    })
-  }
-
   useEffect(() => {
     let mounted=true;
     const controller = new AbortController()
     const signal= controller.signal;
-    authCheck(signal);
     window.scrollTo(0, 0);
     CallousedService.getCallousedNotes(signal).then(data => {
       if(mounted){
