@@ -1,4 +1,4 @@
-import React from "react";//{useContext}
+import React from "react";//,{useContext}
 import Week1 from "./Week1/Week1";
 import Week2 from "./Week2/Week2";
 import Week3 from "./Week3/Week3";
@@ -70,7 +70,6 @@ const Schedule= function(){
       </div>
       <div className='body-padding' style={{paddingTop:'20px',paddingBottom:'20px'}}>
         <Alert className="instruction-bullets"  variant='success'>
-
 
           {/* style={{width:'100%'}} */}
 

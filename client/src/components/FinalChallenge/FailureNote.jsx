@@ -1,13 +1,24 @@
-import React,{useState,useRef,useEffect} from "react";
-import {Animated} from "react-animated-css";
+import React,{useRef,useEffect} from "react";
 
 function FailureNote(props){
-  const [visible,setVisible]=useState(true);
 let timerId=useRef(null);
 
   let day= props.item.date;
   let regex= /(\d+)\W(\d+)\W(\d+)/;
   let redone=day.replace(regex,'$2-$3-$1');
+
+  let movingTranslate=[
+  {
+    opacity: 1
+  },
+  {
+    opacity:0
+  }
+  ];
+  let detailMovement={
+    duration:500,
+    fill: 'forwards'
+  }
 
 useEffect(()=>{
   return ()=>{
@@ -15,9 +26,9 @@ useEffect(()=>{
   }
 },[])
 
-function noteDelete(){
-  setVisible(false);
-  timerId=setTimeout(()=>{setVisible(true);},1000);
+function noteDelete(e){
+  let targetDiv=e.target.parentElement.parentElement;
+  targetDiv.animate(movingTranslate,detailMovement);
   props.delete(props.id);
 }
 
@@ -26,13 +37,7 @@ const indent={
 }
 return(
   <div className="col-lg-12" >
-    <Animated
-      animationIn="fadeIn"
-      animationOut="bounceOut"
-      animationInDuration={1000}
-      animationOutDuration={1000}
-      isVisible={visible}
-    >
+
       <div className="note-container">
         <div className="note" >
 
@@ -55,7 +60,7 @@ return(
 
         </div>
       </div>
-    </Animated>
+
   </div>
 );
 

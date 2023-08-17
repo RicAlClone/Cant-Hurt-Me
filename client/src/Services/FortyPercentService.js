@@ -29,7 +29,7 @@ getRuleNotes:(signal)=>{
   .catch(error => {
     if (error.name === 'AbortError') {
       // Handle the user-aborted request case
-      console.log('The 40 percent notes request was aborted by the user.');
+      // console.log('The 40 percent notes request was aborted by the user.');
     } else {
       // Handle other errors
       console.log('An error occurred in 40 percent:', error);

@@ -36,7 +36,7 @@ getMirrorNotes:(signal)=>{
   .catch(error => {
     if (error.name === 'AbortError') {
       // Handle the user-aborted request case
-      console.log('The mirror notes request was aborted by the user.');
+      // console.log('The mirror notes request was aborted by the user.');
     } else {
       // Handle other errors
       console.log('An error occurred:', error);
@@ -81,7 +81,6 @@ getImage:(signal)=>{
       if(res.status!==401){
 
         return res.json().then(data=>{
-          console.log('from mirror service--->',data);
           return data
         });
       }
@@ -92,7 +91,7 @@ getImage:(signal)=>{
     .catch(error => {
   if (error.name === 'AbortError') {
     // Handle the user-aborted request case
-    console.log('The image mirror request was aborted by the user.');
+    // console.log('The image mirror request was aborted by the user.');
   } else {
     // Handle other errors
     console.log('An error occurred:', error);

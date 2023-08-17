@@ -8,6 +8,8 @@ import {SpinnerDiamond} from 'spinners-react';
 import Accordion from 'react-bootstrap/Accordion';
 import {GiBrain} from 'react-icons/gi';
 import {IconContext} from "react-icons";
+import AuthService from "../../Services/AuthService";
+
 
 const Calloused = function(props) {
   const authContext = useContext(AuthContext);
@@ -32,8 +34,15 @@ const Calloused = function(props) {
       mounted=false;
       controller.abort();
       clearTimeout(timer.current);
+      //checking if authenticating when we unmount component
+      AuthService.isAuthenticated().then(data=>{
+        if(!data.isAuthenticated){
+          authContext.setIsAuthenticated(false);
+          authContext.setUser({username:""});
+        }
+      })
     }
-  }, []);
+  }, [authContext]);
 
   function addItems(e, input) {
     e.preventDefault();

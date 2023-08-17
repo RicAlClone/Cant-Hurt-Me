@@ -7,10 +7,10 @@ import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
 import{BsFillExclamationCircleFill} from "react-icons/bs";
 import Accordion from 'react-bootstrap/Accordion';
-
 import {FaCookie} from "react-icons/fa";
 import {BiCookie} from 'react-icons/bi';
 import { IconContext } from "react-icons";
+import AuthService from "../../Services/AuthService";
 
 
 const CookieJar = function() {
@@ -44,8 +44,15 @@ const CookieJar = function() {
       controller.abort();
       clearTimeout(timer.current);
       clearTimeout(aniProblem);
+      //checking if authenticating when we unmount component
+      AuthService.isAuthenticated().then(data=>{
+        if(!data.isAuthenticated){
+          authContext.setIsAuthenticated(false);
+          authContext.setUser({username:""});
+        }
+      })
     }
-  }, []);
+  }, [authContext]);
 
   const [index2, setIndex2] = useState(0);
   const [turnOn, setTurnOn] = useState(false);
@@ -221,10 +228,10 @@ const CookieJar = function() {
           ? array.map((element, index)=>{
 
             if (index === index2) {
-
               return <TheCookie
-              key={index}
-              array={array}
+                key={index}
+                id={element._id}
+                array={array}
               index={index}
               secAni={secAni}
               delete={deleteCookie}/>

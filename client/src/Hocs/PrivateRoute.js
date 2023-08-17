@@ -20,11 +20,12 @@ function PrivateRoute({component:Component,roles,...rest}){
         return <Redirect
           to={{pathname:'/login', state:{from:props.location}}}
                />
+      }else{
+        // e.g this would return <BadHand> with all its props
+        //When adding a component the rule states the name should be capital thats
+        // why we re-assign the component prop to Component
+        return <Component {...props}/>
       }
-      // e.g this would return <BadHand> with all its props
-      //When adding a component the rule states the name should be capital thats
-      // why we re-assign the component prop to Component
-      return <Component {...props}/>
     }}/>
 
   );

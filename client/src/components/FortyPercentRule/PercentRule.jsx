@@ -34,18 +34,17 @@ const [required,setRequired]=useState(false);
 
 let authContext=useContext(AuthContext);
 
-function authCheck(){
-AuthService.isAuthenticated().then(data=>{
-  if(!data.isAuthenticated){
-    const {setIsAuthenticated,setUser}=authContext;
-    setIsAuthenticated(false);
-    setUser({username:""})
-  }
-})
-}
-
 let timer=useRef(null);
 
+function authCheck(){
+
+  AuthService.isAuthenticated().then(data=>{
+    if(!data.isAuthenticated){
+      authContext.setIsAuthenticated(false);
+      authContext.setUser({username:""});
+    }
+  })
+}
 
 useEffect(()=>{
   const controller = new AbortController()
@@ -55,6 +54,8 @@ useEffect(()=>{
     if(mounted){
       setIsLoaded(true);
       setArray(data.fortyPercentRules);
+    }else{
+      // console.log('mounted false in percentRule')
     }
   });
 
@@ -62,8 +63,15 @@ useEffect(()=>{
     mounted=false;
     controller.abort();
     clearTimeout(timer.current);
+    //checking if authenticating when we unmount component
+    AuthService.isAuthenticated().then(data=>{
+      if(!data.isAuthenticated){
+        authContext.setIsAuthenticated(false);
+        authContext.setUser({username:""});
+      }
+    })
   }
-},[]);
+},[authContext]);
 
 function handleChange(event){
 setRequired(false);

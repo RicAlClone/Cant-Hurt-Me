@@ -28,7 +28,7 @@ const takingSoulsService={
     .catch(error => {
       if (error.name === 'AbortError') {
         // Handle the user-aborted request case
-        console.log('The taking souls notes request was aborted by the user.');
+        // console.log('The taking souls notes request was aborted by the user.');
       } else {
         // Handle other errors
         console.log('An error occurred in taking souls notes');

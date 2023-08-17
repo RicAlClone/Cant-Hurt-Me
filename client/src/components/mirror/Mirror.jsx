@@ -4,6 +4,7 @@ import CreateArea from "./CreateArea";
 import EachNote from "./EachNote";
 import {Link} from "react-router-dom";
 import MirrorService from "../../Services/MirrorService";
+import AuthService from "../../Services/AuthService";
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
 import { SpinnerDiamond,SpinnerCircularFixed } from 'spinners-react';
@@ -12,7 +13,6 @@ import {Alert, Button} from 'react-bootstrap'
 import Accordion from 'react-bootstrap/Accordion';
 import { IconContext } from "react-icons";
 import {GiMirrorMirror} from 'react-icons/gi';
-
 
 const Mirror = function(props) {
 
@@ -43,40 +43,49 @@ useEffect(() => {
   let mounted=true;
   const controller = new AbortController();
   const signal= controller.signal;
+
     MirrorService.getMirrorNotes(signal).then(data => {
-      if(mounted){
-        setIsLoaded(true);
-        setArray(data.mirrors);
-      }
+        if(mounted){
+            setIsLoaded(true);
+            setArray(data.mirrors);
+          }
     })
     setInitialImageLoading(true);
     MirrorService.getImage(signal).then(data=>{
-      if(mounted){
-        if(data.documents.length>0){
-          setImage({image:data.documents[0].image})
-          setInitialImageLoading(false);
-          setImageExists(true);
-          setImageID(data.documents[0]._id);
+        if(mounted){
+            if(data.documents.length>0){
+              setImage({image:data.documents[0].image})
+              setInitialImageLoading(false);
+              setImageExists(true);
+              setImageID(data.documents[0]._id);
+            }
+            //no image exists so initialImageLoading is false
+            else if(data.documents.length===0){
+            setInitialImageLoading(false);
+            }
         }
-        //no image exists so initialImageLoading is false
-        else if(data.documents.length===0){
-        setInitialImageLoading(false);
-        }
-      }
+
     })
 
     return() => {
       mounted=false;
       controller.abort();
       clearTimeout(timer.current);
+      //checking if authenticating when we unmount component
+      AuthService.isAuthenticated().then(data=>{
+        if(!data.isAuthenticated){
+          authContext.setIsAuthenticated(false);
+          authContext.setUser({username:""});
+        }
+      })
     }
 
-  }, []);
+
+  }, [authContext]);
 
   function addNote(note) {
     MirrorService.postMirrorNote(note).then(data => {
       if (!data.message.msgError) {
-
         MirrorService.getMirrorNotes().then(getData => {
           setArray(getData.mirrors);
           setMessage(data.message);
@@ -134,7 +143,6 @@ function addImage(){
         setImage({image:gData.documents[0].image})
         setImageID(gData.documents[0]._id)
         setImageMessage(data.message);
-        console.log(imageMessage);
         timer.current = setTimeout(() => {
           setImageMessage(null);
           setHide(false);

@@ -54,7 +54,7 @@ if(!entry.date||!entry.title||!entry.paragraph){
   console.log('something is empty');
 }
 else{
-console.log('handleAddEntry():',entry);
+// console.log('handleAddEntry():',entry);
   props.addJournalEntry(entry);
   setEntry(()=>{
     setSubmitCheck(false);
@@ -99,8 +99,6 @@ function paragraphFilled(property){
   }
 }
 
-
-console.log('entry:',entry);
   return (
     <form >
       <div className="all-main-containers">

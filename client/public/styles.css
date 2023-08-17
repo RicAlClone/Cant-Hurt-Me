@@ -3,10 +3,6 @@ html{
   overflow-y: scroll;
 }
 
-/* b {
-  color:#525252;
-} */
-
 .shadow{
   box-shadow: 5px 5px 15px -5px #888888;
 }

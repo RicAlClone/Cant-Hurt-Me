@@ -8,6 +8,7 @@ import { SpinnerDiamond } from 'spinners-react';
 import Accordion from 'react-bootstrap/Accordion';
 import {GiMountainRoad} from 'react-icons/gi';
 import { IconContext } from "react-icons";
+import AuthService from "../../Services/AuthService";
 
 function Uncommon(){
 
@@ -35,8 +36,15 @@ useEffect(()=>{
     mounted=false;
     controller.abort();
     clearTimeout(timer.current)
+    //checking if authenticating when we unmount component
+    AuthService.isAuthenticated().then(data=>{
+      if(!data.isAuthenticated){
+        authContext.setIsAuthenticated(false);
+        authContext.setUser({username:""});
+      }
+    })
   }
-},[])
+},[authContext])
 
 function addJournalEntry(entry){
 

@@ -1,18 +1,21 @@
 import React,{useState,useEffect,useContext} from "react";
 import Day from "./Day";
 import ScheduleService from '../../../Services/ScheduleService';
-import AuthService from '../Services/AuthService';
+import AuthService from '../../../Services/AuthService';
 import {AuthContext} from '../../../Context/AuthContext';
 // import {FiArrowLeftCircle,FiArrowRightCircle} from 'react-icons/fi';
+// import { Link,useHistory } from 'react-router-dom';
+
 
 
 function Week1(props){
+  // const history= useHistory();
 
 const [color,setColor]=useState("")
 //we have to press edit button before we can change update to true
 const[update,setUpdate]=useState(false);
 
-const authContext= useContext(AuthContext);
+const {isAuthenticated,setIsAuthenticated,setUser}=useContext(AuthContext)
 //functions allow us to choose the background color of block
 function red(){
   setColor("#e00000")
@@ -275,8 +278,10 @@ let skeleton={
 //Brings our data when page loads for the first time
 
 function authCheck(){
+  console.log('running authCheck, week 1');
   AuthService.isAuthenticated().then(data=>{
     if(!data.isAuthenticated){
+      console.log('authCheck, week 1, is reading, not authenticated')
       setIsAuthenticated(false);
       setUser({username:""});
     }
@@ -286,13 +291,8 @@ useEffect(()=>{
   const controller = new AbortController()
   const signal = controller.signal;
 let mounted=true;
-authCheck();
 ScheduleService.getSchedule(signal).then(data=>{
   if(mounted){
-    if(data.message.msgBody==="Unauthorized"){
-    console.log('unauthorized');
-    }
-    else{
     setIsLoaded(true);
     setArray(data.message.documents);
     setEvolve(data.message.documents[0]);
@@ -302,15 +302,21 @@ ScheduleService.getSchedule(signal).then(data=>{
     setFriObj(data.message.documents[4]);
     setSatObj(data.message.documents[5]);
     setSunObj(data.message.documents[6]);
-    }
   }
 })
 
     return ()=>{
       mounted=false;
       controller.abort();
+      AuthService.isAuthenticated().then(data=>{
+        if(!data.isAuthenticated){
+          console.log('authCheck, week 1, is reading, not authenticated')
+          setIsAuthenticated(false);
+          setUser({username:""});
+        }
+      })
     }
-  },[])
+  },[setIsAuthenticated, setUser])
 
 //Styles our edit,and save button
 const [saveButtonStyle,setSaveButtonStyle]=useState('btn btn-light');
@@ -527,16 +533,17 @@ const dayInfo=[
 ];
 //Clicking edit button allows us to color the blocks
 function editClick(nameDay){
-
-  dayInfo.forEach((item)=>{
-    if(nameDay===item.day){
-      setIdHolder(array[item.index]._id);
-    }
-  })
-
-  setUpdate(true);
-  setBackColorDay({backgroundColor:'white'});
-}
+  authCheck();
+  if(isAuthenticated){
+    dayInfo.forEach((item)=>{
+      if(nameDay===item.day){
+        setIdHolder(array[item.index]._id);
+      }
+    })
+    setUpdate(true);
+    setBackColorDay({backgroundColor:'white'});
+  }
+};
 
 //Save button will get id from edit button and the day object
 //and send to the backend to update our original day model
@@ -558,9 +565,8 @@ ScheduleService.updateDay(id,body).then(data=>{
     setEditButtonStyle('btn btn-info');
   }
   else if(data.message.msgBody === "Unauthorized"){
-const {setUser,setIsAuthenticated}=authContext;
-  setUser(null);
-  setIsAuthenticated(false);
+    setUser({username: ""});
+    setIsAuthenticated(false);
   }
 })
 setUpdate(false);
@@ -588,9 +594,8 @@ ScheduleService.getSchedule().then(data=>{
   setSunObj(data.message.documents[6]);
 }
 else if(data.message.msgBody === "Unauthorized"){
-const {setUser,setIsAuthenticated}=authContext;
-setUser(null);
-setIsAuthenticated(false);
+  setUser({username: ""});
+  setIsAuthenticated(false);
 }
 })
 setSaveButtonStyle('btn btn-light');

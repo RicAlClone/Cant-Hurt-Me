@@ -43,12 +43,13 @@ router.post("/addMirrorNote",passport.authenticate('jwt', { session: false }), f
 router.get("/getMirrorNotes",passport.authenticate('jwt', { session: false }), function(req,res){
   const id=req.user._id;
 
-
 User.findById({_id:id}).populate('mirrors').exec((err,document)=>{
   if(err){
+    console.log('error in mirror route :', err);
     res.status(500).json({message:{msgBody:"error",msgError:true}});
   }
 else{
+  console.log('authenticated from mirror route')
   res.status(200).json({mirrors:document.mirrors,authenticated:true});
 }
 });

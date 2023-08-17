@@ -32,7 +32,6 @@ let onClickLogoutHandler = ()=>{
 const unAuthenticatedNavBar= ()=>{
   return(
   <>
-
     <Nav className="mr-auto">
       <Nav.Link style={{color:"white"}}  as={Link} href='#Home' to="/" > Home </Nav.Link>
       <Nav.Link style={{color:"white"}}  as={Link} href='#login' to="/login" >Login</Nav.Link>
@@ -72,6 +71,7 @@ return(
       <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#Schedule' to="/Schedule">8. Schedule</NavDropdown.Item>
       <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#Uncommon' to="/Uncommon" >9. Uncommon Amongst the Uncommon</NavDropdown.Item>
       <NavDropdown.Item  onClick={authCheck} style={blackText} as={Link} href='#EmpFail' to="/EmpowermentFailure">10. Empowerment of Failure</NavDropdown.Item>
+      
     </NavDropdown>
   </Nav>
 

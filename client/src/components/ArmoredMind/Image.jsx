@@ -1,5 +1,4 @@
-import React,{useState,useEffect,useRef} from "react";
-import {Animated} from "react-animated-css";
+import React,{useEffect,useRef} from "react";
 
 let color= {
 
@@ -10,7 +9,18 @@ function Image(props){
 
 let timerId=useRef(null);
 
-const [visible,setVisible]=useState(true);
+let movingTranslate=[
+{
+  opacity: 1
+},
+{
+  opacity:0
+}
+];
+let detailMovement={
+  duration:500,
+  fill: 'forwards'
+}
 
 useEffect(()=>{
   return ()=>{clearTimeout(timerId)}
@@ -19,33 +29,24 @@ useEffect(()=>{
 
   return(
     <>
-      <div  className="col-lg-4" style={color} >
-        <Animated
-          animationIn="fadeIn"
-          animationOut="bounceOut"
-          animationInDuration={1000}
-          animationOutDuration={1000}
-          isVisible={visible}
-        >
+      <div  className="col-lg-4" key={props.id} style={color} >
+
+        <div >
+
+          <img  style={{width: "100%",height:"240px"}} alt="" src={props.arrayItem} />
+
+        </div>
 
 
-          <div >
+        <i  className="fas fa-trash-alt delete-bottom-right" style={{marginTop:'10px'}} onClick={
+          (e)=>{
+            
+            let targetDiv=e.target.parentElement;
 
-            <img  style={{width: "100%",height:"240px"}} alt="" src={props.arrayItem} />
+            targetDiv.animate(movingTranslate,detailMovement);
+            props.deleteImage(props.id);
+          }}/>
 
-          </div>
-
-
-          <i  className="fas fa-trash-alt delete-bottom-right" style={{marginTop:'10px'}} onClick={
-            ()=>{
-              setVisible(false);
-              timerId=setTimeout(()=>{setVisible(true);},1000);
-
-              props.deleteImage(props.id);
-            }}/>
-
-
-        </Animated>
       </div>
     </>
   );

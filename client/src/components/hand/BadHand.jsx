@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useRef, useContext} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import ListItem from "./ListItem";
 import {Link} from "react-router-dom";
 import BadhandService from "../../Services/BadhandService.js";
 import AddIcon from "../AddIcon";
 import Message from "../Message";
 import {AuthContext} from "../../Context/AuthContext";
+import AuthService from "../../Services/AuthService";
 import {SpinnerDiamond} from 'spinners-react';
 import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Accordion from 'react-bootstrap/Accordion';
@@ -14,6 +14,7 @@ import {CgCardSpades} from 'react-icons/cg';
 import {IconContext} from "react-icons";
 
 const BadHand = function() {
+
 
   //authContext is like useState for all components.
   const authContext = useContext(AuthContext);
@@ -45,9 +46,16 @@ const BadHand = function() {
       mounted = false;
       controller.abort();
       clearTimeout(timer.current);
+      //checking if authenticating when we unmount component
+      AuthService.isAuthenticated().then(data=>{
+        if(!data.isAuthenticated){
+          authContext.setIsAuthenticated(false);
+          authContext.setUser({username:""});
+        }
+      })
     }
 
-  }, []);
+  }, [authContext]);
 
   function letsChange(event) {
     const newValue = event.target.value;
@@ -91,12 +99,12 @@ const BadHand = function() {
     }
   }
 
+
   function deleteItem(id) {
 
     //sends over id of item to our route to delete from database
     BadhandService.deleteBadhand(id).then(data => {
       if (!data.message.msgError) {
-
         BadhandService.getBadhands().then(data => {
           newItems(data.badhands);
         });
@@ -192,19 +200,24 @@ const BadHand = function() {
                 <button type='submit' className="button-top-right" onClick={addItems}>
                   <AddIcon/>
                 </button>
-                </div>
+              </div>
 
-                <div>
-                  <ul className="list-container" style={{
-                      paddingTop: '0'
-                    }}>
+              <div>
+                <ul className="list-container" style={{
+                  paddingTop: '0'
+                }}>
 
-                    {
-                      items.map(function(arrayItem, index) {
-                        return <ListItem key={index} id={arrayItem._id} arrayItem={arrayItem} deleteItem={deleteItem}/>
-                      })
-                    }
-                  </ul>
+                  {
+                    items.map(function(arrayItem,index){
+                      return <ListItem
+                        key={index}
+                        id={arrayItem._id}
+                        arrayItem={arrayItem}
+                        deleteItem={deleteItem}
+                             />
+                    })
+                  }
+                </ul>
                 </div>
               </div>
 

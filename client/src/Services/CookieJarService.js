@@ -27,7 +27,7 @@ const cookieJarService={
     .catch(error => {
       if (error.name === 'AbortError') {
         // Handle the user-aborted request case
-        console.log('The cookie jar notes request was aborted by the user.');
+        // console.log('The cookie jar notes request was aborted by the user.');
       } else {
         // Handle other errors
         console.log('An error occurred in cookie jar:', error);

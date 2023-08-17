@@ -14,7 +14,7 @@ const badhandService={
     .catch(error => {
       if (error.name === 'AbortError') {
         // Handle the user-aborted request case
-        console.log('The badhand notes request was aborted by the user.');
+        // console.log('The badhand notes request was aborted by the user.');
       } else {
         // Handle other errors
         console.log('An error occurred in badhand:', error);

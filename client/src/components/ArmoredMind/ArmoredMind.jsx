@@ -10,6 +10,7 @@ import {BsFillExclamationCircleFill} from "react-icons/bs"
 import Accordion from 'react-bootstrap/Accordion';
 import {GiCrestedHelmet} from 'react-icons/gi';
 import {IconContext} from "react-icons";
+import AuthService from "../../Services/AuthService";
 
 const ArmoredMind = function(props) {
 
@@ -24,7 +25,7 @@ const ArmoredMind = function(props) {
 //used to check if input is empty when submitted
   const [submitCheck, setSubmitCheck] = useState(false);
 
-  const auth = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
 
   let timer = useRef(null);
 
@@ -48,8 +49,15 @@ const ArmoredMind = function(props) {
             mounted=false;
             controller.abort();
             clearTimeout(timer.current);
+            //checking if authenticating when we unmount component
+            AuthService.isAuthenticated().then(data=>{
+              if(!data.isAuthenticated){
+                authContext.setIsAuthenticated(false);
+                authContext.setUser({username:""});
+              }
+            })
     }
-  }, []);
+  }, [authContext]);
 
   function handleChange(event) {
     const newValue = event.target.value;
@@ -72,8 +80,8 @@ const ArmoredMind = function(props) {
             }, 2000);
           } else if (data.message.msgBody === "Unauthorized") {
 
-            auth.setIsAuthenticated(false);
-            auth.setUser(null);
+            authContext.setIsAuthenticated(false);
+            authContext.setUser(null);
           }
         });
       });
@@ -99,8 +107,8 @@ const ArmoredMind = function(props) {
             setMessage(null)
           }, 2000);
         } else if (data.message.msgBody === "Unauthorized") {
-          auth.setIsAuthenticated(false);
-          auth.setUser(null);
+          authContext.setIsAuthenticated(false);
+          authContext.setUser(null);
         }
       })
     })
@@ -185,7 +193,7 @@ const ArmoredMind = function(props) {
               alignItems: "center",
               height: '40px',
               paddingLeft: '15px'
-            }}>
+          }}>
             {
               message
                 ? <Message message={message}/>
@@ -200,8 +208,8 @@ const ArmoredMind = function(props) {
     {
       isLoaded
         ? <div className="row">
-            {
-              array.map(function(arrayItem, index) {
+          {
+            array.map(function(arrayItem, index) {
                 return <Image key={index} id={arrayItem._id} arrayItem={arrayItem.imageURL} deleteImage={deleteImage}/>
               })
             }

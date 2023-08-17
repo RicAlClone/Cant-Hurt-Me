@@ -10,6 +10,7 @@ import {BsFillExclamationCircleFill} from 'react-icons/bs';
 import Accordion from 'react-bootstrap/Accordion';
 import {GrDocumentTime} from 'react-icons/gr';
 import { IconContext } from "react-icons";
+import AuthService from "../../Services/AuthService";
 
 function EmpowermentFailure(){
 
@@ -46,8 +47,15 @@ useEffect(()=>{
     mounted=false;
     controller.abort();
     clearTimeout(timer.current);
+    //checking if authenticating when we unmount component
+    AuthService.isAuthenticated().then(data=>{
+      if(!data.isAuthenticated){
+        authContext.setIsAuthenticated(false);
+        authContext.setUser({username:""});
+      }
+    })
   }
-},[])
+},[authContext])
 
 function handleChange(event){
   const {name, value}=event.target;
