@@ -46,7 +46,7 @@ userRouter.post('/register',(req,res)=>{
       const newUser= new User({username,password});
 
     newUser.save((err,result)=>{
-    
+
       if(err){
         //We get 3 different types of errors when registering
         if(err.errors['username']&&err.errors['password']){
@@ -96,7 +96,6 @@ userRouter.get('/logout', passport.authenticate('jwt', {session : false}), (req,
 
 
 userRouter.get('/authenticated', passport.authenticate('jwt', {session : false}), (req,res)=>{
-  console.log('authenticated route');
   const {username}= req.user;
   res.status(200).json({isAuthenticated : true, user:{username}});
 
