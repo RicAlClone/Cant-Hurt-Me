@@ -15,7 +15,6 @@ app.use(cookieParser());
 app.use(express.json({limit: '50mb',extended:true}));
 app.use(express.urlencoded({limit: '50mb',extended:true}));
 
-
 mongoose.connect(process.env.ATLAS_URI,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
   console.log("MongoDB database connected successfully");
 })
