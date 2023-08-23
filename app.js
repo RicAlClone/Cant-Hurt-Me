@@ -17,11 +17,7 @@ app.use(express.urlencoded({limit: '50mb',extended:true}));
 
 mongoose.connect(process.env.ATLAS_URI,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
   console.log("MongoDB database connected successfully");
-  app.listen(PORT,function(){
-    console.log(`server is on port ${PORT}`);
-  })
-
-})
+});
 
 
 const userRouter = require('./routes/User');
@@ -51,25 +47,17 @@ app.use('/user/failure',failureRouter);
 const path = require("path");
 
 __dirname=path.resolve();
-
-// if(process.env.NODE_ENV==='production'){
-  app.use(express.static(path.join(__dirname,'./client/build')));
-
+if(process.env.NODE_ENV==='production'){
+  app.use(express.static(path.join(__dirname,'/client/build')));
   app.get('*',(req,res)=>{
-    res.sendFile(path.join(__dirname,"./client/build/index.html"));
-    //res.sendFile(path.resolve(__dirname,"client","build","index.html"));
-//removed from package.json
-    // "server": "nodemon app.js",
-    // "build": "cd client && npm run build",
-    // "install": "cd client && npm install",
-    // "client": "npm start --prefix client",
-    // "dev": "concurrently \"npm run server\" \"npm run client\""
-
-
+    res.sendFile(path.resolve(__dirname,"client","build","index.html"));
   });
-// }
-// else{
-// app.get('/',(req,res)=>{
-//   res.send('App is running...')
-// })
-// }
+}
+else{
+app.get('/',(req,res)=>{
+  res.send('App is running...')
+})
+}
+app.listen(PORT,function(){
+  console.log(`server is on port ${PORT}`);
+})
