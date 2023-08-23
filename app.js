@@ -17,6 +17,10 @@ app.use(express.urlencoded({limit: '50mb',extended:true}));
 
 mongoose.connect(process.env.ATLAS_URI,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:true},()=>{
   console.log("MongoDB database connected successfully");
+  app.listen(PORT,function(){
+    console.log(`server is on port ${PORT}`);
+  })
+
 })
 
 
@@ -69,8 +73,3 @@ __dirname=path.resolve();
 //   res.send('App is running...')
 // })
 // }
-
-
-app.listen(PORT,function(){
-  console.log(`server is on port ${PORT}`);
-})
