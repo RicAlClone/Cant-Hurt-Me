@@ -49,7 +49,7 @@ User.findById({_id:id}).populate('mirrors').exec((err,document)=>{
     res.status(500).json({message:{msgBody:"error",msgError:true}});
   }
 else{
-  console.log('authenticated from mirror route')
+  //console.log('authenticated from mirror route')
   res.status(200).json({mirrors:document.mirrors,authenticated:true});
 }
 });

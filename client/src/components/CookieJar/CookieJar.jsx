@@ -236,6 +236,7 @@ const CookieJar = function() {
               secAni={secAni}
               delete={deleteCookie}/>
           }
+            return null
         })
         : null
     }

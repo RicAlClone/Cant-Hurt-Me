@@ -14,7 +14,7 @@ function DailyInstructions(){
         <Alert variant='danger' style={marginBottom}>
           <p>
             For first time users you want to go through all challenges and then refer to instructions below.
-            <Link  as={Link} to="/BadHand"> -->First Challenge</Link>
+            <Link  as={Link} to="/BadHand">First Challenge</Link>
           </p>
         </Alert>
 

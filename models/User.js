@@ -53,7 +53,7 @@ UserSchema.pre('save',function(next){
 //User wants to change his password to a new password which is just plain text.
   if(!this.isModified('password')){
     //next() takes us to the next middleware
-    console.log('this password is already modified');
+    //console.log('this password is already modified');
     //when the user exist we are pushed to the next function where
     //we can return a cb to passport authenticate
     return next();
